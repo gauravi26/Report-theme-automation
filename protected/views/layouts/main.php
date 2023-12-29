@@ -44,7 +44,7 @@
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
                                 array('label'=>'Report Theme Mapping', 'url'=>array('/reportTheme/index')),
-                                array('label'=>'Theme', 'url'=>array('/themeForReport/index')),
+                                array('label'=>'Theme', 'url'=>array('/themeForReport/reportTheme')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
 
 
