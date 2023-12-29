@@ -1,0 +1,51 @@
+// Create a script element
+var customScript = document.createElement('script');
+
+// Set the type attribute to JavaScript
+customScript.type = 'text/javascript';
+
+// Set the content of the script to your provided script
+customScript.textContent = `
+   document.addEventListener('DOMContentLoaded', function () {
+    // Highlight cells with maximum and minimum values in the "Percent %" column
+    var style = document.createElement('style');
+    style.textContent = 'table td.max-value { background-color: #aaffaa; } ' +
+                        'table td.min-value { background-color: #ffaaaa; }';
+
+    document.head.appendChild(style);
+
+    // Extract values from the "Percent %" column
+    var values = $('table td:nth-child(8)').map(function () {
+        var cellValue = parseFloat($(this).text().trim());
+        return isNaN(cellValue) ? null : cellValue;
+    }).get();
+
+    // Filter out null values (non-numeric cells)
+    values = values.filter(function (value) {
+        return value !== null;
+    });
+
+    // Find the maximum and minimum values
+    var maxValue = Math.max.apply(null, values);
+    var minValue = Math.min.apply(null, values);
+
+    // Add 'max-value' and 'min-value' classes to cells with max and min values
+    $('table td:nth-child(8)').each(function () {
+        var cellValue = parseFloat($(this).text().trim());
+
+        // Highlight maximum value in green
+        if (cellValue === maxValue) {
+            $(this).addClass('max-value');
+        }
+
+        // Highlight minimum value in red
+        if (cellValue === minValue) {
+            $(this).addClass('min-value');
+        }
+    });
+});
+
+`;
+
+// Append the script to the head of the document
+document.head.appendChild(customScript);

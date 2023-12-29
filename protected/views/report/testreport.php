@@ -1,0 +1,115 @@
+
+<?php  
+$controller = Yii::app()->getController();
+//  print_r($controller);
+// die();
+    $actionId = $controller->getAction()->getId();
+    $controllerId = $controller->getId();
+
+
+echo CHtml::hiddenField('controllerId', $controllerId);
+echo CHtml::hiddenField('actionId', $actionId);
+ ?>
+<body>
+    <body>
+  <div id="scriptPlaceholder"></div>
+</body>
+
+  <div class="student-container">
+    <h2>HTML TABLE</h2>
+    <table class="student-report">
+      <thead>
+        <tr>
+          <th>Roll No.</th>
+          <th>Name</th>
+          <th>English</th>
+          <th>Maths</th>
+          <th>Science</th>
+          <th>Computer Science</th>
+          <th>Social Studies</th>
+          <th>Percent %</th> <!-- Added Total column -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>Adiya</td>
+          <td>86</td>
+          <td>90</td>
+          <td>56</td>
+          <td>23</td>
+          <td>56</td>
+          <td>30</td> <!-- Placeholder for Total column -->
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>Riya</td>
+          <td>54</td>
+          <td>77</td>
+          <td>77</td>
+          <td>92</td>
+          <td>05</td>
+          <td>45</td> <!-- Placeholder for Total column -->
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>Priya</td>
+          <td>68</td>
+          <td>48</td>
+          <td>8</td>
+          <td>92</td>
+          <td>90</td>
+          <td>89</td> <!-- Placeholder for Total column -->
+        </tr>
+        <tr>
+          <td>04</td>
+          <td>Gauravi</td>
+          <td>48</td>
+          <td>56</td>
+          <td>87</td>
+          <td>34</td>
+          <td>55</td>
+          <td>37</td> <!-- Placeholder for Total column -->
+        </tr>
+        <tr>
+          <td>05</td>
+          <td>Nikhil</td>
+          <td>86</td>
+          <td>37</td>
+          <td>87</td>
+          <td>67</td>
+          <td>45</td>
+          <td>95</td> <!-- Placeholder for Total column -->
+        </tr>
+      </tbody>
+      <!-- Footer (You can uncomment this if needed)
+      <tfoot>
+        <tr>
+          <td colspan=3>Maximum Marks: </td>
+          <td colspan=3>Marks Obtained: </td>
+          <td colspan=3>Grade: </td>
+        </tr>
+      </tfoot>
+      -->
+    </table>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+//document.addEventListener('DOMContentLoaded', function () {
+//    // Add tooltips to cells with additional information
+//    var style = document.createElement('style');
+//    style.textContent = 'table td.tooltip { cursor: pointer; border-bottom: 1px dotted #000; }';
+//
+//    document.head.appendChild(style);
+//
+//    // Add 'tooltip' class to each cell for tooltips
+//    $('table td').addClass('tooltip').each(function () {
+//        var cellContent = $(this).text().trim();
+//        $(this).attr('title', 'Additional Info: ' + cellContent);
+//    });
+//});
+</script>
+
+

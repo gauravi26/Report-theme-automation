@@ -1,0 +1,25 @@
+// Create a script element
+var customScript = document.createElement('script');
+
+// Set the type attribute to JavaScript
+customScript.type = 'text/javascript';
+
+// Set the content of the script to your provided script
+customScript.textContent = `
+   document.addEventListener('DOMContentLoaded', function () {
+    // Add alternating row colors for better readability
+    var style = document.createElement('style');
+    style.textContent = 'table tr.even-row { background-color: #f9f9f9 !important; } ' +
+                        'table tr.odd-row { background-color: #AAA7A7 !important; }';
+
+    document.head.appendChild(style);
+
+    // Add 'even-row' and 'odd-row' classes to alternate rows
+    $('table tr:even').addClass('even-row');
+    $('table tr:odd').addClass('odd-row');
+});
+
+`;
+
+// Append the script to the head of the document
+document.head.appendChild(customScript);

@@ -1,0 +1,26 @@
+// Create a script element
+var customScript = document.createElement('script');
+
+// Set the type attribute to JavaScript
+customScript.type = 'text/javascript';
+
+// Set the content of the script to your provided script
+customScript.textContent = `
+    document.addEventListener('DOMContentLoaded', function () {
+    // Add tooltips to cells with additional information
+    var style = document.createElement('style');
+    style.textContent = 'table td.tooltip { cursor: pointer; border-bottom: 1px dotted #000; }';
+
+    document.head.appendChild(style);
+
+    // Add 'tooltip' class to each cell for tooltips
+    $('table td').addClass('tooltip').each(function () {
+        var cellContent = $(this).text().trim();
+        $(this).attr('title', 'Additional Info: ' + cellContent);
+    });
+});
+
+`;
+
+// Append the script to the head of the document
+document.head.appendChild(customScript);
