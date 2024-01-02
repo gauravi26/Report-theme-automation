@@ -1,26 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "css_properties".
+ * This is the model class for table "report_theme_mapping".
  *
- * The followings are the available columns in table 'css_properties':
+ * The followings are the available columns in table 'report_theme_mapping':
  * @property integer $id
- * @property string $property_name
- * @property string $property_value
- *
- * The followings are the available model relations:
- * @property ElementCssProperties[] $elementCssProperties
- * @property FormElementCssProperties[] $formElementCssProperties
- * @property ThemeForReport[] $themeForReports
+ * @property integer $application_forms_id
+ * @property integer $report_id
+ * @property integer $theme_ID
  */
-class CssProperties extends CActiveRecord
+class ReportThemeMapping extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'css_properties';
+		return 'report_theme_mapping';
 	}
 
 	/**
@@ -31,10 +27,11 @@ class CssProperties extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('property_name, property_value', 'length', 'max'=>255),
+			array('application_forms_id, report_id, theme_ID', 'required'),
+			array('application_forms_id, report_id, theme_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, property_name, property_value', 'safe', 'on'=>'search'),
+			array('id, application_forms_id, report_id, theme_ID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,9 +43,6 @@ class CssProperties extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'elementCssProperties' => array(self::HAS_MANY, 'ElementCssProperties', 'css_properties_id'),
-			'formElementCssProperties' => array(self::HAS_MANY, 'FormElementCssProperties', 'css_properties_id'),
-			'themeForReports' => array(self::HAS_MANY, 'ThemeForReport', 'css_property_id'),
 		);
 	}
 
@@ -59,8 +53,9 @@ class CssProperties extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'property_name' => 'Property Name',
-			'property_value' => 'Property Value',
+			'application_forms_id' => 'Application Forms',
+			'report_id' => 'Report',
+			'theme_ID' => 'Theme',
 		);
 	}
 
@@ -83,8 +78,9 @@ class CssProperties extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('property_name',$this->property_name,true);
-		$criteria->compare('property_value',$this->property_value,true);
+		$criteria->compare('application_forms_id',$this->application_forms_id);
+		$criteria->compare('report_id',$this->report_id);
+		$criteria->compare('theme_ID',$this->theme_ID);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -95,7 +91,7 @@ class CssProperties extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CssProperties the static model class
+	 * @return ReportThemeMapping the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

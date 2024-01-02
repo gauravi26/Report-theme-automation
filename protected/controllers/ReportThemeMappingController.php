@@ -1,6 +1,6 @@
 <?php
 
-class TableThemeController extends Controller
+class ReportThemeMappingController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class TableThemeController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','applyThemeToReport','manage'),
+				'actions'=>array('create','update', 'applyThemeReport'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,14 +62,14 @@ class TableThemeController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new TableTheme;
+		$model=new ReportThemeMapping;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['TableTheme']))
+		if(isset($_POST['ReportThemeMapping']))
 		{
-			$model->attributes=$_POST['TableTheme'];
+			$model->attributes=$_POST['ReportThemeMapping'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -91,9 +91,9 @@ class TableThemeController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['TableTheme']))
+		if(isset($_POST['ReportThemeMapping']))
 		{
-			$model->attributes=$_POST['TableTheme'];
+			$model->attributes=$_POST['ReportThemeMapping'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -122,7 +122,7 @@ class TableThemeController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TableTheme');
+		$dataProvider=new CActiveDataProvider('ReportThemeMapping');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +133,10 @@ class TableThemeController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new TableTheme('search');
+		$model=new ReportThemeMapping('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['TableTheme']))
-			$model->attributes=$_GET['TableTheme'];
+		if(isset($_GET['ReportThemeMapping']))
+			$model->attributes=$_GET['ReportThemeMapping'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -147,12 +147,12 @@ class TableThemeController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return TableTheme the loaded model
+	 * @return ReportThemeMapping the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=TableTheme::model()->findByPk($id);
+		$model=ReportThemeMapping::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,71 +160,68 @@ class TableThemeController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param TableTheme $model the model to be validated
+	 * @param ReportThemeMapping $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='table-theme-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='report-theme-mapping-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-        public function actionApplyThemeToReport(){
-            
-            $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
+        
+    public function actionApplyThemeReport()
+{
+//    $controllerId = "report";
+//    $actionId = "testReport";
+//    
+        $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
             $actionId = isset($_GET['action']) ? $_GET['action'] : null;
 
-//             $controllerId = "faculty";
-//            $actionId = "create";
-            // Find the ApplicationForms model that matches the current controller and action
-            $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
-           
+    $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
+    
+    if ($applicationForm != null) {
+        $mappedReportTheme = ReportThemeMapping::model()->findByAttributes(['application_forms_id' => $applicationForm->id]);
+        
+        if ($mappedReportTheme != null) {
+            $reportId = $mappedReportTheme->report_id;
+            $mappedTheme = $mappedReportTheme->theme_ID;
             
-            if (!$applicationForm) {
-                // Handle the case where ApplicationForms model is not found
-                echo "ApplicationForms not found for controller: $controllerId, action: $actionId";
-                return;
-    }
-    $pageId = $applicationForm->id;
-//    print_r($pageId);
-//            die();
-if ($pageId) {
-    $mappedReportTheme = ReportTheme::model()->findByAttributes(['application_forms_id' => $pageId]);
-
-    if ($mappedReportTheme) {
-        $report_id = $mappedReportTheme->report_name;
-
-        // Fetch corresponding records from table_theme based on report_id
-        $tableThemes = TableTheme::model()->findAllByAttributes(['report_id' => $report_id]);
-
-        if ($tableThemes) {
-            $cssString = array(); // Initialize an array to store CSS rules
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('reference_id = :reference_id');
+            $criteria->params[':reference_id'] = $mappedTheme;
             
-            foreach ($tableThemes as $tableTheme) {
-                $report_element = $tableTheme->report_element;
-                $css_property = $tableTheme->css_property;
-                $value = $tableTheme->value;
+            $themeOfThemes = ThemeForReport::model()->findAll($criteria);
+            
+            if (!empty($themeOfThemes)) {
+                foreach ($themeOfThemes as $themeOfTheme) {
+                    $elementId = $themeOfTheme->element_id;
+                    $cssPropertiesId = $themeOfTheme->css_property_id;
+                    $value = $themeOfTheme->value;
 
-                // Add the CSS rule to the array
-    $cssString[] = "$report_element { $css_property: $value !important; }";
+                    $elementTable = Elements::model()->findByPk(['id' => $elementId]);
+                    $element = $elementTable->element;
+
+                    $cssPropertyTable = CssProperties::model()->findByPk(['id' => $cssPropertiesId]);
+                    $cssProperty = $cssPropertyTable->property_name;
+
+                    // Check if the element is "report-container" or "report-table" and add the dot accordingly
+                    $elementSelector = in_array($element, ['report-container', 'report-table']) ? ".$element" : $element;
+
+                    // Apply the CSS rule to your report
+                    echo "$elementSelector { $cssProperty: $value !important; }\n";
+                }
+            } else {
+                echo "Theme Not Found";
             }
-
-            // Output the CSS string
-            echo implode("\n", $cssString);
         } else {
-            echo "No records found in TableTheme for report_id: $report_id";
+            echo "No Theme Mapped with Page and Reports";
         }
     } else {
-        echo "No matching ReportTheme found for application_forms_id: $pageId";
+        echo "ApplicationForms not found for controller: $controllerId, action: $actionId";
     }
 }
 
-            
-            
-        }
-        public function actionManage() {
-    $this->render('manage'); // Assuming 'tableTheme' is the controller ID
-}
 
 }

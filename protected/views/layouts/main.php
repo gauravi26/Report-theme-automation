@@ -20,7 +20,7 @@
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>
 <!--        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>-->
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applyReportTheme.js"></script>
+        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -43,7 +43,7 @@
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
-                                array('label'=>'Report Theme Mapping', 'url'=>array('/reportTheme/index')),
+                                array('label'=>'Custom Theme Mapping', 'url'=>array('/reportTheme/index')),
                                 array('label'=>'Theme', 'url'=>array('/themeForReport/reportTheme')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
 
