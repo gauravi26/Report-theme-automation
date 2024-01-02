@@ -1,16 +1,17 @@
+<?php  
+$controller = Yii::app()->getController();
+//  print_r($controller);
+// die();
+    $actionId = $controller->getAction()->getId();
+    $controllerId = $controller->getId();
+
+
+echo CHtml::hiddenField('controllerId', $controllerId);
+echo CHtml::hiddenField('actionId', $actionId);
+ ?>
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-
-    <!-- Include jQuery 3.6.4 (replace it with the appropriate version if needed) -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <!-- DataTables Core -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-    <!-- DataTables CSS (for styling) -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 <div class="report-container">
     <h2>Table Themes</h2>
@@ -41,11 +42,16 @@
         </tbody>
     </table>
 </div>
+     <script src="http://localhost/report/AjaxFiles/datatable.js"></script>
 
-<script>
+<!--<script>
     $(document).ready(function () {
-        $('#tableThemeTable').DataTable({
+        $('.report-table').DataTable({
             // Add any DataTable options here
+            "paging": true,
+            "ordering": true,
+            "info": true,
+            // Add more options as needed
         });
     });
-</script>
+</script>-->

@@ -14,7 +14,16 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <!-- DataTables Responsive JS -->
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<!-- DataTables CSS (for styling) -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+
+<!-- DataTables Responsive CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/customProperties.js"></script>
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/texttypeproperties.js"></script>
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>
@@ -22,7 +31,16 @@
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
+                <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
 
+        <!-- DataTables Core -->
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+        <!-- DataTables CSS (for styling) -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+        <!-- Include common DataTable initialization script -->
+        <script src="path/to/common-datatable.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -43,9 +61,10 @@
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
-                                array('label'=>'Custom Theme Mapping', 'url'=>array('/reportTheme/index')),
                                 array('label'=>'Theme', 'url'=>array('/themeForReport/reportTheme')),
+                                array('label'=>'Theme Mapping', 'url'=>array('/reportThemeMapping/index')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
+                                array('label'=>'Custom Theme Mapping', 'url'=>array('/reportTheme/index')),
 
 
 			),

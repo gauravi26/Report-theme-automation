@@ -223,8 +223,12 @@ if ($pageId) {
             
             
         }
-        public function actionManage() {
-    $this->render('manage'); // Assuming 'tableTheme' is the controller ID
+        
+   public function actionManage() {
+    $reportData = TableTheme::model()->findAll();
+
+    $this->render('manage', array('tableThemes' => $reportData));
 }
+ 
 
 }
