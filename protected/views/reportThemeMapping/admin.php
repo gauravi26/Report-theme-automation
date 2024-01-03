@@ -24,6 +24,16 @@ $('.search-form form').submit(function(){
 	return false;
 });
 ");
+
+
+if (isset($data)) {
+    $page = ApplicationForms::model()->findByPk($data->application_forms_id);
+    
+    $report = Report::model()->findByPk($data->report_id);
+    
+    // Corrected the syntax for accessing the model method
+    $theme = ThemeforReport::model()->findByPk($data->theme_ID);
+}
 ?>
 
 <h1>Manage Report Theme Mappings</h1>
@@ -46,9 +56,19 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'application_forms_id',
-		'report_id',
-		'theme_ID',
+		array(
+            'name' => 'application_forms_id',
+            'value' => '$data->applicationForms->menu_form', // Assuming 'menu_form' is a property of ApplicationForms model
+        ),
+        array(
+            'name' => 'report_id',
+            'value' => '$data->report->report_name', // Assuming 'report_name' is a property of Report model
+        ),
+        array(
+            'name' => 'theme_ID',
+            'value' => '$data->theme->theme_name', // Assuming 'theme_name' is a property of ThemeforReport model
+        ),
+
 		array(
 			'class'=>'CButtonColumn',
 		),

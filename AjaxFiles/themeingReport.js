@@ -10,7 +10,6 @@
         });
     });
 
-    // Function to fetch CSS properties
 // Function to fetch CSS properties
 function fetchCssProperties(controller, action) {
     // Make the AJAX request to fetch CSS properties

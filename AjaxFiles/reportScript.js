@@ -28,7 +28,6 @@ function fetchReportScript(controller, action) {
 }
 
 // Function to apply the fetched script
-// Function to apply the fetched script
 function applyScript(reportScript) {
     // Use jQuery's $.getScript to load and execute the script
     $.getScript('data:text/javascript;charset=utf-8,' + encodeURIComponent(reportScript))

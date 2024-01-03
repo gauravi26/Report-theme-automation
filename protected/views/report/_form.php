@@ -29,18 +29,22 @@ echo CHtml::hiddenField('actionId', $actionId);
 		<?php echo $form->textField($model,'report_name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'report_name'); ?>
 	</div>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'report_grid_container_id'); ?>
+		<?php echo $form->textField($model,'report_grid_container_id',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'report_grid_container_id'); ?>
+            <p>Please enter class name of Grid Container . Default : report-container</p>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'report_table_id'); ?>
 		<?php echo $form->textField($model,'report_table_id',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'report_table_id'); ?>
+            <p>Please enter class name of Report table . Default : report-table</p>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'report_grid_container_id'); ?>
-		<?php echo $form->textField($model,'report_grid_container_id',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'report_grid_container_id'); ?>
-	</div>
+	
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'details'); ?>
@@ -53,88 +57,5 @@ echo CHtml::hiddenField('actionId', $actionId);
 	</div>
 
 <?php $this->endWidget(); ?>
-<body>
-  <div id="scriptPlaceholder"></div>
-</body>
-
-  <div class="report-container">
-    <h2>HTML TABLE</h2>
-    <table class="report-table">
-      <thead>
-        <tr>
-          <th>Roll No.</th>
-          <th>Name</th>
-          <th>English</th>
-          <th>Maths</th>
-          <th>Science</th>
-          <th>Computer Science</th>
-          <th>Social Studies</th>
-          <th>Percent %</th> <!-- Added Total column -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>01</td>
-          <td>Adiya</td>
-          <td>86</td>
-          <td>90</td>
-          <td>56</td>
-          <td>23</td>
-          <td>56</td>
-          <td>30</td> <!-- Placeholder for Total column -->
-        </tr>
-        <tr>
-          <td>02</td>
-          <td>Riya</td>
-          <td>54</td>
-          <td>77</td>
-          <td>77</td>
-          <td>92</td>
-          <td>05</td>
-          <td>45</td> <!-- Placeholder for Total column -->
-        </tr>
-        <tr>
-          <td>03</td>
-          <td>Priya</td>
-          <td>68</td>
-          <td>48</td>
-          <td>8</td>
-          <td>92</td>
-          <td>90</td>
-          <td>89</td> <!-- Placeholder for Total column -->
-        </tr>
-        <tr>
-          <td>04</td>
-          <td>Gauravi</td>
-          <td>48</td>
-          <td>56</td>
-          <td>87</td>
-          <td>34</td>
-          <td>55</td>
-          <td>37</td> <!-- Placeholder for Total column -->
-        </tr>
-        <tr>
-          <td>05</td>
-          <td>Nikhil</td>
-          <td>86</td>
-          <td>37</td>
-          <td>87</td>
-          <td>67</td>
-          <td>45</td>
-          <td>95</td> <!-- Placeholder for Total column -->
-        </tr>
-      </tbody>
-    
-    </table>
-  </div>
-
- <!-- DataTable initialization script -->
-   <!-- DataTable initialization script -->
-   
-<!--     <script src="http://localhost/report/AjaxFiles/datatable.js"></script>-->
-
-
-
-</body>
 
 </div><!-- form -->

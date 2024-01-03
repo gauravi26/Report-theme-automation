@@ -22,8 +22,17 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'application_forms_id',
-		'report_id',
-		'theme_ID',
+		array(
+            'name' => 'application_forms_id',
+            'value' => $model->applicationForms->menu_form, // Assuming 'menu_form' is a property of ApplicationForms model
+        ),
+        array(
+            'name' => 'report_id',
+            'value' => $model->report->report_name, // Assuming 'report_name' is a property of Report model
+        ),
+        array(
+            'name' => 'theme_ID',
+            'value' => $model->theme->theme_name, // Assuming 'theme_name' is a property of ThemeforReport model
+        ),
 	),
 )); ?>

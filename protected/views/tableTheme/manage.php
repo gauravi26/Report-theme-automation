@@ -1,4 +1,6 @@
-<?php  
+<style>
+    
+</style><?php  
 $controller = Yii::app()->getController();
 //  print_r($controller);
 // die();
@@ -8,6 +10,8 @@ $controller = Yii::app()->getController();
 
 echo CHtml::hiddenField('controllerId', $controllerId);
 echo CHtml::hiddenField('actionId', $actionId);
+
+
  ?>
 <head>
   <meta charset="UTF-8">
@@ -31,8 +35,12 @@ echo CHtml::hiddenField('actionId', $actionId);
             <?php foreach ($tableThemes as $theme): ?>
                 <tr>
                     <td><?php echo $theme['id']; ?></td>
-                    <td><?php echo $theme['report_id']; ?></td>
-                    <td><?php echo $theme['report_element_name']; ?></td>
+ <td>
+            <?php
+            $reportModel = Report::model()->findByPk($theme['report_id']);
+            echo isset($reportModel) ? $reportModel->report_name : 'N/A';
+            ?>
+        </td>                    <td><?php echo $theme['report_element_name']; ?></td>
                     <td><?php echo $theme['report_element']; ?></td>
                     <td><?php echo $theme['theme_name']; ?></td>
                     <td><?php echo $theme['css_property']; ?></td>

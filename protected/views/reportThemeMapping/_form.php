@@ -11,7 +11,6 @@ $reportList = CHtml::listData($report, 'id', 'report_name');
 
 $theme = ThemeForReport::model()->findAll(array('order' => 'theme_name'));
 $themeList = Chtml::listData($theme, 'reference_id','theme_name');
-print_r($themeList);
 $uniqueThemes = array_unique($themeList);
 
 

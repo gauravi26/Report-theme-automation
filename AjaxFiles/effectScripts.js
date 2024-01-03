@@ -21,7 +21,7 @@ $(document).ready(function() {
 //                console.log(elementId)
                 // Replace "elementId" in the JavaScript code with the actual element ID
                
-              jsCode = jsCode.replace(/elementId/g, "\"" + elementId + "\"");
+               jsCode = jsCode.replace(/elementId/g, "\"" + elementId + "\"");
 //                console.log(jsCode)
 
                 // Replace "triggerValue" with the actual trigger value in the JavaScript code

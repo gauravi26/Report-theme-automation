@@ -43,7 +43,10 @@ class ReportThemeMapping extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-		);
+            'applicationForms' => array(self::BELONGS_TO, 'ApplicationForms', 'application_forms_id'),
+            'report' => array(self::BELONGS_TO, 'Report', 'report_id'),
+            'theme' => array(self::BELONGS_TO, 'ThemeforReport', 'theme_ID'),
+        );
 	}
 
 	/**
