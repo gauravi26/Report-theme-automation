@@ -1,42 +1,32 @@
-$(document).ready(function () {
-    // Event handler for page load
-    $(window).on('load', function () {
-        // Get the controller and action names
-        var controllerName = $("#controllerId").val();
-        var actionName = $("#actionId").val();
+// Create a script element
+var customScript = document.createElement('script');
 
-        // Call the function to fetch the report script
-        fetchReportScript(controllerName, actionName);
-    });
-});
+// Set the type attribute to JavaScript
+customScript.type = 'text/javascript';
 
-// Function to fetch report script
-function fetchReportScript(controller, action) {
-    // Call the server-side function to get the script
-    $.ajax({
-        url: 'index.php?r=effects/reportScriptMapping', 
-        type: 'GET',
-        data: { controller: controller, action: action },
-        success: function (response) {
-            // Apply the fetched script
-            applyScript(response);
-        },
-        error: function () {
-            console.error('Error fetching report script.');
-        }
-    });
-}
+// Set the content of the script to your provided script
+customScript.textContent = `
+    document.addEventListener('DOMContentLoaded', function () {
+        // Adding style rules dynamically for both 7th and 8th columns
+        var style = document.createElement('style');
+        style.textContent = 'table td:nth-child(8).red { color: red !important; } ' +
+                            ' table td:nth-child(8).green { color: green !important; }';
 
-// Function to apply the fetched script
-function applyScript(reportScript) {
-    // Use jQuery's $.getScript to load and execute the script
-    $.getScript('data:text/javascript;charset=utf-8,' + encodeURIComponent(reportScript))
-        .done(function (script, textStatus) {
-            console.log('Script loaded and executed successfully');
-        })
-        .fail(function (jqxhr, settings, exception) {
-            console.error('Error loading or executing the script', exception);
+        document.head.appendChild(style);
+
+        // Now you can use your existing jQuery code for both columns
+        $('table td:nth-child(7), table td:nth-child(8)').each(function() {
+            var percentage = parseInt($(this).text());
+            $(this).removeClass('red green');
+
+            if (percentage < 45) {
+                $(this).addClass('red');
+            } else {
+                $(this).addClass('green');
+            }
         });
-}
+    });
+`;
 
-
+// Append the script to the head of the document
+document.head.appendChild(customScript);

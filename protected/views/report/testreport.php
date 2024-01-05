@@ -100,6 +100,25 @@ echo CHtml::hiddenField('actionId', $actionId);
 
 </body>
 
-
-
-
+<script>
+//document.addEventListener('DOMContentLoaded', function () {
+//        // Adding style rules dynamically for both 7th and 8th columns
+//        var style = document.createElement('style');
+//        style.textContent = 'table td:nth-child(8).red { color: red !important; } ' +
+//                            ' table td:nth-child(8).green { color: green !important; }';
+//
+//        document.head.appendChild(style);
+//
+//        // Now you can use your existing jQuery code for both columns
+//        $('table td:nth-child(7), table td:nth-child(8)').each(function() {
+//            var percentage = parseInt($(this).text());
+//            $(this).removeClass('red green');
+//
+//            if (percentage < 45) {
+//                $(this).addClass('red');
+//            } else {
+//                $(this).addClass('green');
+//            }
+//        });
+//    });
+</script>

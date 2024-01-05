@@ -24,7 +24,7 @@ function fetchCssProperties(controller, action) {
 
             // Create a style element and append it to the head
             var styleElement = $('<style>').text(combinedCssRule);
-            console.log(styleElement.prop('outerHTML'));
+//            console.log(styleElement.prop('outerHTML'));
             $('head').append(styleElement);
         },
         error: function (xhr, status, error) {
