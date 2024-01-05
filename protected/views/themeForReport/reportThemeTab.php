@@ -1,180 +1,243 @@
-<!-- reportThemeTab.php -->
-<style>/* Custom Styles */
-    .nav-pills .nav-link {
-      color: #ffffff;
-      background-color: #007bff;
-      border-radius: 0;
-      padding: 10px 20px;
-      margin-right: 10px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
+    <!-- reportThemeTab.php -->
+    <style>/* Custom Styles */
 
-    .nav-pills .nav-link:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #ffffff;
-      opacity: 0;
-      transform: translateY(100%);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: -1;
-    }
 
-    .nav-pills .nav-link:hover:before,
-    .nav-pills .nav-link:focus:before {
-      opacity: 0.1;
-      transform: translateY(0);
-    }
+        h3 {
+          color: #0056b3;
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
 
-    .nav-pills .nav-link.active:before {
-      opacity: 0.1;
-      transform: translateY(0);
-      z-index: -1;
-    }
+        h4{
+            font-color: blue;
+            font-size: 20px
 
-    .nav-pills .nav-link span {
-      position: relative;
-      z-index: 1;
-    }
+        }
+        p {
+          color: #333333;
+          font-size: 16px;
+        }
 
-    .tab-content {
+         #Size .label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+         #Size input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+
+        .tabcontent {
       padding: 20px;
-      background-color: #f8f9fa;
-      border-radius: 0 4px 4px 4px;
-      border-top: 2px solid #0056b3;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      box-sizing: border-box;
     }
-
-    h3 {
-      color: #0056b3;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    
-    h4{
-        font-color: blue;
-        font-size: 20px
-        
-    }
-    p {
-      color: #333333;
-      font-size: 16px;
-    }
-
-     #Size .label {
+    .tab {
+        margin-bottom: 20px;
+      }
+      label {
         display: inline-block;
-        width: 100px;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;    
+        padding: 8px; /* Add padding to the right of the label */
+
+    }
+
+    .tabcontent label {
+        display: inline-block;
+        width: 150px;
         text-align: right;
-        margin-bottom: 10px;
+        margin-right: 10px;
     }
 
-     #Size input[type="text"] {
-        padding: 5px;
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
-     .nested-tabcontainer {
-    display: none;
+    </style>
+
+    <?php
+    /* @var $themeReportModel ThemeForReport */
+    $this->pageTitle = 'Report Theme: ' . CHtml::encode($themeReportModel->theme_name);
+    ?>
+    <h1>Theme For Report</h1>
+
+    <h2><?php echo CHtml::encode($themeReportModel->theme_name); ?></h2>
+    
+<form method="post" action="<?php echo Yii::app()->createUrl('themeForReport/saveThemeValues'); ?>">
+    <input type="hidden" name="themeReportId" value="<?php echo $themeReportModel->reference_id; ?>">
+
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCss(event, 'GridContainer')">GridContainer</button>
+      <button class="tablinks" onclick="openCss(event, 'Heading')">Heading</button>
+      <button class="tablinks" onclick="openCss(event, 'Table')">Table</button>
+      <button class="tablinks" onclick="openCss(event, 'TableHeader')">TableHeader</button>
+      <button class="tablinks" onclick="openCss(event, 'TableRows')">TableRows</button>
+      <button class="tablinks" onclick="openCss(event, 'TableCells')">TableCells</button>
+      <button class="tablinks" onclick="openCss(event, 'TableFooter')">TableFooter</button>
+    </div>
+    
+   <div class="tab">
+        <?php foreach ($associatedSets as $set): ?>
+            <button class="tablinks" onclick="openCss(event, '<?php echo $set->element_id . '_' . $set->css_property_id; ?>')">
+                <?php echo $set->theme_name; ?>
+            </button>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Dynamic tabs content -->
+    <?php foreach ($associatedSets as $set): ?>
+        <div id="<?php echo $set->element_id . '_' . $set->css_property_id; ?>" class="tabcontent">
+            <h3><?php echo $set->theme_name; ?> - <?php echo $set->element_id . '_' . $set->css_property_id; ?></h3>
+            <!-- Dynamic generation of input fields based on element_id and css_property_id -->
+            <label for="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value">Value:</label>
+            <input type="text" name="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value"
+                value="<?php echo $set->value; ?>" class="container-property-input">
+            <!-- Add more input fields as needed -->
+        </div>
+    <?php endforeach; ?>
+
+    <div id="GridContainer" class="tabcontent">
+      <h3>Grid Container</h3>
+
+      <!-- Content for the "GridContainer" tab goes here -->
+      <label for="gridPropertyValue">Grid Property :</label>
+      <select name="container_grid" class="container-property-input">
+      <option value=" ">Select</option>
+      <option value="display">Display</option>
+      <option value="default">Default Style</option>
+      <option value="centered">Centered Style</option>
+      <option value="wide">Wide Style</option>
+      <option value="custom">Custom Style</option>
+      <!-- Add more options as needed -->
+    </select><br>
+
+    <label>Grid Columns:</label>
+    <input type="number" name="container_gridColumns" min="1" class="container-property-input"><br>
+
+    <label>Grid Gap:</label>
+    <input type="number" name="container_gridGap" min="0" class="container-property-input"><br>
+
+    <label>Justify Content:</label>
+    <select name="container_justifyContent" class="container-property-input">
+         <option value=" ">Select</option>
+        <option value="center">Center</option>
+        <option value="flex-start">Flex Start</option>
+        <option value="center">Center</option>
+        <option value="flex-end">Flex End</option>
+      <!-- Add more options as needed -->
+    </select><br>
+
+    <label>Align Items:</label>
+    <select name="container_alignItems" class="container-property-input">
+                <option value=" ">Select</option>
+
+       <option value="center">Center</option>
+       <option value="flex-start">Flex Start</option>
+       <option value="flex-end">Flex End</option>
+      <!-- Add more options as needed -->
+    </select><br>
+
+    <label>Background Color:</label>
+    <input type="color" name="container_backgroundColor" value="#FFFFFF" class="container-property-input"><br>
+
+    <label>Border Radius:</label>
+    <input type="number" name="container_borderRadius" min="0" class="container-property-input"><br>
+
+    <label>Padding:</label>
+    <input type="number" name="container_padding" min="0" class="container-property-input"><br>
+
+    <label for="container_fontFamily">Font Family:</label>
+    <select id="container_fontFamily" name="container_fontFamily" class="container-property-input">
+        <option value=" ">Select</option>
+        <option value="'Arial', sans-serif">Arial, sans-serif</option>
+        <option value="'Verdana', sans-serif">Verdana, sans-serif</option>
+        <option value="'Helvetica', sans-serif">Helvetica, sans-serif</option>
+        <option value="'Georgia', serif">Georgia, serif</option>
+        <option value="'Times New Roman', serif">Times New Roman, serif</option>
+        <option value="'Courier New', monospace">Courier New, monospace</option>
+        <option value="'Trebuchet MS', sans-serif">Trebuchet MS, sans-serif</option>
+        <option value="'Roboto', sans-serif">Roboto, sans-serif</option>
+        <option value="'Open Sans', sans-serif">Open Sans, sans-serif</option>
+        <option value="'Lato', sans-serif">Lato, sans-serif</option>
+        <option value="'Montserrat', sans-serif">Montserrat, sans-serif</option>
+        <!-- Add more font family options as needed -->
+    </select><br>
+
+    <label>Width:</label>
+    <input type="number" name="container_width" min="0" class="container-property-input"><br>
+
+    <label>Margin:</label>
+    <input type="text" name="container_margin" class="container-property-input"><br>
+
+
+    </div>
+      <div id="Heading" class="tabcontent">
+      <h3>Heading</h3>
+      <!-- Content for the "Table" tab goes here -->
+      </div>
+      <div id="Table" class="tabcontent">
+      <h3>Table</h3>
+      <!-- Content for the "Table" tab goes here -->
+      </div>
+      <div id="TableHeader" class="tabcontent">
+      <h3>Table Header</h3>
+      <!-- Content for the "TableHeader" tab goes here -->
+    </div>
+
+    <div id="TableRows" class="tabcontent">
+      <h3>Table Rows</h3>
+      <!-- Content for the "TableRows" tab goes here -->
+    </div>
+
+    <div id="TableCells" class="tabcontent">
+      <h3>Table Cells</h3>
+      <!-- Content for the "TableCells" tab goes here -->
+    </div>
+
+    <div id="TableFooter" class="tabcontent">
+      <h3>Table Footer</h3>
+      <!-- Content for the "TableFooter" tab goes here -->
+    </div>
+<br><input type="submit" value="Save">
+</form>
+
+   <script>
+function openCss(event, tabName) {
+  // Hide all tabcontent elements
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
   }
 
-   .nested-tab {
-    text-align: left;
+  // Remove 'active' class from all tablinks
+  var tablinks = document.getElementsByClassName("tablinks");
+  for (var i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
 
-  .nested-tab button {
-    margin-right: 5px;
+  // Show the selected tab content and add 'active' class to the clicked tablink
+  document.getElementById(tabName).style.display = "block";
+  event.currentTarget.className += " active";
+
+  // Prevent the default action
+  if (event.preventDefault) {
+    event.preventDefault();
+  } else {
+    event.returnValue = false; // For older IE versions
   }
 
-  /* Styles for the nested tab content */
-  .nested-tabcontent {
-    display: none;
-    padding: 20px;
-    border: 1px solid #ccc;
-    margin-top: 10px;
-  }
+  return false;
+}
 
-  /* Additional styles for specific elements within the nested tab content */
-  .nested-tabcontent h4 {
-    margin-top: 0;
-  }
+// Set "Container" tab as active by default on page load
+document.addEventListener("DOMContentLoaded", function () {
+  var defaultTabButton = document.querySelector(".tablinks");
+  defaultTabButton.click();
+});
 
-  .nested-tabcontent label {
-    display: inline-block;
-    width: 150px;
-    text-align: right;
-    margin-right: 10px;
-  }
-
-  .nested-tabcontent input,
-  .nested-tabcontent select {
-    padding: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
-</style>
-
-<?php
-/* @var $themeReportModel ThemeForReport */
-$this->pageTitle = 'Report Theme: ' . CHtml::encode($themeReportModel->theme_name);
-?>
-<h1>Theme For Report</h1>
-
-<h2><?php echo CHtml::encode($themeReportModel->theme_name); ?></h2>
-
-<div class="tab">
-  <button class="tablinks" onclick="openCss(event, 'Grid Container')">Grid Container</button>
-  <button class="tablinks" onclick="openCss(event, 'Heading')">Heading</button>
-  <button class="tablinks" onclick="openCss(event, 'Table')">Table</button>
-  <button class="tablinks" onclick="openCss(event, 'Table Header')">Table Header</button>
-  <button class="tablinks" onclick="openCss(event, 'Table Rows')">Table Rows</button>
-  <button class="tablinks" onclick="openCss(event, 'Table Cells')">Table Cells</button>
-  <button class="tablinks" onclick="openCss(event, 'Table Footer')">Table Footer</button>
-</div>
-
-<div id="Grid Container" class="tabcontent">
-  <h3>Grid Container</h3>
-  <!-- Content for the "Grid Container" tab goes here -->
-  
-  
-</div>
-  <div id="Heading" class="tabcontent">
-  <h3>Heading</h3>
-  <!-- Content for the "Table" tab goes here -->
-  </div>
-  <div id="Table" class="tabcontent">
-  <h3>Table</h3>
-  <!-- Content for the "Table" tab goes here -->
-  </div>
-  <div id="Table Header" class="tabcontent">
-  <h3>Table Header</h3>
-  <!-- Content for the "Table Header" tab goes here -->
-</div>
-
-<div id="Table Rows" class="tabcontent">
-  <h3>Table Rows</h3>
-  <!-- Content for the "Table Rows" tab goes here -->
-</div>
-
-<div id="Table Cells" class="tabcontent">
-  <h3>Table Cells</h3>
-  <!-- Content for the "Table Cells" tab goes here -->
-</div>
-
-<div id="Table Footer" class="tabcontent">
-  <h3>Table Footer</h3>
-  <!-- Content for the "Table Footer" tab goes here -->
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="http://localhost/testproject/AjaxFiles/tab-view-updatetheme_element_value.js"></script>
+</script>

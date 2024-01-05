@@ -50,7 +50,7 @@ echo CHtml::hiddenField('actionId', $actionId);
         </tbody>
     </table>
 </div>
-     <script src="http://localhost/report/AjaxFiles/datatable.js"></script>
+<!--     <script src="http://localhost/report/AjaxFiles/datatable.js"></script>-->
 
 <!--<script>
     $(document).ready(function () {
