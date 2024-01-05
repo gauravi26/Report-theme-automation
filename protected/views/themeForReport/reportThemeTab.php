@@ -82,24 +82,16 @@
     </div>
     
    <div class="tab">
-        <?php foreach ($associatedSets as $set): ?>
-            <button class="tablinks" onclick="openCss(event, '<?php echo $set->element_id . '_' . $set->css_property_id; ?>')">
-                <?php echo $set->theme_name; ?>
-            </button>
-        <?php endforeach; ?>
+       <?php foreach ($associatedSets as $set): ?>
+    <div>
+        <label for="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value">
+            <?php echo $set->theme_name; ?> - <?php echo $set->element_id . '_' . $set->css_property_id; ?>
+        </label>
+        <input type="text" name="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value"
+            value="<?php echo $set->value; ?>" class="container-property-input">
+        <!-- Add more input fields as needed -->
     </div>
-
-    <!-- Dynamic tabs content -->
-    <?php foreach ($associatedSets as $set): ?>
-        <div id="<?php echo $set->element_id . '_' . $set->css_property_id; ?>" class="tabcontent">
-            <h3><?php echo $set->theme_name; ?> - <?php echo $set->element_id . '_' . $set->css_property_id; ?></h3>
-            <!-- Dynamic generation of input fields based on element_id and css_property_id -->
-            <label for="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value">Value:</label>
-            <input type="text" name="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value"
-                value="<?php echo $set->value; ?>" class="container-property-input">
-            <!-- Add more input fields as needed -->
-        </div>
-    <?php endforeach; ?>
+<?php endforeach; ?>
 
     <div id="GridContainer" class="tabcontent">
       <h3>Grid Container</h3>
