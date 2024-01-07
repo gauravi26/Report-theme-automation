@@ -494,19 +494,21 @@ public function actionGetFieldIds()
 
 public function actionReportScriptMapping() {
    
-    $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
-    $actionId = isset($_GET['action']) ? $_GET['action'] : null;
+//    $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
+//    $actionId = isset($_GET['action']) ? $_GET['action'] : null;
 
-//    $controllerId = "report";
-//    $actionId = "testReport";
+    $controllerId = "report";
+    $actionId = "testReport";
     $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
 
     if ($applicationForm) {
         // Finding Form Based on the combination of Controller and Action
         $formId = $applicationForm->id;
-
         $effectModel = Effects::model()->findByAttributes(['form_id' => $formId]); // Use an array to specify attributes
+
         if ($effectModel) {
+            
+            
             $scriptCodeId = $effectModel->effect_code_id;
 
             $scriptCode = ScriptCode::model()->findByPk($scriptCodeId);
@@ -520,6 +522,7 @@ public function actionReportScriptMapping() {
 //              $jsCode = $jsonObject->js;
               
               echo $customScript;
+
 //              echo $jsCode;
                 
             } else {
