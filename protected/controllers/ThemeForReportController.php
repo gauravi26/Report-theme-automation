@@ -283,6 +283,48 @@ public function actionTabThemeReport($themeReportId) {
     ));
 }
 
+public function actionSaveThemeValues() {
+    // Fetch all records for the given reference_id
+    $referenceId = $_POST['themeReportId'];
+    $themeForReports = ThemeForReport::model()->findAllByAttributes(array('reference_id' => $referenceId));
+
+    // Iterate through the POST data
+    foreach ($_POST as $key => $value) {
+        // Check if the key corresponds to an element_id_css_property_id pair
+        if (preg_match('/^(\d+)_(\d+)$/', $key, $matches)) {
+            $elementId = $matches[1];
+            $cssPropertyId = $matches[2];
+
+            // Find the corresponding ThemeForReport model
+            $themeForReport = $this->findThemeForReport($themeForReports, $elementId, $cssPropertyId);
+
+            // Update the value and save the model
+            if ($themeForReport !== null) {
+                $themeForReport->value = $value;
+                $themeForReport->save();
+            }
+        }
+    }
+
+    // Redirect or do any other necessary actions
+    // ...
+
+//     Optionally, you can print or return something
+//    print_r($_POST);
+//    die();
+}
+
+// Helper function to find the ThemeForReport model for a given element_id and css_property_id
+private function findThemeForReport($themeForReports, $elementId, $cssPropertyId) {
+    foreach ($themeForReports as $themeForReport) {
+        if ($themeForReport->element_id == $elementId && $themeForReport->css_property_id == $cssPropertyId) {
+            return $themeForReport;
+        }
+    }
+    return null;
+}
+
+
 //public function actionSaveThemeValues() {
 //    print_r($_POST);  // Print POST data for debugging
 //die();
@@ -324,54 +366,40 @@ public function actionTabThemeReport($themeReportId) {
 
 
 
-       public function actionSaveThemeValues() {
-    // Print POST data for debugging
-//    print_r($_POST);
-//    die();
-    if (isset($_POST['themeReportId'])) {
-    $referenceId = $_POST['themeReportId'];
-    foreach ($_POST as $key => $value) {
-        // Check if the input field name matches the pattern "{theme_name} - {element_id}_{css_property_id}"
-        if (preg_match('/(.+) - (\d+)_(\d+)_value/', $key, $matches)) {
-            $theme_name = $matches[1];
-            $element_id = $matches[2];
-            $css_property_id = $matches[3];
+//      public function actionSaveThemeValues() {
+//    if (isset($_POST['themeReportId'])) {
+//        $referenceId = $_POST['themeReportId'];
+//
+//        // Fetch all records for the given reference_id
+//        $themeForReports = ThemeForReport::model()->findAllByAttributes(array('reference_id' => $referenceId));
+//
+//        // Iterate through the fetched records and update them
+//        foreach ($themeForReports as $themeReportModel) {
+//            // Check if the input field name matches the pattern "{theme_name} - {element_id}_{css_property_id}"
+//            $key = $themeReportModel->theme_name . ' - ' . $themeReportModel->element_id . '_' . $themeReportModel->css_property_id . '_value';
+//
+//            if (isset($_POST['theme_values'][$key])) {
+//                $value = $_POST['theme_values'][$key];
+//                $themeReportModel->value = $value;
+//
+//                // Save the changes
+//                if ($themeReportModel->save()) {
+//                    
+////                    print_r($themeReportModel);
+////                    die();
+//                    echo "Record updated successfully<br>";
+//                } else {
+//                    echo "Failed to update record<br>";
+//                    print_r($themeReportModel->getErrors()); // Display errors, if any
+//                    die(); // Stop execution for debugging
+//                }
+//            }
+//        }
+//
+//        // Continue with the rest of your logic or redirect as needed
+//    }
+//}
 
-            // Find the corresponding record and update the value
-            $themeReportModel = ThemeForReport::model()->findByAttributes(array(
-                'reference_id' => $referenceId,
-                'element_id' => $element_id,
-                'css_property_id' => $css_property_id,
-            ));
-            
-             print_r($themeReportModel);
-                die();
-
-               
-                if ($themeReportModel !== null) {
-                    $themeReportModel->value = $value;
-
-                    // Debug: Print the values before saving
-                    echo "Theme Name: $theme_name, Element ID: $element_id, CSS Property ID: $css_property_id, New Value: $value<br>";
-
-                    // Save the changes
-                    if ($themeReportModel->save()) {
-                        echo "Record updated successfully<br>";
-                    } else {
-                        echo "Failed to update record<br>";
-                        print_r($themeReportModel->getErrors()); // Display errors, if any
-                        die(); // Stop execution for debugging
-                    }
-                } else {
-                    echo "Record not found for Theme Name: $theme_name, Element ID: $element_id, CSS Property ID: $css_property_id<br>";
-                }
-            }
-        }
-    }
-
-    // Redirect to the tab view page
-    $this->redirect(array('tabThemeReport', 'themeReportId' => $_POST['themeReportId']));
-}
 
 
 }

@@ -82,95 +82,36 @@
     </div>
     
    <div class="tab">
-       <?php foreach ($associatedSets as $set): ?>
-    <div>
-        <label for="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value">
-            <?php echo $set->theme_name; ?> - <?php echo $set->element_id . '_' . $set->css_property_id; ?>
-        </label>
-        <input type="text" name="<?php echo $set->element_id . '_' . $set->css_property_id; ?>_value"
-            value="<?php echo $set->value; ?>" class="container-property-input">
-        <!-- Add more input fields as needed -->
-    </div>
-<?php endforeach; ?>
+    <?php foreach ($associatedSets as $set): ?>
+        <div>
+            <?php
+            $elementTable = Elements::model()->findByPk(['id' => $set->element_id]);
+            $element = $elementTable->element;
+
+            $cssPropertyTable = CssProperties::model()->findByPk(['id' => $set->css_property_id]);
+            $cssProperty = $cssPropertyTable->property_name;
+
+            $fieldName = $set->element_id . '_' . $set->css_property_id;
+            $labelName = $element . '_' . $cssProperty;
+            $inputName = $fieldName; // Without the "report-" prefix
+            ?>
+            <label for="<?php echo $inputName ; ?>">
+                <?php echo $labelName; ?>
+            </label>
+            <input type="text" name="<?php echo $inputName; ?>" value="<?php echo $set->value; ?>" class="container-property-input">
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
     <div id="GridContainer" class="tabcontent">
       <h3>Grid Container</h3>
-
-      <!-- Content for the "GridContainer" tab goes here -->
-      <label for="gridPropertyValue">Grid Property :</label>
-      <select name="container_grid" class="container-property-input">
-      <option value=" ">Select</option>
-      <option value="display">Display</option>
-      <option value="default">Default Style</option>
-      <option value="centered">Centered Style</option>
-      <option value="wide">Wide Style</option>
-      <option value="custom">Custom Style</option>
-      <!-- Add more options as needed -->
-    </select><br>
-
-    <label>Grid Columns:</label>
-    <input type="number" name="container_gridColumns" min="1" class="container-property-input"><br>
-
-    <label>Grid Gap:</label>
-    <input type="number" name="container_gridGap" min="0" class="container-property-input"><br>
-
-    <label>Justify Content:</label>
-    <select name="container_justifyContent" class="container-property-input">
-         <option value=" ">Select</option>
-        <option value="center">Center</option>
-        <option value="flex-start">Flex Start</option>
-        <option value="center">Center</option>
-        <option value="flex-end">Flex End</option>
-      <!-- Add more options as needed -->
-    </select><br>
-
-    <label>Align Items:</label>
-    <select name="container_alignItems" class="container-property-input">
-                <option value=" ">Select</option>
-
-       <option value="center">Center</option>
-       <option value="flex-start">Flex Start</option>
-       <option value="flex-end">Flex End</option>
-      <!-- Add more options as needed -->
-    </select><br>
-
-    <label>Background Color:</label>
-    <input type="color" name="container_backgroundColor" value="#FFFFFF" class="container-property-input"><br>
-
-    <label>Border Radius:</label>
-    <input type="number" name="container_borderRadius" min="0" class="container-property-input"><br>
-
-    <label>Padding:</label>
-    <input type="number" name="container_padding" min="0" class="container-property-input"><br>
-
-    <label for="container_fontFamily">Font Family:</label>
-    <select id="container_fontFamily" name="container_fontFamily" class="container-property-input">
-        <option value=" ">Select</option>
-        <option value="'Arial', sans-serif">Arial, sans-serif</option>
-        <option value="'Verdana', sans-serif">Verdana, sans-serif</option>
-        <option value="'Helvetica', sans-serif">Helvetica, sans-serif</option>
-        <option value="'Georgia', serif">Georgia, serif</option>
-        <option value="'Times New Roman', serif">Times New Roman, serif</option>
-        <option value="'Courier New', monospace">Courier New, monospace</option>
-        <option value="'Trebuchet MS', sans-serif">Trebuchet MS, sans-serif</option>
-        <option value="'Roboto', sans-serif">Roboto, sans-serif</option>
-        <option value="'Open Sans', sans-serif">Open Sans, sans-serif</option>
-        <option value="'Lato', sans-serif">Lato, sans-serif</option>
-        <option value="'Montserrat', sans-serif">Montserrat, sans-serif</option>
-        <!-- Add more font family options as needed -->
-    </select><br>
-
-    <label>Width:</label>
-    <input type="number" name="container_width" min="0" class="container-property-input"><br>
-
-    <label>Margin:</label>
-    <input type="text" name="container_margin" class="container-property-input"><br>
-
 
     </div>
       <div id="Heading" class="tabcontent">
       <h3>Heading</h3>
       <!-- Content for the "Table" tab goes here -->
+      
       </div>
       <div id="Table" class="tabcontent">
       <h3>Table</h3>
@@ -195,7 +136,7 @@
       <h3>Table Footer</h3>
       <!-- Content for the "TableFooter" tab goes here -->
     </div>
-<br><input type="submit" value="Save">
+<br><input type="submit" value="Save" name ="saveTheme">
 </form>
 
    <script>

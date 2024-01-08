@@ -96,24 +96,6 @@ echo CHtml::hiddenField('actionId', $actionId);
 
 </body>
 
-<script type="text/javascript" defer="defer">   document.addEventListener('DOMContentLoaded', function () {
-                    var style = document.createElement('style');
-                    style.textContent = 'table td:nth-child(8).red { color: red !important; } ' +
-                                        ' table td:nth-child(8).green { color: green !important; }';
-
-                    document.head.appendChild(style);
-
-                    $('table td:nth-child(8)').each(function() {
-                        var percentage = parseInt($(this).text());
-                        $(this).removeClass('red green');
-
-                        if (percentage < 45) {
-                            $(this).addClass('red');
-                        } else {
-                            $(this).addClass('green');
-                        }
-                    });
-                });</script>
 
 <!--<script type="text/javascript" defer="defer">   document.addEventListener('DOMContentLoaded', function () {
                     var style = document.createElement('style');
