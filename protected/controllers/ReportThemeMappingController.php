@@ -32,7 +32,7 @@ class ReportThemeMappingController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'applyThemeReport'),
+				'actions'=>array('create','update', 'applyThemeReport','testReport'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -223,5 +223,8 @@ class ReportThemeMappingController extends Controller
     }
 }
 
-
+public function actiontestReport(){
+    
+    $this->render("testreport");
+}
 }

@@ -96,6 +96,10 @@ echo CHtml::hiddenField('actionId', $actionId);
 
 </body>
 
+<script>
+
+</script>
+
 
 <!--<script type="text/javascript" defer="defer">   document.addEventListener('DOMContentLoaded', function () {
                     var style = document.createElement('style');

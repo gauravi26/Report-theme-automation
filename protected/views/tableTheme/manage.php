@@ -1,6 +1,5 @@
-<style>
-    
-</style><?php  
+
+<?php  
 $controller = Yii::app()->getController();
 //  print_r($controller);
 // die();
@@ -10,8 +9,6 @@ $controller = Yii::app()->getController();
 
 echo CHtml::hiddenField('controllerId', $controllerId);
 echo CHtml::hiddenField('actionId', $actionId);
-
-
  ?>
 <head>
   <meta charset="UTF-8">

@@ -56,7 +56,11 @@
         text-align: right;
         margin-right: 10px;
     }
-
+ 
+    .star{
+        
+        color: red;
+    }
     </style>
 
     <?php
@@ -80,30 +84,75 @@
       <button class="tablinks" onclick="openCss(event, 'TableCells')">TableCells</button>
       <button class="tablinks" onclick="openCss(event, 'TableFooter')">TableFooter</button>
     </div>
+    <?php
+$elementTabMapping = [
+    60 => 'GridContainer',
+    115 => 'Heading',
+    61 => 'Table',
+    53 => 'TableHeader',
+    55  => 'TableRows',
+    56 => 'TableRows',
+    57=> 'TableRows',
+    116 => 'TableCells',
+    58 => 'TableFooter',
     
-   <div class="tab">
-    <?php foreach ($associatedSets as $set): ?>
-        <div>
-            <?php
-            $elementTable = Elements::model()->findByPk(['id' => $set->element_id]);
-            $element = $elementTable->element;
+    // Add more mappings as needed
+];
 
-            $cssPropertyTable = CssProperties::model()->findByPk(['id' => $set->css_property_id]);
-            $cssProperty = $cssPropertyTable->property_name;
+$requiredName = ['60_1','115_2','115_3','61_1','61_41','61_39','53_3','53_18','57_1','116_3','58_1','58_3'];
+?>
+ <!-- Create an associative array to group input fields based on tab IDs -->
+<?php
+$inputFieldsByTab = [];
 
-            $fieldName = $set->element_id . '_' . $set->css_property_id;
-            $labelName = $element . '_' . $cssProperty;
-            $inputName = $fieldName; // Without the "report-" prefix
-            ?>
-            <label for="<?php echo $inputName ; ?>">
-                <?php echo $labelName; ?>
-            </label>
-            <input type="text" name="<?php echo $inputName; ?>" value="<?php echo $set->value; ?>" class="container-property-input">
-        </div>
-    <?php endforeach; ?>
-</div>
+foreach ($associatedSets as $set) {
+    $elementTable = Elements::model()->findByPk(['id' => $set->element_id]);
+    $element = $elementTable->element_name;
 
+    $cssPropertyTable = CssProperties::model()->findByPk(['id' => $set->css_property_id]);
+    $cssProperty = $cssPropertyTable->property_name;
 
+    $fieldName = $set->element_id . '_' . $set->css_property_id;
+    $labelName =  $cssProperty;
+    $inputName = $fieldName; 
+
+    // Check if the element has a corresponding tab ID
+    $tabId = isset($elementTabMapping[$set->element_id]) ? $elementTabMapping[$set->element_id] : 'default';
+
+    // Group input fields by tab ID
+    $inputFieldsByTab[$tabId][] = [
+        'label' => $labelName,
+        'inputName' => $inputName,
+        'value' => $set->value,
+    ];
+}
+?>
+
+<!-- Render tabs and associated input fields -->
+<?php foreach ($inputFieldsByTab as $tabId => $inputFields): ?>
+    <div id="<?php echo $tabId; ?>" class="tabcontent">
+        <h3><?php echo ucfirst($tabId); ?></h3>
+        <!-- Content for the tab goes here -->
+        <?php foreach ($inputFields as $inputField): ?>
+            <div>
+                <label for="<?php echo $inputField['inputName']; ?>">
+                    <?php echo ucfirst($inputField['label']); ?>
+
+                </label>
+ 
+                    <!-- Keep the existing text input for other fields -->
+                    <input type="text" 
+                    name="<?php echo $inputField['inputName']; ?>" 
+                    value="<?php echo $inputField['value']; ?>" 
+                    class="container-property-input "
+                    <?php echo (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])) ? 'required' : ''; ?>
+    >
+                    <span class='star'>  <?php echo (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])) ? '*' : ''; ?></span>
+
+                       </div>
+        <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
     <div id="GridContainer" class="tabcontent">
       <h3>Grid Container</h3>
 

@@ -42,10 +42,37 @@
         <!-- Include common DataTable initialization script -->
         <script src="path/to/common-datatable.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        
+        <?php  
+$controller = Yii::app()->getController();
+$actionId = $controller->getAction()->getId();
+$controllerId = $controller->getId();
+?>
+
+
+
 </head>
 
 <body>
+<?php  
+$controller = Yii::app()->getController();
+$actionId = $controller->getAction()->getId();
+$controllerId = $controller->getId();
+?>
 
+<script>
+    var controllerIdInput = document.createElement("input");
+    controllerIdInput.type = "hidden";
+    controllerIdInput.name = "controllerId";
+    controllerIdInput.value = "<?php echo $controllerId; ?>";
+    document.body.appendChild(controllerIdInput);
+
+    var actionIdInput = document.createElement("input");
+    actionIdInput.type = "hidden";
+    actionIdInput.name = "actionId";
+    actionIdInput.value = "<?php echo $actionId; ?>";
+    document.body.appendChild(actionIdInput);
+</script>
 <div class="container" id="page">
 
 	<div id="header">
@@ -64,7 +91,7 @@
                                 array('label'=>'Theme', 'url'=>array('/themeForReport/reportTheme')),
                                 array('label'=>'Theme Mapping', 'url'=>array('/reportThemeMapping/index')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
-                                array('label'=>'Custom Theme Mapping', 'url'=>array('/reportTheme/index')),
+                                array('label'=>'Demo', 'url'=>array('/reportThemeMapping/testReport')),
 
 
 			),

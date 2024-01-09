@@ -11,7 +11,9 @@ function fetchReportScript(controller, action) {
         data: { controller: controller, action: action },
         success: function (response) {
             // Apply the fetched script
-            applyScript(response);
+//            applyScript(response);
+
+                $("#scriptPlaceholder").append("<script>"+response+"</script>");
         },
         error: function () {
             console.error('Error fetching report script.');

@@ -305,7 +305,8 @@ public function actionSaveThemeValues() {
             }
         }
     }
-
+//            $this->redirect(array('tabThemeReport', 'themeReportId' => $_POST['themeReportId']));
+               $this ->render("successPage");
     // Redirect or do any other necessary actions
     // ...
 
