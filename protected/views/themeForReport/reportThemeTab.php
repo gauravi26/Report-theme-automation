@@ -61,6 +61,12 @@
         
         color: red;
     }
+    
+    #page{
+        width: 1500px;
+    }
+    
+ 
     </style>
 
     <?php
@@ -83,6 +89,8 @@
       <button class="tablinks" onclick="openCss(event, 'TableRows')">TableRows</button>
       <button class="tablinks" onclick="openCss(event, 'TableCells')">TableCells</button>
       <button class="tablinks" onclick="openCss(event, 'TableFooter')">TableFooter</button>
+      <button class="tablinks" onclick="openCss(event, 'DataTable')">DataTable</button>
+
     </div>
     <?php
 $elementTabMapping = [
@@ -95,6 +103,10 @@ $elementTabMapping = [
     57=> 'TableRows',
     116 => 'TableCells',
     58 => 'TableFooter',
+    117 =>'DataTable',
+    118 =>'DataTable',
+    119 =>'DataTable',
+    120 =>'DataTable',
     
     // Add more mappings as needed
 ];
@@ -183,6 +195,10 @@ foreach ($associatedSets as $set) {
 
     <div id="TableFooter" class="tabcontent">
       <h3>Table Footer</h3>
+      <!-- Content for the "TableFooter" tab goes here -->
+    </div>
+<div id="DataTable" class="DataTable">
+      <h3>Data Table</h3>
       <!-- Content for the "TableFooter" tab goes here -->
     </div>
 <br><input type="submit" value="Save" name ="saveTheme">

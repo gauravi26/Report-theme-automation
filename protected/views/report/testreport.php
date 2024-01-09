@@ -1,4 +1,19 @@
+<style>
+    
+     
+    /* Apply styles to .dataTables_length */
 
+
+/* Apply styles to .dataTables_filter */
+
+/* Apply styles to .dataTables_info */
+/*.dataTables_info {
+    font-weight: bold;
+    color: red !important;
+    font-size: 22px;
+}*/
+
+</style>
 <?php  
 $controller = Yii::app()->getController();
 //  print_r($controller);

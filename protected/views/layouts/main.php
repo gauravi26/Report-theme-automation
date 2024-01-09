@@ -30,7 +30,6 @@
 <!--        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>-->
 <!--        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>-->
         <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
                 <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
 
         <!-- DataTables Core -->
@@ -40,7 +39,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
         <!-- Include common DataTable initialization script -->
-        <script src="path/to/common-datatable.js"></script>
+        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
         
         <?php  
