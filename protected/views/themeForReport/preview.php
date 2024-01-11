@@ -8,7 +8,7 @@
   <div id="preview">
 
   <div class="report-container" id='report-container'>
-    <h2>HTML TABLE</h2>
+    <h2 id='report-header'>HTML TABLE</h2>
     <table class="report-table" id='report-table'>
       <thead>
         <tr>

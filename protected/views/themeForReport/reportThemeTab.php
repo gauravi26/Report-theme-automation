@@ -191,9 +191,16 @@ $inputId = $element . '_' . $cssProperty;
     
 <br><input type="submit" value="Save" name ="saveTheme">
 </form>
+    
+    <!--INCLUDING PREVIEW PAGE -->
+
 <?php
-include 'preview.php'; // or require 'themePreview.php';
+include 'preview.php'; 
 ?>
+    
+<!--Script for preview -->
+<script src="http://localhost/report/AjaxFiles/reportPreview.js"></script>
+
       <script>
 function openCss(event, tabName) {
   // Hide all tabcontent elements
@@ -229,73 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const reportThemeForm = document.getElementById('reportThemeForm');
-    const reportGridContainer = document.getElementById('report-container');
-        const reportTable = document.getElementById('report-table');
 
-    
-
-    function updateGridContainerProperties() {
-        reportGridContainer.style.backgroundColor = reportThemeForm['.report-container_background-color'].value;
-        reportGridContainer.style.grid = reportThemeForm['.report-container_grid'].value;
-        reportGridContainer.style.gridTemplateColumns = reportThemeForm['.report-container_grid-template-columns'].value;
-        reportGridContainer.style.gridGap = reportThemeForm['.report-container_grid-gap'].value;
-        reportGridContainer.style.justifyContent = reportThemeForm['.report-container_justify-content'].value;
-        reportGridContainer.style.alignItems = reportThemeForm['.report-container_align-items'].value;
-        reportGridContainer.style.boderRadius = reportThemeForm['.report-container_border-radius'].value;
-        reportGridContainer.style.padding = reportThemeForm['.report-container_padding'].value;
-        reportGridContainer.style.fontFamily = reportThemeForm['.report-container_font-family'].value;
-        reportGridContainer.style.width = reportThemeForm['.report-container_width'].value;
-        reportGridContainer.style.margin = reportThemeForm['.report-container_margin'].value;
-       
-    }
-    
-    
-    function updateTableProperties()  {
-        
-        reportTable.style.width = reportThemeForm['.report-table _width'].value;
-         reportTable.style.borderCollapse = reportThemeForm['.report-table _border-collapse'].value;
-    reportTable.style.borderSpacing = reportThemeForm['.report-table _border-spacing'].value;
-    reportTable.style.marginTop = reportThemeForm['.report-table _margin-top'].value;
-    reportTable.style.backgroundColor = reportThemeForm['.report-table _background-color'].value;
-
-    }
-
-    // Adding Listener Grid Container 
-    reportThemeForm['.report-container_grid'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_grid-template-columns'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_grid-gap'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_justify-content'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_align-items'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_background-color'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_border-radius'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_padding'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_font-family'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_width'].addEventListener("input", updateGridContainerProperties);
-    reportThemeForm['.report-container_margin'].addEventListener("input", updateGridContainerProperties);
-  
-  
-     // Adding Listener Table 
-     
-   reportThemeForm['.report-table _width'].addEventListener("input", updateTableProperties); 
-   reportThemeForm['.report-table _border-collapse'].addEventListener("input", updateTableProperties);
-   reportThemeForm['.report-table _border-spacing'].addEventListener("input", updateTableProperties);
-   reportThemeForm['.report-table _margin-top'].addEventListener("input", updateTableProperties);
-   reportThemeForm['.report-table _background-color'].addEventListener("input", updateTableProperties);
-
-   
-   
-   
-   
-   
-    // Initial background color update
-    updateGridContainerProperties();
-    updateTableProperties();
-    
-});
-</script>
 
 
 
