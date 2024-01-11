@@ -101,6 +101,7 @@ echo CHtml::hiddenField('actionId', $actionId);
           <td>45</td>
           <td>95</td> <!-- Placeholder for Total column -->
         </tr>
+        
       </tbody>
     
     </table>

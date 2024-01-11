@@ -15,38 +15,30 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   <!-- DataTables Responsive JS -->
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-<!-- DataTables CSS (for styling) -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-
-<!-- DataTables Responsive CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
-
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/customProperties.js"></script>
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/texttypeproperties.js"></script>
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>
-<!--        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>-->
-<!--        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>-->
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
-                <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
-
-        <!-- DataTables Core -->
+        <!-- DataTables Responsive JS -->
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-        <!-- DataTables CSS (for styling) -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-        <!-- Include common DataTable initialization script -->
-        <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
-        
-        <?php  
-$controller = Yii::app()->getController();
-$actionId = $controller->getAction()->getId();
-$controllerId = $controller->getId();
-?>
+    <!-- DataTables CSS (for styling) -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+<!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/customProperties.js"></script>
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/texttypeproperties.js"></script>
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>-->-->
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
+                    <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
+
+
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
+            <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+            <?php  
+    $controller = Yii::app()->getController();
+    $actionId = $controller->getAction()->getId();
+    $controllerId = $controller->getId();
+    ?>
 
 
 
