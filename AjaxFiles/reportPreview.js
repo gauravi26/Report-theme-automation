@@ -152,7 +152,7 @@ const tfootInputs = {
     fontWeight: document.getElementById('tfoot_font-weight')
 };
 
-const tfootElement = document.querySelector('tfoot');
+const tfootElement = document.getElementById('tfoot');
 
 function updateTfootProperties() {
     const styles = {
@@ -161,11 +161,13 @@ function updateTfootProperties() {
         fontWeight: tfootInputs.fontWeight.value
     };
 
+    // Apply styles directly to the <tfoot> element
     Object.entries(styles).forEach(([property, value]) => {
         tfootElement.style[property] = value;
     });
 }
 
+// Add event listeners to input fields
 Object.values(tfootInputs).forEach(input => {
     input.addEventListener("input", updateTfootProperties);
 });
@@ -173,8 +175,6 @@ Object.values(tfootInputs).forEach(input => {
 // Initial update
 updateTfootProperties();
 
-
-   
    
     // Calling functions for each tabs 
     updateGridContainerProperties();
