@@ -154,7 +154,18 @@
     <td>93</td>
 </tr>
       </tbody>
-    
+    <tfoot id="tfoot">
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
     </table>
   </div>
 

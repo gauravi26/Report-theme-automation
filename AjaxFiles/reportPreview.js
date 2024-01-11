@@ -182,5 +182,53 @@ updateTfootProperties();
     updateTableProperties();
    updateTableHeader();
    updateTableCellProperties();
+   
+   
+   
+   const trInputs = {
+        evenBackgroundColor: document.getElementById('tr:nth-child(even)_background-color'),
+        oddBackgroundColor: document.getElementById('tr:nth-child(odd)_background-color'),
+        hoverBackgroundColor: document.getElementById('tr:hover_background-color')
+    };
+
+    const trElements = document.querySelectorAll('tr');
+
+    function updateTrStyles() {
+        const styles = {
+            evenBackgroundColor: trInputs.evenBackgroundColor.value,
+            oddBackgroundColor: trInputs.oddBackgroundColor.value,
+            hoverBackgroundColor: trInputs.hoverBackgroundColor.value
+        };
+
+        trElements.forEach((tr, index) => {
+            tr.style.backgroundColor = index % 2 === 0 ? styles.evenBackgroundColor : styles.oddBackgroundColor;
+        });
+    }
+
+    function handleHoverEffects(tr) {
+        tr.addEventListener('mouseover', () => {
+            tr.style.backgroundColor = trInputs.hoverBackgroundColor.value;
+        });
+
+        tr.addEventListener('mouseout', () => {
+            const index = Array.from(tr.parentNode.children).indexOf(tr);
+            const targetColor = index % 1 === 0 ? trInputs.evenBackgroundColor.value : trInputs.oddBackgroundColor.value;
+            tr.style.backgroundColor = targetColor;
+        });
+    }
+
+    // Adding event listeners
+    Object.values(trInputs).forEach(input => {
+        input.addEventListener('input', updateTrStyles);
+    });
+
+    // Initial update
+    updateTrStyles();
+
+    // Hover effects
+    trElements.forEach(tr => {
+        handleHoverEffects(tr);
+    });
+
 
 });
