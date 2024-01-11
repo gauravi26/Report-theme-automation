@@ -229,6 +229,23 @@ updateTfootProperties();
     trElements.forEach(tr => {
         handleHoverEffects(tr);
     });
+    
+  
+    const dataTableLength = document.getElementsByClassName('dataTables_length')[0];
 
+function updateDataTableLengthColor() {
+    const colorInput = document.getElementById('.dataTables_length_color');
+    if (colorInput) {
+        dataTableLength.style.color = colorInput.value;
+    }
+}
+
+const colorInput = document.getElementById('.dataTables_length_color');
+if (colorInput) {
+    colorInput.addEventListener("input", updateDataTableLengthColor);
+}
+
+updateDataTableLengthColor();
 
 });
+

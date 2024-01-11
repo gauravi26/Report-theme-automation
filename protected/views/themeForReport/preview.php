@@ -75,7 +75,7 @@
         </tr>
         <tr>
     <td>08</td>
-    <td>Kiran</td>
+    <td>Karan</td>
     <td>92</td>
     <td>78</td>
     <td>88</td>
