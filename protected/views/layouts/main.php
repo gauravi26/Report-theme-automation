@@ -24,7 +24,7 @@
 
 <!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/customProperties.js"></script>
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/texttypeproperties.js"></script>
-            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>-->-->
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>-->
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>

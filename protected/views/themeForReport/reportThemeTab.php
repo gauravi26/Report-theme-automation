@@ -40,7 +40,7 @@
       border: 1px solid #ccc;
       margin-top: 10px;
       box-sizing: border-box;
-      width: 648px
+      width: 600px
     }
     .tab {
         margin-bottom: 20px;
@@ -58,7 +58,7 @@
         display: inline-block;
         width: 150px;
         text-align: right;
-        margin-right: 10px;
+/*        margin-right: 10px;*/
     }
  
     .star{
@@ -66,25 +66,32 @@
         color: red;
     }
     
-    #page{
+    .span-19 {
         width: 1500px;
     }
-    
-  #preview{
-/*             background-color: #ffffff;*/
-/*    height: 700px;*/
-/*width: 800px;*/
-    float: right;
-    border: 1px solid #000;
-    padding: 10px;
-    padding-top: 10px;
-    display: box-model;
+    #page {
+        width: 1500px
+    }
 
-          
-      }
+    #reportThemeForm{
+        
+        width: 600px;
+    }
       
-       th { background-color: #102b47 ; }
+/*       th { background-color: #102b47 ; }*/
       
+      .previewDiv {
+        position: absolute;
+        right: 20px; /* Adjust the right distance as needed */
+        bottom: -75px;
+/*        height: 300px*/
+    }
+    
+    form input[type="text"]{
+        
+        height: 25px;
+/*        background-color: red;*/
+    }
     </style>
   
     <?php
@@ -193,11 +200,11 @@ $inputId = $element . '_' . $cssProperty;
 </form>
     
     <!--INCLUDING PREVIEW PAGE -->
-
+    <div class="previewDiv">
 <?php
 include 'preview.php'; 
 ?>
-    
+    </div>
 <!--Script for preview -->
 <script src="http://localhost/report/AjaxFiles/reportPreview.js"></script>
 
