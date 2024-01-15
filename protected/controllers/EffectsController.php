@@ -494,8 +494,8 @@ public function actionGetFieldIds()
 
 public function actionReportScriptMapping() {
    
-//    $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
-//    $actionId = isset($_GET['action']) ? $_GET['action'] : null;
+    $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
+    $actionId = isset($_GET['action']) ? $_GET['action'] : null;
 
     $controllerId = "report";
     $actionId = "testReport";

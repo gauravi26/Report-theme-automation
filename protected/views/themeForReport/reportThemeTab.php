@@ -81,9 +81,10 @@
 /*       th { background-color: #102b47 ; }*/
       
       .previewDiv {
-        position: absolute;
+        position: relative;
         right: 20px; /* Adjust the right distance as needed */
-        bottom: -75px;
+        bottom: -90px;
+        margin-top : -333px
 /*        height: 300px*/
     }
     
@@ -115,6 +116,7 @@
       <button class="tablinks" onclick="openCss(event, 'TableCells')">TableCells</button>
       <button class="tablinks" onclick="openCss(event, 'TableFooter')">TableFooter</button>
       <button class="tablinks" onclick="openCss(event, 'DataTable')">DataTable</button>
+      <button class="tablinks" onclick="openCss(event, 'Effect')">Effect</button>
 
     </div>
     <?php
@@ -145,14 +147,16 @@ $inputFieldsByTab = [];
 foreach ($associatedSets as $set) {
     $elementTable = Elements::model()->findByPk(['id' => $set->element_id]);
     $element = $elementTable->element;
+    $elementName = $elementTable->element_name;
+
 
     $cssPropertyTable = CssProperties::model()->findByPk(['id' => $set->css_property_id]);
     $cssProperty = $cssPropertyTable->property_name;
 
     $fieldName = $set->element_id . '_' . $set->css_property_id;
-    $labelName =  $cssProperty;
+    $labelName =  $elementName . " ".$cssProperty;
     $inputName = $fieldName; 
-$inputId = $element . '_' . $cssProperty;
+    $inputId = $element . '_' . $cssProperty;
     // Check if the element has a corresponding tab ID
     $tabId = isset($elementTabMapping[$set->element_id]) ? $elementTabMapping[$set->element_id] : 'default';
 
@@ -175,23 +179,36 @@ $inputId = $element . '_' . $cssProperty;
             <div>
                 <label for="<?php echo $inputField['inputName']; ?>">
                     <?php echo ucfirst($inputField['label']); ?>
-
                 </label>
- 
+
+                                <?php if (strpos($inputField['label'], 'color') !== false): ?>
+                    <!-- Include a color picker for properties containing the word "color" -->
+                   <input type="color" 
+                           name="<?php echo $inputField['inputName']; ?>" 
+                           value="<?php echo $inputField['value']; ?>" 
+                           class="container-property-input"
+                           id="<?php echo $inputField['id']; ?>"
+                           <?php if (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])): ?>
+                               required
+                           <?php endif; ?>
+                    >
+                <?php else: ?>
                     <!-- Keep the existing text input for other fields -->
                     <input type="text" 
-                    name="<?php echo $inputField['inputName']; ?>" 
-                    value="<?php echo $inputField['value']; ?>" 
-                    class="container-property-input "
-                    id="<?php echo $inputField['id']; ?>"
-                       <?php if (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])): ?>
-                           required
-                       <?php endif; ?>
-                >
+                           name="<?php echo $inputField['inputName']; ?>" 
+                           value="<?php echo $inputField['value']; ?>" 
+                           class="container-property-input"
+                           id="<?php echo $inputField['id']; ?>"
+                           <?php if (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])): ?>
+                               required
+                           <?php endif; ?>
+                    >
+                <?php endif; ?>
+
                 <span class='star'>
                     <?php echo (in_array($inputField['inputName'], $requiredName) && empty($inputField['value'])) ? '*' : ''; ?>
                 </span>
-                       </div>
+            </div>
         <?php endforeach; ?>
     </div>
 <?php endforeach; ?>
@@ -207,42 +224,9 @@ include 'preview.php';
     </div>
 <!--Script for preview -->
 <script src="http://localhost/report/AjaxFiles/reportPreview.js"></script>
+<script src="http://localhost/report/AjaxFiles/tabView.js"></script>
 
-      <script>
-function openCss(event, tabName) {
-  // Hide all tabcontent elements
-  var tabcontent = document.getElementsByClassName("tabcontent");
-  for (var i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
 
-  // Remove 'active' class from all tablinks
-  var tablinks = document.getElementsByClassName("tablinks");
-  for (var i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the selected tab content and add 'active' class to the clicked tablink
-  document.getElementById(tabName).style.display = "block";
-  event.currentTarget.className += " active";
-
-  // Prevent the default action
-  if (event.preventDefault) {
-    event.preventDefault();
-  } else {
-    event.returnValue = false; // For older IE versions
-  }
-
-  return false;
-}
-
-// Set "Container" tab as active by default on page load
-document.addEventListener("DOMContentLoaded", function () {
-  var defaultTabButton = document.querySelector(".tablinks");
-  defaultTabButton.click();
-});
-
-</script>
 
 
 

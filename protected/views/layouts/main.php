@@ -25,8 +25,8 @@
 <!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/customProperties.js"></script>
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/texttypeproperties.js"></script>
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/applytheme.js"></script>-->
-            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>
-            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>
+<!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/effectScripts.js"></script>-->
+<!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportTheme.js"></script>-->
             <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/themeingReport.js"></script>
                     <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
 
@@ -79,8 +79,8 @@ $controllerId = $controller->getId();
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
-                                array('label'=>'Theme', 'url'=>array('/themeForReport/reportTheme')),
-                                array('label'=>'Theme Mapping', 'url'=>array('/reportThemeMapping/index')),
+                                array('label'=>'Create Theme for Report', 'url'=>array('/themeForReport/reportTheme')),
+                                array('label'=>'Apply Theme to Report', 'url'=>array('/reportThemeMapping/index')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
                                 array('label'=>'Demo', 'url'=>array('/reportThemeMapping/testReport')),
 

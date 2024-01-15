@@ -1,19 +1,4 @@
-<style>
-    
-     
-    /* Apply styles to .dataTables_length */
 
-
-/* Apply styles to .dataTables_filter */
-
-/* Apply styles to .dataTables_info */
-/*.dataTables_info {
-    font-weight: bold;
-    color: red !important;
-    font-size: 22px;
-}*/
-
-</style>
 <?php  
 $controller = Yii::app()->getController();
 //  print_r($controller);
@@ -111,10 +96,33 @@ echo CHtml::hiddenField('actionId', $actionId);
 
 
 </body>
-
-<script>
-
-</script>
+<script src="http://localhost/report/AjaxFiles/reportScript.js"></script>
+<!--<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var percentageElements = document.querySelectorAll('table td:nth-child(8)');
+    percentageElements.forEach(function (element) {
+      var percentage = parseInt(element.textContent);
+      if (percentage >= 45) {
+        element.style.setProperty('color', 'green', 'important');
+      } else {
+        element.style.setProperty('color', 'red', 'important');
+      }
+    });
+  });
+</script>-->
+<!--<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var percentageElements = document.querySelectorAll('table td:nth-child(8)');
+    percentageElements.forEach(function (element) {
+        var percentage = parseInt(element.textContent);
+        if (percentage >= 45) {
+            element.style.setProperty('color', 'green', 'important');
+        } else {
+            element.style.setProperty('color', 'red', 'important');
+        }
+    });
+});
+</script>-->
 
 
 <!--<script type="text/javascript" defer="defer">   document.addEventListener('DOMContentLoaded', function () {

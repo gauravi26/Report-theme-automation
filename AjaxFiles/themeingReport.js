@@ -14,7 +14,7 @@
 function fetchCssProperties(controller, action) {
     // Make the AJAX request to fetch CSS properties
     $.ajax({
-        url: 'index.php?r=reportThemeMapping/applyThemeReport',
+        url: 'index.php?r=effects/reportScriptMapping',
         type: 'GET',
         dataType: 'text', // Change the data type to 'text'
         data: { controller: controller, action: action },
