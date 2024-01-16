@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
                 
                  "paging": true,
             "ordering": true,
-            "info": true,
+            "info": true
                 // Add any DataTable options here
             });
         }
