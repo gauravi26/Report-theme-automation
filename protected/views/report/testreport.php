@@ -196,18 +196,5 @@ echo CHtml::hiddenField('actionId', $actionId);
 
 
 </body>
-<!--
-<script>
-var secondRowCells = document.querySelectorAll('table.report-table tbody tr:nth-child(5) td:nth-child(8)');
 
-secondRowCells.forEach(function (element) {
-    var percentage = parseInt(element.textContent);
-    if (percentage >= 30) {
-        element.style.setProperty('color', 'green', 'important');
-    } else {
-        element.style.setProperty('color', 'red', 'important');
-    }
-});
-
-</script>-->
-<script src="http://localhost/report/AjaxFiles/reportScript.js"></script>
+<!--<script src="http://localhost/report/AjaxFiles/reportScript.js"></script>-->

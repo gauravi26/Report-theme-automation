@@ -1,17 +1,19 @@
-
 <?php  
 $controller = Yii::app()->getController();
-//  print_r($controller);
-// die();
-    $actionId = $controller->getAction()->getId();
-    $controllerId = $controller->getId();
+$actionId = $controller->getAction()->getId();
+$controllerId = $controller->getId();
 
+// Assuming $tableThemes is an array of TableTheme models
+//$tableThemes = /* ... fetch your TableTheme models here ... */;
+
+// Get the column names dynamically
+$columns = array_keys(TableTheme::model()->getTableSchema()->columns);
 
 echo CHtml::hiddenField('controllerId', $controllerId);
 echo CHtml::hiddenField('actionId', $actionId);
- ?>
+?>
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <div class="report-container">
@@ -19,44 +21,33 @@ echo CHtml::hiddenField('actionId', $actionId);
     <table class="report-table" id="tableThemeTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Report ID</th>
-                <th>Element Name</th>
-                <th>Report Element</th>
-                <th>Theme Name</th>
-                <th>CSS Property</th>
-                <th>Value</th>
+                <?php foreach ($columns as $columnName): ?>
+                    <th><?php echo $columnName; ?></th>
+                <?php endforeach; ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($tableThemes as $theme): ?>
                 <tr>
-                    <td><?php echo $theme['id']; ?></td>
- <td>
-            <?php
-            $reportModel = Report::model()->findByPk($theme['report_id']);
-            echo isset($reportModel) ? $reportModel->report_name : 'N/A';
-            ?>
-        </td>                    <td><?php echo $theme['report_element_name']; ?></td>
-                    <td><?php echo $theme['report_element']; ?></td>
-                    <td><?php echo $theme['theme_name']; ?></td>
-                    <td><?php echo $theme['css_property']; ?></td>
-                    <td><?php echo $theme['value']; ?></td>
+                    <?php foreach ($columns as $columnName): ?>
+                        <td>
+                            <?php 
+                            // Handle special cases (e.g., fetching related model data)
+                            switch ($columnName) {
+                                case 'report_id':
+                                    $reportModel = Report::model()->findByPk($theme[$columnName]);
+                                    echo isset($reportModel) ? $reportModel->report_name : 'N/A';
+                                    break;
+                                // Add more cases if needed for other special handling
+                                default:
+                                    echo $theme[$columnName];
+                                    break;
+                            }
+                            ?>
+                        </td>
+                    <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-<!--     <script src="http://localhost/report/AjaxFiles/datatable.js"></script>-->
-
-<!--<script>
-    $(document).ready(function () {
-        $('.report-table').DataTable({
-            // Add any DataTable options here
-            "paging": true,
-            "ordering": true,
-            "info": true,
-            // Add more options as needed
-        });
-    });
-</script>-->

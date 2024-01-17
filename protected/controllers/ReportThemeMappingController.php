@@ -178,7 +178,7 @@ class ReportThemeMappingController extends Controller
 //    
         $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
             $actionId = isset($_GET['action']) ? $_GET['action'] : null;
-
+        
     $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
     
     if ($applicationForm != null) {

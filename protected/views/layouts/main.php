@@ -31,7 +31,7 @@
                     <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/datatable.js"></script>
 
 
-<!--            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>-->
+            <script src="<?php echo Yii::app()->baseUrl; ?>/AjaxFiles/reportScript.js"></script>
             <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
             <?php  

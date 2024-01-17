@@ -1,5 +1,11 @@
-jQuery(document).ready(function ($) {
-    
+$(document).ready(function () {
+    // Get the controller and action names
+    var controllerName = $("#controllerId").val();
+    var actionName = $("#actionId").val();
+
+    // Call the function to fetch CSS properties
+    applyColorStyles(controllerName, actionName);
+
     // Flag to check if DataTable is already initialized
     var isDataTableInitialized = false;
 
@@ -16,17 +22,18 @@ jQuery(document).ready(function ($) {
     }
 
     // Function to apply color styles
-    function applyColorStyles() {
+    function applyColorStyles(controller, action) {
         $.ajax({
             url: 'index.php?r=effects/reportScriptMapping',
             type: 'GET',
+            data: { controller: controller, action: action },
             success: function (response) {
-                console.log(response);
+//                console.log(response);
 
                 // Check if DataTable is initialized
                 if (!isDataTableInitialized) {
                     // Initialize DataTable if not already initialized
-                    initializeDataTable();
+//                    initializeDataTable();
                 }
 
                 // Append the script to the body
@@ -43,11 +50,14 @@ jQuery(document).ready(function ($) {
 
     // Event handler for draw.dt
     $('.report-table').on('draw.dt', function () {
-        // Call the applyColorStyles function
-        applyColorStyles();
+        // Get the controller and action names
+        var controllerName = $("#controllerId").val();
+        var actionName = $("#actionId").val();
+
+        // Call the applyColorStyles function with controller and action
+        applyColorStyles(controllerName, actionName);
     });
 
     // Initial application of the script
     applyColorStyles();
-
 });
