@@ -6,6 +6,9 @@
  * The followings are the available columns in table 'report':
  * @property integer $id
  * @property string $report_name
+ * @property string $query
+ * @property string $reportColumn
+ * @property string $reportRow
  * @property string $report_table_id
  * @property string $report_grid_container_id
  * @property string $details
@@ -28,11 +31,11 @@ class Report extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('report_name, report_table_id, report_grid_container_id, details', 'required'),
-			array('report_name, report_table_id, report_grid_container_id, details', 'length', 'max'=>255),
+			array('report_name, query, reportColumn, reportRow, report_table_id, report_grid_container_id, details', 'required'),
+			array('report_name, query, reportColumn, reportRow, report_table_id, report_grid_container_id, details', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, report_name, report_table_id, report_grid_container_id, details', 'safe', 'on'=>'search'),
+			array('id, report_name, query, reportColumn, reportRow, report_table_id, report_grid_container_id, details', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +58,9 @@ class Report extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'report_name' => 'Report Name',
+			'query' => 'Query',
+			'reportColumn' => 'Report Column',
+			'reportRow' => 'Report Row',
 			'report_table_id' => 'Report Table',
 			'report_grid_container_id' => 'Report Grid Container',
 			'details' => 'Details',
@@ -81,6 +87,9 @@ class Report extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('report_name',$this->report_name,true);
+		$criteria->compare('query',$this->query,true);
+		$criteria->compare('reportColumn',$this->reportColumn,true);
+		$criteria->compare('reportRow',$this->reportRow,true);
 		$criteria->compare('report_table_id',$this->report_table_id,true);
 		$criteria->compare('report_grid_container_id',$this->report_grid_container_id,true);
 		$criteria->compare('details',$this->details,true);

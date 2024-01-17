@@ -47,9 +47,14 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		'id',
 		'report_name',
+		'query',
+		'reportColumn',
+		'reportRow',
 		'report_table_id',
+		/*
 		'report_grid_container_id',
 		'details',
+		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

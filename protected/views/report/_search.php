@@ -22,6 +22,21 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'query'); ?>
+		<?php echo $form->textField($model,'query',array('size'=>60,'maxlength'=>255)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'reportColumn'); ?>
+		<?php echo $form->textField($model,'reportColumn',array('size'=>60,'maxlength'=>255)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'reportRow'); ?>
+		<?php echo $form->textField($model,'reportRow',array('size'=>60,'maxlength'=>255)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'report_table_id'); ?>
 		<?php echo $form->textField($model,'report_table_id',array('size'=>60,'maxlength'=>255)); ?>
 	</div>

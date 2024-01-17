@@ -32,7 +32,7 @@ class ThemeForReportController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'reportTheme','tabThemeReport','saveThemeValues'),
+				'actions'=>array('create','update', 'reportTheme','tabThemeReport','saveThemeValues','reportTestTheme'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -324,6 +324,15 @@ private function findThemeForReport($themeForReports, $elementId, $cssPropertyId
     }
     return null;
 }
+
+public function actionReportTestTheme(){
+    
+   $themeReportData = ThemeForReport::model()->findAll();
+   
+   $this->render('report', array('Themeforreport' => $themeReportData ));
+
+}
+        
 
 
 //public function actionSaveThemeValues() {

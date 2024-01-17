@@ -18,3 +18,7 @@ $this->menu=array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
+
+<?php
+include 'queryTesting.php'; 
+?>

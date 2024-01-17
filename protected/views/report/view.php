@@ -23,6 +23,9 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'report_name',
+		'query',
+		'reportColumn',
+		'reportRow',
 		'report_table_id',
 		'report_grid_container_id',
 		'details',

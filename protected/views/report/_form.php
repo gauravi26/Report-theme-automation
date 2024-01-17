@@ -1,14 +1,9 @@
-<?php  
-$controller = Yii::app()->getController();
-//  print_r($controller);
-// die();
-    $actionId = $controller->getAction()->getId();
-    $controllerId = $controller->getId();
+<?php
+/* @var $this ReportController */
+/* @var $model Report */
+/* @var $form CActiveForm */
+?>
 
-
-echo CHtml::hiddenField('controllerId', $controllerId);
-echo CHtml::hiddenField('actionId', $actionId);
- ?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -29,22 +24,36 @@ echo CHtml::hiddenField('actionId', $actionId);
 		<?php echo $form->textField($model,'report_name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'report_name'); ?>
 	</div>
-        
-        <div class="row">
-		<?php echo $form->labelEx($model,'report_grid_container_id'); ?>
-		<?php echo $form->textField($model,'report_grid_container_id',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'report_grid_container_id'); ?>
-            <p>Please enter class name of Grid Container . Default : report-container</p>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'query'); ?>
+		<?php echo $form->textField($model,'query',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'query'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'reportColumn'); ?>
+		<?php echo $form->textField($model,'reportColumn',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'reportColumn'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'reportRow'); ?>
+		<?php echo $form->textField($model,'reportRow',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'reportRow'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'report_table_id'); ?>
 		<?php echo $form->textField($model,'report_table_id',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'report_table_id'); ?>
-            <p>Please enter class name of Report table . Default : report-table</p>
 	</div>
 
-	
+	<div class="row">
+		<?php echo $form->labelEx($model,'report_grid_container_id'); ?>
+		<?php echo $form->textField($model,'report_grid_container_id',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'report_grid_container_id'); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'details'); ?>
