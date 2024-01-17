@@ -41,4 +41,26 @@ echo CHtml::hiddenField('actionId', $actionId);
             </tbody>
         </table>
     </div>
+<script>
+    $(document).ready(function () {
+        // Assume the JSON response is stored in a variable named 'responseData'
+        var responseData = {"columns":["id","reference_id","theme_name","element_id","css_property_id","value"],"totalRecords":204};
+
+        // Example: Apply styling based on the 'css_property_id' column
+        var cssPropertyIdColumnIndex = responseData.columns.indexOf('css_property_id');
+        var cssPropertyIdElements = $('table td:nth-child(' + (cssPropertyIdColumnIndex + 1) + ')');
+
+        cssPropertyIdElements.each(function () {
+            // Apply your styling logic here based on the 'css_property_id' column content
+            var value = parseInt($(this).text());
+            if (value >= 30) {
+                $(this).css('color', 'green');
+            } else {
+                $(this).css('color', 'red');
+            }
+            // Add more conditions as needed for your specific styling logic
+        });
+    });
+</script>
+
 </body>

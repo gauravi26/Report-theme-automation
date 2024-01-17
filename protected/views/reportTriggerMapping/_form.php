@@ -43,7 +43,7 @@ Yii::app()->clientScript->registerCoreScript('jquery');
                 <div id="queryResultContainer"></div>
 
         
-                <button type="submit" class="queryButton" id="queryButton">Fetch Columns and Records</button>
+
 
 
 	<div class="row">
