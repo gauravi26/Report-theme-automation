@@ -1,0 +1,20 @@
+                       Information Schema
+
+1. Query for columns : SELECT DISTINCT column_name
+FROM information_schema.columns
+WHERE table_name = 'theme_for_report';
+
+2.Query for perticular columns of a table : SELECT DISTINCT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'student_information'
+AND column_name IN ('first_name', 'last_name');
+
+                          Normal 
+
+1. single table : SELECT DISTINCT course_name
+FROM courses;
+
+2. SELECT first_name, last_name, course_id
+FROM student_information;
+
+                       

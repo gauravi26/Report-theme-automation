@@ -41,26 +41,27 @@ echo CHtml::hiddenField('actionId', $actionId);
             </tbody>
         </table>
     </div>
-<script>
+<!--<script>
+   
     $(document).ready(function () {
-        // Assume the JSON response is stored in a variable named 'responseData'
-        var responseData = {"columns":["id","reference_id","theme_name","element_id","css_property_id","value"],"totalRecords":204};
+        // Apply styles to elements in the eighth column
+        var cssPropertyIdElements = document.querySelectorAll('table td:nth-child(5)');
 
-        // Example: Apply styling based on the 'css_property_id' column
-        var cssPropertyIdColumnIndex = responseData.columns.indexOf('css_property_id');
-        var cssPropertyIdElements = $('table td:nth-child(' + (cssPropertyIdColumnIndex + 1) + ')');
+        cssPropertyIdElements.forEach(function (element) {
+            var cssPropertyValue = parseInt(element.textContent);
 
-        cssPropertyIdElements.each(function () {
-            // Apply your styling logic here based on the 'css_property_id' column content
-            var value = parseInt($(this).text());
-            if (value >= 30) {
-                $(this).css('color', 'green');
+            // Add your styling logic here based on the 'css_property_id' column content
+            // Example: Add color based on the value
+            if (cssPropertyValue >= 30) {
+                element.style.setProperty('color', 'green', 'important');
             } else {
-                $(this).css('color', 'red');
+                element.style.setProperty('color', 'red', 'important');
             }
             // Add more conditions as needed for your specific styling logic
         });
     });
-</script>
+</script>-->
+
+
 
 </body>

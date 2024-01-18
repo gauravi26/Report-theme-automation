@@ -170,12 +170,11 @@ class ReportTriggerMappingController extends Controller
 			Yii::app()->end();
 		}
 	}
-       public function actionQuery() {
+      public function actionQuery() {
     $selectedReportId = isset($_POST['ReportTriggerMapping']['report_id']) ? $_POST['ReportTriggerMapping']['report_id'] : null;
-//    print_r($selectedReportId);
-//    die();
+
     $fetchQuery = Report::model()->findByPk($selectedReportId);
-    
+
     if ($fetchQuery !== null) {
         $modelClassName = $fetchQuery->query; // Assuming 'query' contains the model class name
     } else {
@@ -184,13 +183,18 @@ class ReportTriggerMappingController extends Controller
     }
 
     $columns = array_keys($modelClassName::model()->getTableSchema()->columns);
+    
+    // Create a mapping of column names to numbers
+    $columnMapping = array_combine($columns, range(1, count($columns)));
+
     $records = $modelClassName::model()->findAll();
 
     // Check if it's an AJAX request
     if(Yii::app()->request->isAjaxRequest) {
-        // Return the result as JSON
+        // Return the result as JSON along with column mapping
         echo CJSON::encode(array(
             'columns' => $columns,
+            'columnMapping' => $columnMapping,
             'totalRecords' => count($records),
         ));
         Yii::app()->end();

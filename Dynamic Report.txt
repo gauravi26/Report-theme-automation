@@ -1,0 +1,108 @@
+1.---  Column name 
+ var targetColumnName = 'percentage'; // Change this to the desired column name
+
+// Find the index of the target column in the table header
+var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnName);
+
+// If the target column is found, apply the script
+if (columnIndex !== -1) {
+    var targetElements = document.querySelectorAll('table td:nth-child(' + (columnIndex + 1) + ')');
+    
+    targetElements.forEach(function (element) {
+        var value = parseInt(element.textContent);
+        if (!isNaN(value)) {
+            if (value >= 30) {
+                element.style.setProperty('color', 'green', 'important');
+            } else {
+                element.style.setProperty('color', 'red', 'important');
+            }
+        }
+    });
+} else {
+    console.error('Column not found: ' + targetColumnName);
+}
+
+
+2.---Column name and word 
+var targetColumnName = 'academic_status'; // Change this to the desired column name
+var targetWords = ['Enrolled','Regural']; // Specify the words to match
+
+// Find the index of the target column in the table header
+var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnName);
+
+// If the target column is found, apply the script
+if (columnIndex !== -1) {
+    var rows = document.querySelectorAll('table tbody tr');
+
+    rows.forEach(function (row) {
+        var cell = row.querySelector('td:nth-child(' + (columnIndex + 1) + ')');
+        var value = cell ? cell.textContent.trim() : '';
+
+        if (targetWords.includes(value)) {
+            row.style.setProperty('background-color', 'blue', 'important');
+            row.style.setProperty('font-weight', 'bold', 'important');
+        }
+    });
+} else {
+    console.error('Column not found: ' + targetColumnName);
+}
+
+
+
+3.Highlight Record with with word
+
+
+ var targetWord = 'Gauravi'; // Change this to the desired target word
+
+    var rows = document.querySelectorAll('table tbody tr');
+
+    rows.forEach(function (row) {
+        var cells = row.querySelectorAll('td');
+
+        var shouldHighlight = Array.from(cells).some(function (cell) {
+            var value = cell.textContent.trim();
+            return value.includes(targetWord);
+        });
+
+        if (shouldHighlight) {
+            row.style.setProperty('background-color', 'blue', 'important');
+            row.style.setProperty('font-weight', 'bold', 'important');
+        }
+    });
+
+
+
+4. HiglightColumn cells based in column name 
+
+<script>
+    var targetColumnNames = ['first_name', 'last_name']; // Change this to the desired column names
+    var highlightColor = 'yellow'; // Change this to the desired highlight color
+
+    // Find the indices of the target columns in the table header
+    var columnIndices = targetColumnNames.map(function (columnName) {
+        return Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === columnName);
+    });
+
+    // If all target columns are found, apply the script
+    if (columnIndices.every(index => index !== -1)) {
+        columnIndices.forEach(function (columnIndex) {
+            var cellsInColumn = document.querySelectorAll('table tbody td:nth-child(' + (columnIndex + 1) + ')');
+
+            cellsInColumn.forEach(function (cell) {
+                cell.style.setProperty('background-color', highlightColor, 'important');
+                cell.style.setProperty('font-weight', 'bold', 'important');
+            });
+        });
+    } else {
+        console.error('One or more columns not found: ' + targetColumnNames.join(', '));
+    }
+</script>
+
+
+
+
+
+
+
+
+

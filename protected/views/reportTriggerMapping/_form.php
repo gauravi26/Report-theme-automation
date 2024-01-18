@@ -53,10 +53,16 @@ Yii::app()->clientScript->registerCoreScript('jquery');
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'report_columns'); ?>
-		<?php echo $form->textField($model,'report_columns',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'report_columns'); ?>
-	</div>
+    <?php echo $form->labelEx($model, 'report_columns'); ?>
+
+    <?php
+    $columns = array("column1", "column2", "column3"); // Replace this with your actual dynamic column names
+    echo $form->dropDownList($model, 'report_columns', CHtml::listData($columns, 'column_name', 'column_name'), array('prompt' => 'Select Column', 'id' => 'columnOptions'));
+    ?>
+
+    <?php echo $form->error($model, 'report_columns'); ?>
+</div>
+
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'report_row'); ?>
