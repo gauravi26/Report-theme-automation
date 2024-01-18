@@ -32,7 +32,7 @@ class ReportTriggerMappingController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'query'),
+				'actions'=>array('create','update', 'query','columnQuery'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -176,34 +176,94 @@ class ReportTriggerMappingController extends Controller
     $fetchQuery = Report::model()->findByPk($selectedReportId);
 
     if ($fetchQuery !== null) {
-        $modelClassName = $fetchQuery->query; // Assuming 'query' contains the model class name
+        $modelClassName = $fetchQuery->query; 
+
+        // Execute the query
+        $command = Yii::app()->db->createCommand($modelClassName);
+        $sqlQuery = $command->getText();
+
+        // Parse the SQL query to extract column names
+        preg_match('/SELECT\s+(.*?)\s+FROM/i', $sqlQuery, $matches);
+        $columns = explode(',', $matches[1]);
+
+        // Trim and remove aliases from column names
+        $columns = array_map(function($column) {
+            return trim(preg_replace('/\s+AS\s+\w+/', '', $column));
+        }, $columns);
+
+        // Display column names in a list
+    echo '<ul>';
+    foreach ($columns as $column) {
+        echo '<li>' . htmlspecialchars($column) . '</li>';
+    }
+    echo '</ul>';
+} else {
+    echo "Report not found";
+    echo "Error in running the query";
+    return; // Exit the function if the report is not found
+}
+
+//    $columns = array_keys($modelClassName::model()->getTableSchema()->columns);
+//    
+//    // Create a mapping of column names to numbers
+//    $columnMapping = array_combine($columns, range(1, count($columns)));
+//
+//    $records = $modelClassName::model()->findAll();
+//
+//    // Check if it's an AJAX request
+//    if(Yii::app()->request->isAjaxRequest) {
+//        // Return the result as JSON along with column mapping
+//        echo CJSON::encode(array(
+//            'columns' => $columns,
+//            'columnMapping' => $columnMapping,
+//            'totalRecords' => count($records),
+//        ));
+//        Yii::app()->end();
+//    } else {
+//        // Display the result directly for non-AJAX requests
+//        echo "Columns: " . implode(", ", $columns) . "<br>";
+//        echo "Total Records: " . count($records) . "<br>";
+//    }
+}
+
+public function actionColumnQuery() {
+    print_r($_POST);
+        die();
+        $selectedReportId = isset($_POST['ReportTriggerMapping']['report_id']) ? $_POST['ReportTriggerMapping']['report_id'] : null;
+
+//    $selectedReportId = 7;
+    $fetchQuery = Report::model()->findByPk($selectedReportId);
+
+    if ($fetchQuery !== null) {
+        $modelClassName = $fetchQuery->query; 
+
+        // Execute the query
+        $command = Yii::app()->db->createCommand($modelClassName);
+        $sqlQuery = $command->getText();
+
+        // Parse the SQL query to extract column names
+        preg_match('/SELECT\s+(.*?)\s+FROM/i', $sqlQuery, $matches);
+        $columns = explode(',', $matches[1]);
+
+        // Trim and remove aliases from column names
+        $columns = array_map(function($column) {
+            return trim(preg_replace('/\s+AS\s+\w+/', '', $column));
+        }, $columns);
+
+        // Now you can use $columns as needed
+        print_r($columns);
     } else {
         echo "Report not found";
+        echo "Error in running the query";
+
         return; // Exit the function if the report is not found
     }
-
-    $columns = array_keys($modelClassName::model()->getTableSchema()->columns);
-    
-    // Create a mapping of column names to numbers
-    $columnMapping = array_combine($columns, range(1, count($columns)));
-
-    $records = $modelClassName::model()->findAll();
-
-    // Check if it's an AJAX request
-    if(Yii::app()->request->isAjaxRequest) {
-        // Return the result as JSON along with column mapping
-        echo CJSON::encode(array(
-            'columns' => $columns,
-            'columnMapping' => $columnMapping,
-            'totalRecords' => count($records),
-        ));
-        Yii::app()->end();
-    } else {
-        // Display the result directly for non-AJAX requests
-        echo "Columns: " . implode(", ", $columns) . "<br>";
-        echo "Total Records: " . count($records) . "<br>";
-    }
 }
+
+
+    
+
+    
 
 
 
