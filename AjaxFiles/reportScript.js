@@ -24,7 +24,7 @@ $(document).ready(function () {
     // Function to apply color styles
     function applyColorStyles(controller, action) {
         $.ajax({
-            url: 'index.php?r=effects/reportScriptMapping',
+            url: 'index.php?r=reportTriggerMapping/reportScriptMapping',
             type: 'GET',
             data: { controller: controller, action: action },
             success: function (response) {

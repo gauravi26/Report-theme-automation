@@ -48,7 +48,6 @@ echo CHtml::hiddenField('actionId', $actionId);
   
 <script>
     
-//var targetColumnNames = ['last_name']; var targetWords = ['Johnson','Sharma','Harris']; var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnNames[0]); if (columnIndex !== -1) { var rows = document.querySelectorAll('table tbody tr'); rows.forEach(function (row) { var cell = row.querySelector('td:nth-child(' + (columnIndex + 1) + ')'); var value = cell ? cell.textContent.trim() : ''; if (targetWords.includes(value)) { cell.style.setProperty('background-color', '#6495ED', 'important'); cell.style.setProperty('font-weight', 'bold', 'important'); } }); } else { console.error('Column not found: ' + targetColumnNames.join(', ')); }
 </script>
 <!--  <script>
     var targetColumnNamess = ['first_name', 'last_name','course_id']; // Change this to the desired column names

@@ -32,7 +32,7 @@ class ReportTriggerMappingController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'query','columnQuery','getScriptDetail'),
+				'actions'=>array('create','update', 'query','columnQuery','getScriptDetail','reportScriptMapping'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -61,42 +61,7 @@ class ReportTriggerMappingController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
         
-        public function actionCreate()
-	{
-		$model=new ReportTriggerMapping;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['ReportTriggerMapping']))
-		{
-			$model->attributes=$_POST['ReportTriggerMapping'];
-                        $scriptId = $model->scipt_id;
-                        $column = $model->report_columns;
-                        $rowWord = $model->report_row;
-                        $pageId = $model->application_forms_id;
-                        
-                        if($scriptId!=null){
-                            
-                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId, $pageId);
-                            
-                            
-                        }
-                        else{
-                            echo "Please check if all fields a filled property with correct values.<br>";
-                            echo "Error Saving Script for this report.";
-                        }
-                        
-                        $model->applied_script=($script)
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-                private function SaveScriptForReport($column, $rowWord, $scriptId) {
+        private function SaveScriptForReport($column, $rowWord, $scriptId) {
            // Fetch Script using $scriptId. Replace columnName with $column and word $rowWord.
            // Save Script in Applied Script Column with $pageId
            // Check if any of the variables is null
@@ -143,8 +108,8 @@ class ReportTriggerMappingController extends Controller
                    
                }
                  print_r($script);
-                 return $script
-
+//                 die();
+                 return $script;
            
 
                // The rest of your code here
@@ -156,6 +121,44 @@ class ReportTriggerMappingController extends Controller
        }
 
 
+        
+        public function actionCreate()
+	{
+		$model=new ReportTriggerMapping;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['ReportTriggerMapping']))
+		{
+			$model->attributes=$_POST['ReportTriggerMapping'];
+                        $scriptId = $model->scipt_id;
+                        $column = $model->report_columns;
+                        $rowWord = $model->report_row;
+                        $pageId = $model->application_forms_id;
+                        
+                        if($scriptId!=null){
+                            
+                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId);
+                                $model->applied_script = $jsonScript; // Use $jsonScript directly
+
+                            
+                        }
+                        else{
+                            echo "Please check if all fields a filled property with correct values.<br>";
+                            echo "Error Saving Script for this report.";
+                        }
+                        
+//                        $model->applied_script=($script);
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+                
 //public function actionCreate()
 //	{
 //		$model=new ReportTriggerMapping;
@@ -191,6 +194,23 @@ class ReportTriggerMappingController extends Controller
 
 		if(isset($_POST['ReportTriggerMapping']))
 		{
+                    $model->attributes=$_POST['ReportTriggerMapping'];
+                        $scriptId = $model->scipt_id;
+                        $column = $model->report_columns;
+                        $rowWord = $model->report_row;
+                        $pageId = $model->application_forms_id;
+                        
+                        if($scriptId!=null){
+                            
+                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId);
+                                $model->applied_script = $jsonScript; // Use $jsonScript directly
+
+                            
+                        }
+                        else{
+                            echo "Please check if all fields a filled property with correct values.<br>";
+                            echo "Error Saving Script for this report.";
+                        }
 			$model->attributes=$_POST['ReportTriggerMapping'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
@@ -339,6 +359,32 @@ public function actionGetScriptDetail(){
             throw new CHttpException(400, 'Invalid request.');
         }
        
+}
+
+public function actionReportScriptMapping() {
+   
+    $controllerId = isset($_GET['controller']) ? $_GET['controller'] : null;
+    $actionId = isset($_GET['action']) ? $_GET['action'] : null;
+        
+    $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
+
+    if ($applicationForm) {
+        // Finding Form Based on the combination of Controller and Action
+        $pageId = $applicationForm->id;
+      
+        $reportScriptModel = ReportTriggerMapping::model()->findByAttributes(['application_forms_id' => $pageId]); // Use an array to specify attributes
+
+        if ($reportScriptModel) { // Fix variable name here
+            $scriptCode = $reportScriptModel->applied_script;
+
+            $jsonObject = json_decode($scriptCode);
+            echo $scriptCode;
+        } else {
+            echo "No Script Mapping Found";
+        }
+    } else {
+        echo "No Application Form Found";
+    }
 }
 
 private function SaveReportEffect()
