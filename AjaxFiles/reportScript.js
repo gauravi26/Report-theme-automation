@@ -28,16 +28,23 @@ $(document).ready(function () {
             type: 'GET',
             data: { controller: controller, action: action },
             success: function (response) {
-//                console.log(response);
+                // Parse the JSON response
+                var appliedScripts = JSON.parse(response);
 
                 // Check if DataTable is initialized
                 if (!isDataTableInitialized) {
                     // Initialize DataTable if not already initialized
-//                    initializeDataTable();
+                    initializeDataTable();
                 }
 
-                // Append the script to the body
-                $("body").append("<script>" + response + "</script>");
+                // Iterate through each script and append it to the body
+                for (var i = 0; i < appliedScripts.length; i++) {
+                    // Wrap each script in a function and execute it
+                    (function(script) {
+                        // Append the script to the body
+                        $("body").append("<script>" + script + "</script>");
+                    })(appliedScripts[i]);
+                }
 
                 // Additional code for handling the theme response, if needed
             },

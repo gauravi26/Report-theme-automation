@@ -368,24 +368,34 @@ public function actionReportScriptMapping() {
         
     $applicationForm = ApplicationForms::model()->findByAttributes(['controller' => $controllerId, 'action' => $actionId]);
 
+    $appliedScripts = array(); // Array to store applied scripts
+
     if ($applicationForm) {
         // Finding Form Based on the combination of Controller and Action
         $pageId = $applicationForm->id;
       
-        $reportScriptModel = ReportTriggerMapping::model()->findByAttributes(['application_forms_id' => $pageId]); // Use an array to specify attributes
+        $reportScriptModels = ReportTriggerMapping::model()->findAllByAttributes(['application_forms_id' => $pageId]);
 
-        if ($reportScriptModel) { // Fix variable name here
-            $scriptCode = $reportScriptModel->applied_script;
-
-            $jsonObject = json_decode($scriptCode);
-            echo $scriptCode;
-        } else {
-            echo "No Script Mapping Found";
+        if ($reportScriptModels) {
+            // Use a loop to iterate through the array of script models
+            foreach ($reportScriptModels as $reportScriptModel) {
+                $scriptCode = $reportScriptModel->applied_script;
+                
+                // Store $scriptCode in the array
+                $appliedScripts[] = $scriptCode;
+            }
         }
-    } else {
-        echo "No Application Form Found";
     }
+
+    // Encode the array into JSON format
+    $jsonResponse = json_encode($appliedScripts);
+     print_r($jsonResponse);
+     die();
+    // Send the JSON response
+    echo $jsonResponse;
 }
+
+
 
 private function SaveReportEffect()
 {
