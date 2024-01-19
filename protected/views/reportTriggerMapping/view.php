@@ -27,5 +27,6 @@ $this->menu=array(
 		'scipt_id',
 		'report_columns',
 		'report_row',
+		'applied_script',
 	),
 )); ?>

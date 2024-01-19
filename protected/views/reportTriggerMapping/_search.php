@@ -41,6 +41,11 @@
 		<?php echo $form->textField($model,'report_row',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'applied_script'); ?>
+		<?php echo $form->textArea($model,'applied_script',array('rows'=>6, 'cols'=>50)); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

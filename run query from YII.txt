@@ -1,0 +1,22 @@
+public function actionColumnQuery()
+{
+    $selectedReportId = 6;
+    $fetchQuery = Report::model()->findByPk($selectedReportId);
+
+    if ($fetchQuery !== null) {
+        $tableName = 'student_information';
+        $tableSchema = Yii::app()->db->schema->getTable($tableName);
+
+        if ($tableSchema !== null) {
+            // Get the column names
+            $columnNames = $tableSchema->getColumnNames();
+
+            // Output or use the column names as needed
+            print_r($columnNames);
+        } else {
+            echo "Table schema not found";
+        }
+    } else {
+        echo "Report not found";
+    }
+}

@@ -10,6 +10,7 @@
  * @property integer $scipt_id
  * @property string $report_columns
  * @property string $report_row
+ * @property string $applied_script
  */
 class ReportTriggerMapping extends CActiveRecord
 {
@@ -34,7 +35,7 @@ class ReportTriggerMapping extends CActiveRecord
 			array('report_columns, report_row', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, application_forms_id, report_id, scipt_id, report_columns, report_row', 'safe', 'on'=>'search'),
+			array('id, application_forms_id, report_id, scipt_id, report_columns, report_row, applied_script', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +62,7 @@ class ReportTriggerMapping extends CActiveRecord
 			'scipt_id' => 'Scipt',
 			'report_columns' => 'Report Columns',
 			'report_row' => 'Report Row',
+			'applied_script' => 'Applied Script',
 		);
 	}
 
@@ -88,6 +90,7 @@ class ReportTriggerMapping extends CActiveRecord
 		$criteria->compare('scipt_id',$this->scipt_id);
 		$criteria->compare('report_columns',$this->report_columns,true);
 		$criteria->compare('report_row',$this->report_row,true);
+		$criteria->compare('applied_script',$this->applied_script,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

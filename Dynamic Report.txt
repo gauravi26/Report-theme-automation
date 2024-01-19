@@ -1,10 +1,7 @@
 1.---  Column name 
- var targetColumnName = 'percentage'; // Change this to the desired column name
-
-// Find the index of the target column in the table header
+ var targetColumnName = 'percentage'; 
 var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnName);
 
-// If the target column is found, apply the script
 if (columnIndex !== -1) {
     var targetElements = document.querySelectorAll('table td:nth-child(' + (columnIndex + 1) + ')');
     

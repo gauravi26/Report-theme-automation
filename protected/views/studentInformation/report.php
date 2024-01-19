@@ -46,31 +46,10 @@ echo CHtml::hiddenField('actionId', $actionId);
         </table>
     </div>
   
-<!--<script>
-  var targetColumnNames = ['last_name']; 
-    var highlightColor = '#FFC000'; // Change this to the desired highlight color
-
-    // Find the indices of the target columns in the table header
-    var columnIndices = targetColumnNames.map(function (columnName) {
-        return Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === columnName);
-    });
-
-    // If all target columns are found, apply the script
-    if (columnIndices.every(index => index !== -1)) {
-        columnIndices.forEach(function (columnIndex) {
-            var cellsInColumn = document.querySelectorAll('table tbody td:nth-child(' + (columnIndex + 1) + ')');
-
-            cellsInColumn.forEach(function (cell) {
-                cell.style.setProperty('background-color', highlightColor, 'important');
-                cell.style.setProperty('font-weight', 'bold', 'important');
-            });
-        });
-    } else {
-        console.error('One or more columns not found: ' + targetColumnNames.join(', '));
-    }
-
-</script>-->
-
+<script>
+    
+//var targetColumnNames = ['last_name']; var targetWords = ['Johnson','Sharma','Harris']; var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnNames[0]); if (columnIndex !== -1) { var rows = document.querySelectorAll('table tbody tr'); rows.forEach(function (row) { var cell = row.querySelector('td:nth-child(' + (columnIndex + 1) + ')'); var value = cell ? cell.textContent.trim() : ''; if (targetWords.includes(value)) { cell.style.setProperty('background-color', '#6495ED', 'important'); cell.style.setProperty('font-weight', 'bold', 'important'); } }); } else { console.error('Column not found: ' + targetColumnNames.join(', ')); }
+</script>
 <!--  <script>
     var targetColumnNamess = ['first_name', 'last_name','course_id']; // Change this to the desired column names
     var highlightColor = 'yellow'; // Change this to the desired highlight color

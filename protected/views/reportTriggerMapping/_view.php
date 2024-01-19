@@ -29,5 +29,9 @@
 	<?php echo CHtml::encode($data->report_row); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('applied_script')); ?>:</b>
+	<?php echo CHtml::encode($data->applied_script); ?>
+	<br />
+
 
 </div>

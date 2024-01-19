@@ -61,41 +61,7 @@ class ReportTriggerMappingController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
         
-//        public function actionCreate()
-//	{
-//		$model=new ReportTriggerMapping;
-//
-//		// Uncomment the following line if AJAX validation is needed
-//		// $this->performAjaxValidation($model);
-//
-//		if(isset($_POST['ReportTriggerMapping']))
-//		{
-//			$model->attributes=$_POST['ReportTriggerMapping'];
-//                        $scriptId = $model->scipt_id;
-//                        $column = $model->report_columns;
-//                        $rowWord = $model->report_row;
-//                        $pageId = $model->application_forms_id;
-//                        
-//                        if($scriptId!=null){
-//                            
-//                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId, $pageId);
-//                            
-//                        }
-//                        else{
-//                            echo "Please check if all fields a filled property with correct values.<br>";
-//                            echo "Error Saving Script for this report.";
-//                        }
-//                        
-//                        
-//			if($model->save())
-//				$this->redirect(array('view','id'=>$model->id));
-//		}
-//
-//		$this->render('create',array(
-//			'model'=>$model,
-//		));
-//	}
-public function actionCreate()
+        public function actionCreate()
 	{
 		$model=new ReportTriggerMapping;
 
@@ -105,6 +71,23 @@ public function actionCreate()
 		if(isset($_POST['ReportTriggerMapping']))
 		{
 			$model->attributes=$_POST['ReportTriggerMapping'];
+                        $scriptId = $model->scipt_id;
+                        $column = $model->report_columns;
+                        $rowWord = $model->report_row;
+                        $pageId = $model->application_forms_id;
+                        
+                        if($scriptId!=null){
+                            
+                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId, $pageId);
+                            
+                            
+                        }
+                        else{
+                            echo "Please check if all fields a filled property with correct values.<br>";
+                            echo "Error Saving Script for this report.";
+                        }
+                        
+                        $model->applied_script=($script)
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -113,20 +96,87 @@ public function actionCreate()
 			'model'=>$model,
 		));
 	}
+                private function SaveScriptForReport($column, $rowWord, $scriptId) {
+           // Fetch Script using $scriptId. Replace columnName with $column and word $rowWord.
+           // Save Script in Applied Script Column with $pageId
+           // Check if any of the variables is null
+           if (isset($column, $rowWord, $scriptId)) {
+               $scriptModel = ScriptCode::model()->findByPk($scriptId);
+               $script = $scriptModel->code;
 
-     private function SaveScriptForReport($column, $rowWord, $scriptId, $pageId){
-         
-         //Fetch Script using $scriptId . Replace columnName with $column and word $rowWord and 
-         //Save Script in JSON FIle with $pageId 
-         $script = ScriptCode::model()->findByPk($scriptId);
-         print_r($script);
-          if ($script === null) {
-        echo "Script not found!";
-    }
-         die();
-         
-         
-     }
+               // Check if 'columnName' is present in the script
+               if (strpos($script, "column_Name") !== false) {
+                   // Replace 'columnName' with the value of $column in the script
+            // Check if $column is a single word or comma-separated
+               $columnArray = explode(',', $column);
+               $columnArray = array_map('trim', $columnArray); // Remove leading/trailing whitespaces
+
+               // Replace 'column_Name' with the value of $column in the script
+               if (count($columnArray) === 1) {
+                   // Single word case
+                   $script = str_replace('column_Name', $columnArray[0], $script);
+               } else {
+                   // Comma-separated words case
+                  $replacementArray = "['" . implode("','", $columnArray) . "']";
+
+
+                 $script = str_replace("['column_Name']", $replacementArray, $script);
+                     
+               }
+               }
+
+               // Check if 'word' is present in the script
+               if (strpos($script, "word") !== false) {
+                   // Replace 'word' with the value of $column in $rowWord
+                   
+                   $wordArray = explode(',', $rowWord);
+                   $wordArray = array_map('trim', $wordArray);                   
+                   if(count($wordArray)===1){
+                       $script = str_replace('word', $wordArray[0], $script);
+                   }
+                   else{                  
+                       
+                       $replacementArray = "['" . implode("','", $wordArray) . "']";
+                 $script = str_replace("['word']", $replacementArray, $script);
+
+                   }
+                   
+               }
+                 print_r($script);
+                 return $script
+
+           
+
+               // The rest of your code here
+               // ...
+
+           } else {
+               throw new InvalidArgumentException('One or more parameters are null.');
+           }
+       }
+
+
+//public function actionCreate()
+//	{
+//		$model=new ReportTriggerMapping;
+//
+//		// Uncomment the following line if AJAX validation is needed
+//		// $this->performAjaxValidation($model);
+//
+//		if(isset($_POST['ReportTriggerMapping']))
+//		{
+//			$model->attributes=$_POST['ReportTriggerMapping'];
+//			if($model->save())
+//				$this->redirect(array('view','id'=>$model->id));
+//                   
+//		}
+//
+//		$this->render('create',array(
+//			'model'=>$model,
+//		));
+//	}
+
+   
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
