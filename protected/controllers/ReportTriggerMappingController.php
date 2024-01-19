@@ -32,7 +32,7 @@ class ReportTriggerMappingController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'query','columnQuery'),
+				'actions'=>array('create','update', 'query','columnQuery','getScriptDetail'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -60,7 +60,42 @@ class ReportTriggerMappingController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+        
+//        public function actionCreate()
+//	{
+//		$model=new ReportTriggerMapping;
+//
+//		// Uncomment the following line if AJAX validation is needed
+//		// $this->performAjaxValidation($model);
+//
+//		if(isset($_POST['ReportTriggerMapping']))
+//		{
+//			$model->attributes=$_POST['ReportTriggerMapping'];
+//                        $scriptId = $model->scipt_id;
+//                        $column = $model->report_columns;
+//                        $rowWord = $model->report_row;
+//                        $pageId = $model->application_forms_id;
+//                        
+//                        if($scriptId!=null){
+//                            
+//                            $jsonScript = $this->SaveScriptForReport($column, $rowWord, $scriptId, $pageId);
+//                            
+//                        }
+//                        else{
+//                            echo "Please check if all fields a filled property with correct values.<br>";
+//                            echo "Error Saving Script for this report.";
+//                        }
+//                        
+//                        
+//			if($model->save())
+//				$this->redirect(array('view','id'=>$model->id));
+//		}
+//
+//		$this->render('create',array(
+//			'model'=>$model,
+//		));
+//	}
+public function actionCreate()
 	{
 		$model=new ReportTriggerMapping;
 
@@ -79,6 +114,19 @@ class ReportTriggerMappingController extends Controller
 		));
 	}
 
+     private function SaveScriptForReport($column, $rowWord, $scriptId, $pageId){
+         
+         //Fetch Script using $scriptId . Replace columnName with $column and word $rowWord and 
+         //Save Script in JSON FIle with $pageId 
+         $script = ScriptCode::model()->findByPk($scriptId);
+         print_r($script);
+          if ($script === null) {
+        echo "Script not found!";
+    }
+         die();
+         
+         
+     }
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -170,101 +218,118 @@ class ReportTriggerMappingController extends Controller
 			Yii::app()->end();
 		}
 	}
-      public function actionQuery() {
-    $selectedReportId = isset($_POST['ReportTriggerMapping']['report_id']) ? $_POST['ReportTriggerMapping']['report_id'] : null;
-
-    $fetchQuery = Report::model()->findByPk($selectedReportId);
-
-    if ($fetchQuery !== null) {
-        $modelClassName = $fetchQuery->query; 
-
-        // Execute the query
-        $command = Yii::app()->db->createCommand($modelClassName);
-        $sqlQuery = $command->getText();
-
-        // Parse the SQL query to extract column names
-        preg_match('/SELECT\s+(.*?)\s+FROM/i', $sqlQuery, $matches);
-        $columns = explode(',', $matches[1]);
-
-        // Trim and remove aliases from column names
-        $columns = array_map(function($column) {
-            return trim(preg_replace('/\s+AS\s+\w+/', '', $column));
-        }, $columns);
-
-        // Display column names in a list
-    echo '<ul>';
-    foreach ($columns as $column) {
-        echo '<li>' . htmlspecialchars($column) . '</li>';
-    }
-    echo '</ul>';
-} else {
-    echo "Report not found";
-    echo "Error in running the query";
-    return; // Exit the function if the report is not found
-}
-
-//    $columns = array_keys($modelClassName::model()->getTableSchema()->columns);
-//    
-//    // Create a mapping of column names to numbers
-//    $columnMapping = array_combine($columns, range(1, count($columns)));
+//public function actionQuery()
+//{
+//    $selectedReportId = isset($_POST['ReportTriggerMapping']['report_id']) ? $_POST['ReportTriggerMapping']['report_id'] : null;
 //
-//    $records = $modelClassName::model()->findAll();
+//    $fetchQuery = Report::model()->findByPk($selectedReportId);
+//    $reportColumns = $fetchQuery->reportColumn;
+//    $db = Yii::app()->db;
 //
-//    // Check if it's an AJAX request
-//    if(Yii::app()->request->isAjaxRequest) {
-//        // Return the result as JSON along with column mapping
-//        echo CJSON::encode(array(
-//            'columns' => $columns,
-//            'columnMapping' => $columnMapping,
-//            'totalRecords' => count($records),
-//        ));
-//        Yii::app()->end();
-//    } else {
-//        // Display the result directly for non-AJAX requests
-//        echo "Columns: " . implode(", ", $columns) . "<br>";
-//        echo "Total Records: " . count($records) . "<br>";
+//    if ($fetchQuery !== null) {
+//        $sql = $fetchQuery->query;
+//        // Execute the query
+//        $command = $db->createCommand($sql);
+//        $result = $command->queryAll();
+//        $columnNames = array_keys($result[0]);
+// // Print column names
+//      echo  $reportColumns;
+//
+//        
 //    }
-}
+//      else {
+//        echo "Report not found";
+//        echo "Error in running the query";
+//        return; // Exit the function if the report is not found
+//    }
+//}
+        
+public function actionQuery()
+{
+    if (Yii::app()->request->isAjaxRequest) {
+        $selectedReportId = Yii::app()->request->getPost('reportId');
 
-public function actionColumnQuery() {
-    print_r($_POST);
-        die();
-        $selectedReportId = isset($_POST['ReportTriggerMapping']['report_id']) ? $_POST['ReportTriggerMapping']['report_id'] : null;
+        $fetchQuery = Report::model()->findByPk($selectedReportId);
+        $reportColumns = $fetchQuery->reportColumn;
+        $db = Yii::app()->db;
 
-//    $selectedReportId = 7;
-    $fetchQuery = Report::model()->findByPk($selectedReportId);
+        if ($fetchQuery !== null) {
+            $sql = $fetchQuery->query;
+            // Execute the query
+            $command = $db->createCommand($sql);
+            $result = $command->queryAll();
+            $columnNames = array_keys($result[0]);
 
-    if ($fetchQuery !== null) {
-        $modelClassName = $fetchQuery->query; 
-
-        // Execute the query
-        $command = Yii::app()->db->createCommand($modelClassName);
-        $sqlQuery = $command->getText();
-
-        // Parse the SQL query to extract column names
-        preg_match('/SELECT\s+(.*?)\s+FROM/i', $sqlQuery, $matches);
-        $columns = explode(',', $matches[1]);
-
-        // Trim and remove aliases from column names
-        $columns = array_map(function($column) {
-            return trim(preg_replace('/\s+AS\s+\w+/', '', $column));
-        }, $columns);
-
-        // Now you can use $columns as needed
-        print_r($columns);
+            // Print column names
+            echo $reportColumns;
+        } else {
+            echo "Report not found";
+            echo "Error in running the query";
+            return; // Exit the function if the report is not found
+        }
     } else {
-        echo "Report not found";
-        echo "Error in running the query";
-
-        return; // Exit the function if the report is not found
+        echo "Error in Getting POST From Form ";
     }
 }
 
 
+
+public function actionGetScriptDetail(){
+    if (Yii::app()->request->isAjaxRequest) {
+            $scriptId = Yii::app()->request->getPost('scriptId');
+            
+            // Fetch script details based on the $scriptId
+            $scriptModel = ScriptCode::model()->findByPk($scriptId);
+            $detail = $scriptModel ? $scriptModel->Description : 'No description available.';
+
+            // Render the details as a response
+            echo $detail;
+               Yii::app()->end();
+        } else {
+            throw new CHttpException(400, 'Invalid request.');
+        }
+       
+}
+
+private function SaveReportEffect()
+{
     
-
     
+   
+}
 
 
+
+//      public function actionColumnQuery() {
+//    $selectedReportId = 6;
+//    $fetchQuery = Report::model()->findByPk($selectedReportId);
+//    $db = Yii::app()->db;
+//
+//    if ($fetchQuery !== null) {
+//        $sql = $fetchQuery->query;
+//
+//            $command = $db->createCommand($sql);
+//                $result = $command->queryAll();
+//                  // Extract column names from the keys of any array in the result
+//        $columnNames = array_keys($result[0]);
+//
+//        // Output or use the column names as needed
+//        print_r($result);
+////                print_r($result);
+//                die();
+//
+//
+//
+//    } else {
+//        echo "Report not found";
+//        return; // Exit the function if the report is not found
+//    }
+//}
 
 }
+
+
+
+
+
+

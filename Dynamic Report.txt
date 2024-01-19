@@ -25,7 +25,7 @@ if (columnIndex !== -1) {
 
 2.---Column name and word 
 var targetColumnName = 'academic_status'; // Change this to the desired column name
-var targetWords = ['Enrolled','Regural']; // Specify the words to match
+var targetWords = ['Regural']; // Specify the words to match
 
 // Find the index of the target column in the table header
 var columnIndex = Array.from(document.querySelectorAll('table th')).findIndex(th => th.textContent.trim() === targetColumnName);

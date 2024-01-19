@@ -46,7 +46,7 @@ echo CHtml::hiddenField('actionId', $actionId);
         </table>
     </div>
   
-<script>
+<!--<script>
   var targetColumnNames = ['last_name']; 
     var highlightColor = '#FFC000'; // Change this to the desired highlight color
 
@@ -69,7 +69,7 @@ echo CHtml::hiddenField('actionId', $actionId);
         console.error('One or more columns not found: ' + targetColumnNames.join(', '));
     }
 
-</script>
+</script>-->
 
 <!--  <script>
     var targetColumnNamess = ['first_name', 'last_name','course_id']; // Change this to the desired column names
