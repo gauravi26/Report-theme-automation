@@ -68,6 +68,10 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
 		<?php echo $form->textField($model,'report_columns',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'report_columns'); ?>
 	</div>
+                
+                <!-- Add this container in your view file -->
+<div id="columnScriptFields"></div>
+
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'report_row'); ?>
