@@ -138,7 +138,7 @@ public function actionCreate()
                 $newModel->report_columns = $singleColumn;
                 $newModel->scipt_id = $model->scipt_id[$singleColumn];
                 // Save the script for the current column
-$jsonScript = $this->SaveScriptForReport(trim($singleColumn), $rowWord, $model->scipt_id[$singleColumn]);
+            $jsonScript = $this->SaveScriptForReport(trim($singleColumn), $rowWord, $model->scipt_id[$singleColumn]);
             $newModel->applied_script = $jsonScript;
             } else {
                 // Check if the current column is associated with 'course_name' or 'course_link'
