@@ -1,3 +1,24 @@
+<style>
+    .row {
+        margin-bottom: 10px; /* Adjust the margin as needed */
+    }
+
+    .label-column {
+        display: inline-block;
+        width: 150px; /* Adjust the width as needed */
+    }
+
+    .text-column {
+        display: inline-block;
+        width: 300px; /* Adjust the width as needed */
+    }
+
+    .dropdown-column {
+        display: inline-block;
+        width: 150px; /* Adjust the width as needed */
+    }
+</style>
+
 <?php
 
 Yii::app()->clientScript->registerCoreScript('jquery');
@@ -92,27 +113,65 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
 
 
         
-        <script>
-    $(document).ready(function(){
-        $('#reportIdDropbox').change(function(){
-            var selectedReportId = $(this).val();
-            
-            // Perform an AJAX request to fetch details based on the selected script_id
-            $.ajax({
-                url: 'index.php?r=reportTriggerMapping/query', // Update with the actual URL
-                type: 'POST',
-                data: {reportId: selectedReportId},
-                success: function(response){
-                    // Update the content of the #scriptDetail div with the fetched details
-                                  $("input[name='ReportTriggerMapping[report_columns]']").val(response);
+<script>
+ $(document).ready(function(){
+    $('#reportIdDropbox').change(function(){
+        var selectedReportId = $(this).val();
 
-                },
-                error: function(){
-                    console.log('Error fetching script details');
+        // Perform an AJAX request to fetch details based on the selected report_id
+        $.ajax({
+            url: 'index.php?r=reportTriggerMapping/query', // Update with the actual URL
+            type: 'POST',
+            data: {reportId: selectedReportId},
+            success: function(response){
+                // Clear existing input fields and container content
+                $("input[name='ReportTriggerMapping[report_columns]']").val(response);
+                $('#columnScriptFields').empty();
+
+                // Split the response by comma to get column names
+                var columnNames = response.split(',');
+
+                // Create input fields dynamically for each column and populate with column names
+                for (var i = 0; i < columnNames.length; i++) {
+                    var columnName = columnNames[i].trim();
+
+                    // Create a div for each pair of (label, dropdown) + (label, text field)
+                    var inputFieldContainer = $('<div class="row"></div>');
+
+                    // Create and append label for the text field
+                    var label = $('<label for="ReportTriggerMapping_columns_' + columnName + '">' + columnName + '</label>');
+                    inputFieldContainer.append(label);
+
+                    // Create and append the text field
+                    var textField = $('<input>').attr({
+                        type: 'text',
+                        id: 'ReportTriggerMapping_columns_' + columnName,
+                        name: 'ReportTriggerMapping[columns][' + columnName + ']',
+                        value: columnName, // Set the value to the column name
+                        size: '60',
+                        maxlength: '255',
+                        class: 'textField',
+                    });
+                    inputFieldContainer.append(textField);
+
+                    // Create and append script_id dropdown with unique id and name
+                    var sciptIdDropdown = $('<select>').attr({
+                        id: 'fieldIdDropdown_' + columnName,
+                        name: 'ReportTriggerMapping[scipt_id][' + columnName + ']',
+                    }).html($('#fieldIdDropdown').html()); // Copy options from the original dropdown
+                    inputFieldContainer.append(sciptIdDropdown);
+
+                    // Append the container to the main container
+                    $('#columnScriptFields').append(inputFieldContainer).append('<br>');
                 }
-            });
+            },
+            error: function(){
+                console.log('Error fetching script details');
+            }
         });
     });
+});
+
 </script>
 <script>
     $(document).ready(function(){

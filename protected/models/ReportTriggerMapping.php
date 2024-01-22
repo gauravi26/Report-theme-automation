@@ -30,7 +30,7 @@ class ReportTriggerMapping extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('application_forms_id, report_id, scipt_id, report_columns, report_row', 'required'),
+			array('application_forms_id, report_id', 'required'),
 			array('application_forms_id, report_id, scipt_id', 'numerical', 'integerOnly'=>true),
 			array('report_columns, report_row', 'length', 'max'=>255),
 			// The following rule is used by search().
