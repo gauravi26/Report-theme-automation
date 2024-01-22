@@ -1,21 +1,7 @@
 <style>
-    .row {
-        margin-bottom: 10px; /* Adjust the margin as needed */
-    }
-
-    .label-column {
-        display: inline-block;
-        width: 150px; /* Adjust the width as needed */
-    }
-
-    .text-column {
-        display: inline-block;
-        width: 300px; /* Adjust the width as needed */
-    }
-
-    .dropdown-column {
-        display: inline-block;
-        width: 150px; /* Adjust the width as needed */
+    #reportIdDropbox input{
+        
+        width: 150px;
     }
 </style>
 

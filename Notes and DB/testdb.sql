@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2023 at 12:35 PM
+-- Generation Time: Jan 22, 2024 at 12:23 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -50,7 +50,14 @@ INSERT INTO `application_forms` (`id`, `menu_form`, `controller`, `action`) VALU
 (8, 'Set Form Theme', '', ''),
 (9, 'Effect', 'effects', 'create'),
 (10, 'Test Report', 'faculty', 'testReport'),
-(11, 'Report', 'report', 'testReport');
+(11, 'Report', 'report', 'testReport'),
+(12, 'Data table', 'tabletheme', 'manage'),
+(13, 'report create form', 'report', 'create'),
+(14, 'Demo report', 'reportThemeMapping', 'testReport'),
+(15, 'Sudent Report', 'studentInformation', 'testReport'),
+(16, 'Themes of Report', 'themeForReport', 'reportTestTheme'),
+(17, 'Student Dynamic Report', 'studentinformation', 'reportTest'),
+(18, 'Course Report', 'courses', 'reportTest');
 
 -- --------------------------------------------------------
 
@@ -133,7 +140,7 @@ INSERT INTO `css_properties` (`id`, `property_name`, `property_value`) VALUES
 (16, 'border-color', '#C00'),
 (17, 'background', '#FEE'),
 (18, 'font-weight', 'bold'),
-(19, 'max-weight', '#C00'),
+(19, 'max-width', '#C00'),
 (20, 'border-color', '#C6D880'),
 (21, 'height', NULL),
 (22, 'box-sizing', NULL),
@@ -174,7 +181,7 @@ CREATE TABLE `current_theme` (
 --
 
 INSERT INTO `current_theme` (`id`, `theme_ID`) VALUES
-(1, 309);
+(1, 121);
 
 -- --------------------------------------------------------
 
@@ -329,20 +336,14 @@ INSERT INTO `effects` (`id`, `form_id`, `trigger_id`, `FIELD_ID`, `effect_code_i
 (78, 1, 0, 16, '1'),
 (79, 1, 0, 18, '3'),
 (80, 1, 0, 16, '3'),
-(81, 1, 0, 16, '3'),
-(82, 3, 0, 32, '1'),
 (83, 2, 0, 4, '4'),
 (84, 2, 0, 4, '4'),
-(85, 1, 0, 18, '4'),
 (86, 1, 0, 18, '1'),
 (87, 2, 0, 2, '3'),
-(88, 2, 0, 2, '3'),
 (89, 2, 0, 3, '3'),
 (90, 2, 0, 3, '3'),
-(91, 2, 0, 3, '3'),
 (92, 4, 0, 33, '3'),
 (93, 4, 0, 33, '3'),
-(94, 4, 0, 33, '3'),
 (95, 1, 0, 18, '3'),
 (96, 4, 0, 33, '3'),
 (97, 2, 0, 3, '3'),
@@ -637,7 +638,11 @@ INSERT INTO `effects` (`id`, `form_id`, `trigger_id`, `FIELD_ID`, `effect_code_i
 (422, 1, 20, 42, '96'),
 (423, 1, 20, 42, '96'),
 (424, 4, 20, 42, '96'),
-(429, 11, 0, 0, '99');
+(432, 2, 1, 4, '3'),
+(433, 12, 0, 42, '102'),
+(434, 14, 0, 42, '101'),
+(435, 11, 0, 0, '100'),
+(436, 17, 0, 0, '106');
 
 -- --------------------------------------------------------
 
@@ -693,6 +698,7 @@ CREATE TABLE `elements` (
 --
 
 INSERT INTO `elements` (`id`, `element_name`, `element`) VALUES
+(0, '', ''),
 (47, 'Heading 1 ', 'h1'),
 (48, 'Heading 2 ', 'h2'),
 (49, 'Heading 3', 'h3'),
@@ -706,8 +712,8 @@ INSERT INTO `elements` (`id`, `element_name`, `element`) VALUES
 (57, 'Hovered Table Row', 'tr:hover'),
 (58, 'Table Footer', 'tfoot'),
 (59, 'Table Body', 'tbody'),
-(60, 'Grid-Container id', 'report-container'),
-(61, 'Report Table Class id ', 'report-table '),
+(60, 'Grid Container ', '.report-container'),
+(61, 'Report Table  ', '.report-table '),
 (62, 'Grid Template Column', 'grid-template-columns'),
 (63, 'Grid Gap', 'grid-gap'),
 (64, 'Grid ', 'grid'),
@@ -755,8 +761,12 @@ INSERT INTO `elements` (`id`, `element_name`, `element`) VALUES
 (112, 'Table Header ', 'thead'),
 (113, 'Table class', '.table'),
 (114, 'Table tag', 'table'),
-(115, 'Report H2', 'report-container h2'),
-(116, 'Table Data Cell', 'td');
+(115, 'Report H2', '.report-container h2'),
+(116, 'Table Data Cell', 'td'),
+(117, 'Show Entry', '.dataTables_length'),
+(118, 'Report Search', '.dataTables_filter'),
+(119, 'Report Entry Number', '.dataTables_info'),
+(120, 'Report Pagination', '#DataTables_Table_0_paginate');
 
 -- --------------------------------------------------------
 
@@ -3741,6 +3751,9 @@ INSERT INTO `night_time_settings` (`id`, `nightStart`, `nightEnd`) VALUES
 CREATE TABLE `report` (
   `id` int(11) NOT NULL,
   `report_name` varchar(255) NOT NULL,
+  `query` varchar(255) NOT NULL,
+  `reportColumn` varchar(255) NOT NULL,
+  `reportRow` varchar(255) NOT NULL,
   `report_table_id` varchar(255) NOT NULL,
   `report_grid_container_id` varchar(255) NOT NULL,
   `details` varchar(255) NOT NULL
@@ -3750,9 +3763,13 @@ CREATE TABLE `report` (
 -- Dumping data for table `report`
 --
 
-INSERT INTO `report` (`id`, `report_name`, `report_table_id`, `report_grid_container_id`, `details`) VALUES
-(1, 'Student Report ', '', '', ''),
-(2, 'Student Report 2 ', '', '', '');
+INSERT INTO `report` (`id`, `report_name`, `query`, `reportColumn`, `reportRow`, `report_table_id`, `report_grid_container_id`, `details`) VALUES
+(2, 'Report', '', '0', '0', '', '', 'test '),
+(3, 'Demo', '', '0', '0', '', '', 'Demo'),
+(4, 'Theme of Report Dynamic table ', 'ThemeForReport', '0', '0', 'report-table', 'report-container', 'Complete Dynamic Table '),
+(5, 'Manage', 'TableTheme', '.', '.', 'report-table', 'report-container', 'Table Theme Report'),
+(6, 'Student Report ', 'SELECT first_name,last_name,percentage,course_id,academic_status FROM student_information', 'first_name,last_name,percentage,course_id,academic_status', '', '', '', 'Student Information Report with Name , course ,major,academic_status'),
+(7, 'Course Dynamic Report', 'SELECT id,course_name,course_link FROM courses', 'id,course_name,course_link', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -3780,7 +3797,7 @@ INSERT INTO `report_element_css_set` (`id`, `element_id`, `css_property_id`) VAL
 (7, 60, 7),
 (8, 60, 6),
 (9, 60, 37),
-(10, 60, 19),
+(10, 60, 13),
 (11, 60, 5),
 (12, 115, 12),
 (13, 115, 38),
@@ -3804,7 +3821,22 @@ INSERT INTO `report_element_css_set` (`id`, `element_id`, `css_property_id`) VAL
 (31, 116, 3),
 (32, 58, 1),
 (33, 58, 3),
-(34, 58, 18);
+(34, 58, 18),
+(35, 53, 2),
+(36, 116, 37),
+(37, 116, 2),
+(38, 116, 23),
+(39, 117, 3),
+(40, 117, 18),
+(41, 117, 2),
+(42, 118, 3),
+(43, 118, 18),
+(44, 118, 2),
+(45, 119, 2),
+(46, 119, 3),
+(47, 119, 18),
+(48, 120, 2),
+(49, 120, 18);
 
 -- --------------------------------------------------------
 
@@ -3846,6 +3878,65 @@ INSERT INTO `report_theme` (`id`, `application_forms_id`, `report_name`, `report
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report_theme_mapping`
+--
+
+CREATE TABLE `report_theme_mapping` (
+  `id` int(11) NOT NULL,
+  `application_forms_id` int(11) NOT NULL,
+  `report_id` int(11) NOT NULL,
+  `theme_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `report_theme_mapping`
+--
+
+INSERT INTO `report_theme_mapping` (`id`, `application_forms_id`, `report_id`, `theme_ID`) VALUES
+(1, 11, 2, 42),
+(2, 12, 2, 7),
+(3, 13, 2, 42),
+(4, 14, 3, 111),
+(6, 16, 4, 42),
+(7, 17, 6, 42),
+(8, 18, 7, 111);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_trigger_mapping`
+--
+
+CREATE TABLE `report_trigger_mapping` (
+  `id` int(11) NOT NULL,
+  `application_forms_id` int(11) NOT NULL,
+  `report_id` int(11) NOT NULL,
+  `scipt_id` int(11) NOT NULL,
+  `report_columns` varchar(255) NOT NULL,
+  `report_row` varchar(255) NOT NULL,
+  `applied_script` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `report_trigger_mapping`
+--
+
+INSERT INTO `report_trigger_mapping` (`id`, `application_forms_id`, `report_id`, `scipt_id`, `report_columns`, `report_row`, `applied_script`) VALUES
+(55, 17, 6, 106, 'first_name', 'Gauravi,David', 'var targetColumnNames = [\'first_name\'];\r\nvar targetWords = [\'Gauravi\',\'David\'];\r\n\r\nvar columnIndex = Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === targetColumnNames[0]);\r\n\r\nif (columnIndex !== -1) {\r\n    var rows = document.querySelectorAll(\'table tbody tr\');\r\n\r\n    rows.forEach(function (row) {\r\n        var cell = row.querySelector(\'td:nth-child(\' + (columnIndex + 1) + \')\');\r\n        var value = cell ? cell.textContent.trim() : \'\';\r\n\r\n        if (targetWords.includes(value)) {\r\n            cell.style.setProperty(\'background-color\', \'#6495ED\', \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        }\r\n    });\r\n} else {\r\n    console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n}'),
+(56, 17, 6, 103, 'last_name', 'Gauravi,Nikhil', 'var targetColumnNames = [\'last_name\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n'),
+(57, 17, 6, 105, 'percentage', 'Gauravi,Nikhil', 'var targetColumnNames = [\'percentage\'];\r\n\r\n    var columnIndices = targetColumnNames.map(function (columnName) {\r\n        return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n    });\r\n\r\n    columnIndices.forEach(function (columnIndex) {\r\n        if (columnIndex !== -1) {\r\n            var targetElements = document.querySelectorAll(\'table td:nth-child(\' + (columnIndex + 1) + \')\');\r\n            \r\n            targetElements.forEach(function (element) {\r\n                var value = parseInt(element.textContent);\r\n                if (!isNaN(value)) {\r\n                    if (value >= 30) {\r\n                        element.style.setProperty(\'color\', \'green\', \'important\');\r\n                    } else {\r\n                        element.style.setProperty(\'color\', \'red\', \'important\');\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n        }\r\n    });'),
+(58, 17, 6, 106, 'first_name', 'Gauravi,Enrolled', 'var targetColumnNames = [\'first_name\'];\r\nvar targetWords = [\'Gauravi\',\'Enrolled\'];\r\n\r\nvar columnIndex = Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === targetColumnNames[0]);\r\n\r\nif (columnIndex !== -1) {\r\n    var rows = document.querySelectorAll(\'table tbody tr\');\r\n\r\n    rows.forEach(function (row) {\r\n        var cell = row.querySelector(\'td:nth-child(\' + (columnIndex + 1) + \')\');\r\n        var value = cell ? cell.textContent.trim() : \'\';\r\n\r\n        if (targetWords.includes(value)) {\r\n            cell.style.setProperty(\'background-color\', \'#6495ED\', \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        }\r\n    });\r\n} else {\r\n    console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n}'),
+(59, 17, 6, 103, 'last_name', 'Gauravi,Enrolled', 'var targetColumnNames = [\'last_name\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n'),
+(60, 17, 6, 105, 'percentage', 'Gauravi,Enrolled', 'var targetColumnNames = [\'percentage\'];\r\n\r\n    var columnIndices = targetColumnNames.map(function (columnName) {\r\n        return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n    });\r\n\r\n    columnIndices.forEach(function (columnIndex) {\r\n        if (columnIndex !== -1) {\r\n            var targetElements = document.querySelectorAll(\'table td:nth-child(\' + (columnIndex + 1) + \')\');\r\n            \r\n            targetElements.forEach(function (element) {\r\n                var value = parseInt(element.textContent);\r\n                if (!isNaN(value)) {\r\n                    if (value >= 30) {\r\n                        element.style.setProperty(\'color\', \'green\', \'important\');\r\n                    } else {\r\n                        element.style.setProperty(\'color\', \'red\', \'important\');\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n        }\r\n    });'),
+(61, 17, 6, 103, 'course_id', 'Gauravi,Enrolled', 'var targetColumnNames = [\'course_id\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n'),
+(62, 17, 6, 106, 'academic_status', 'Gauravi,Enrolled', 'var targetColumnNames = [\'academic_status\'];\r\nvar targetWords = [\'Gauravi\',\'Enrolled\'];\r\n\r\nvar columnIndex = Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === targetColumnNames[0]);\r\n\r\nif (columnIndex !== -1) {\r\n    var rows = document.querySelectorAll(\'table tbody tr\');\r\n\r\n    rows.forEach(function (row) {\r\n        var cell = row.querySelector(\'td:nth-child(\' + (columnIndex + 1) + \')\');\r\n        var value = cell ? cell.textContent.trim() : \'\';\r\n\r\n        if (targetWords.includes(value)) {\r\n            cell.style.setProperty(\'background-color\', \'#6495ED\', \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        }\r\n    });\r\n} else {\r\n    console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n}'),
+(64, 18, 7, 105, 'id', 'NA', 'var targetColumnNames = [\'id\'];\r\n\r\n    var columnIndices = targetColumnNames.map(function (columnName) {\r\n        return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n    });\r\n\r\n    columnIndices.forEach(function (columnIndex) {\r\n        if (columnIndex !== -1) {\r\n            var targetElements = document.querySelectorAll(\'table td:nth-child(\' + (columnIndex + 1) + \')\');\r\n            \r\n            targetElements.forEach(function (element) {\r\n                var value = parseInt(element.textContent);\r\n                if (!isNaN(value)) {\r\n                    if (value >= 30) {\r\n                        element.style.setProperty(\'color\', \'green\', \'important\');\r\n                    } else {\r\n                        element.style.setProperty(\'color\', \'red\', \'important\');\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n        }\r\n    });'),
+(65, 18, 7, 103, 'course_name', 'NA', 'var targetColumnNames = [\'course_name\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n'),
+(66, 18, 7, 103, 'course_link', 'NA', 'var targetColumnNames = [\'course_link\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `script_code`
 --
 
@@ -3880,10 +3971,15 @@ INSERT INTO `script_code` (`id`, `effects`, `css`, `code`, `Description`) VALUES
 (95, 'P and F', '.', '{\n    \"css\": \".\",\n    \"js\": \"document.addEventListener(\'triggerValue\', function () {\\n  var percentageElements = document.querySelector(\'#elementId\');\\n  percentageElements.forEach(function (element) {\\n    var percentage = parseInt(element.textContent);\\n    if (percentage >= 45) {\\n      element.style.setProperty(\'color\', \'green\', \'important\');\\n    } else {\\n      element.style.setProperty(\'color\', \'red\', \'important\');\\n    }\\n  });\\n});\\n\"\n}', ','),
 (96, 'p&f', '.', '{\r\n    \"css\": \".\",\r\n    \"js\": \"document.addEventListener(\'triggerValue\', function () {\\n    var percentageElements = document.querySelectorAll(\'elementId\');\\n    percentageElements.forEach(function (element) {\\n      var percentage = parseInt(element.textContent);\\n      if (percentage >= 45) {\\n        element.style.setProperty(\'color\', \'green\', \'important\');\\n      } else {\\n        element.style.setProperty(\'color\', \'red\', \'important\');\\n      }\\n    });\\n  });\"\r\n}', 'Green Color if content of table column is above 45 or else red '),
 (97, 'Updated Report Script ', '.', '{\n    \"css\": \".\",\n    \"js\": \"document.addEventListener(\'triggerValue\', function () {\\n    \\/\\/ Adding a style rule dynamically\\n    var style = document.createElement(\'style\');\\n    style.textContent = \'table td:nth-child(8).red { color: red !important; } table td:nth-child(8).green { color: green !important; }\';\\n    document.head.appendChild(style);\\n\\n    \\/\\/ Now you can use your existing jQuery code\\n    $(document).ready(function () {\\n        $(\'table td:nth-child(8)\').each(function() {\\n            var percentage = parseInt($(this).text());\\n            $(this).removeClass(\'red green\');\\n\\n            if (percentage < 45) {\\n                $(this).addClass(\'red\');\\n            } else {\\n                $(this).addClass(\'green\');\\n            }\\n        });\\n    });\\n});\"\n}', 'Updated Report Script with ready load '),
-(98, 'Green and Red ', '', '`\r\n    document.addEventListener(\'DOMContentLoaded\', function () {\r\n    // Add tooltips to cells with additional information\r\n    var style = document.createElement(\'style\');\r\n    style.textContent = \'table td.tooltip { cursor: pointer; border-bottom: 1px dotted #000; }\';\r\n\r\n    document.head.appendChild(style);\r\n\r\n    // Add \'tooltip\' class to each cell for tooltips\r\n    $(\'table td\').addClass(\'tooltip\').each(function () {\r\n        var cellContent = $(this).text().trim();\r\n        $(this).attr(\'title\', \'Additional Info: \' + cellContent);\r\n    });\r\n});\r\n\r\n`', 'Custom Pass and Fail '),
+(98, 'Green and Red ', '', '   document.addEventListener(\'DOMContentLoaded\', function () {\r\n                    var style = document.createElement(\'style\');\r\n                    style.textContent = \'table td:nth-child(8).red { color: red !important; } \' +\r\n                                        \' table td:nth-child(8).green { color: green !important; }\';\r\n\r\n                    document.head.appendChild(style);\r\n\r\n                    $(\'table td:nth-child(8)\').each(function() {\r\n                        var percentage = parseInt($(this).text());\r\n                        $(this).removeClass(\'red green\');\r\n\r\n                        if (percentage < 45) {\r\n                            $(this).addClass(\'red\');\r\n                        } else {\r\n                            $(this).addClass(\'green\');\r\n                        }\r\n                    });\r\n                });', 'Custom Pass and Fail '),
 (99, 'Report Toolkit ', '', '`\r\n    document.addEventListener(\'DOMContentLoaded\', function () {\r\n    // Add tooltips to cells with additional information\r\n    var style = document.createElement(\'style\');\r\n    style.textContent = \'table td.tooltip { cursor: pointer; border-bottom: 1px dotted #000; }\';\r\n\r\n    document.head.appendChild(style);\r\n\r\n    // Add \'tooltip\' class to each cell for tooltips\r\n    $(\'table td\').addClass(\'tooltip\').each(function () {\r\n        var cellContent = $(this).text().trim();\r\n        $(this).attr(\'title\', \'Additional Info: \' + cellContent);\r\n    });\r\n});\r\n\r\n`', 'Add a description Box to All cell of report'),
-(100, 'Highlight Min and Max ', '', '`\r\n   document.addEventListener(\'DOMContentLoaded\', function () {\r\n    // Highlight cells with maximum and minimum values in the \"Percent %\" column\r\n    var style = document.createElement(\'style\');\r\n    style.textContent = \'table td.max-value { background-color: #aaffaa; } \' +\r\n                        \'table td.min-value { background-color: #ffaaaa; }\';\r\n\r\n    document.head.appendChild(style);\r\n\r\n    // Extract values from the \"Percent %\" column\r\n    var values = $(\'table td:nth-child(8)\').map(function () {\r\n        var cellValue = parseFloat($(this).text().trim());\r\n        return isNaN(cellValue) ? null : cellValue;\r\n    }).get();\r\n\r\n    // Filter out null values (non-numeric cells)\r\n    values = values.filter(function (value) {\r\n        return value !== null;\r\n    });\r\n\r\n    // Find the maximum and minimum values\r\n    var maxValue = Math.max.apply(null, values);\r\n    var minValue = Math.min.apply(null, values);\r\n\r\n    // Add \'max-value\' and \'min-value\' classes to cells with max and min values\r\n    $(\'table td:nth-child(8)\').each(function () {\r\n        var cellValue = parseFloat($(this).text().trim());\r\n\r\n        // Highlight maximum value in green\r\n        if (cellValue === maxValue) {\r\n            $(this).addClass(\'max-value\');\r\n        }\r\n\r\n        // Highlight minimum value in red\r\n        if (cellValue === minValue) {\r\n            $(this).addClass(\'min-value\');\r\n        }\r\n    });\r\n});\r\n\r\n`', ''),
-(101, 'Even and Odd Row Color ', '', '`\r\n   document.addEventListener(\'DOMContentLoaded\', function () {\r\n    // Add alternating row colors for better readability\r\n    var style = document.createElement(\'style\');\r\n    style.textContent = \'table tr.even-row { background-color: #f9f9f9 !important; } \' +\r\n                        \'table tr.odd-row { background-color: #AAA7A7 !important; }\';\r\n\r\n    document.head.appendChild(style);\r\n\r\n    // Add \'even-row\' and \'odd-row\' classes to alternate rows\r\n    $(\'table tr:even\').addClass(\'even-row\');\r\n    $(\'table tr:odd\').addClass(\'odd-row\');\r\n});\r\n\r\n`', '');
+(100, 'Highlight Min and Max ', '.', 'var percentageElements = document.querySelectorAll(\'table td:nth-child(7)\');\r\nvar values = [];\r\n\r\npercentageElements.forEach(function (element) {\r\n  var percentage = parseInt(element.textContent);\r\n  values.push(percentage);\r\n});\r\n\r\nvar minValue = Math.min(...values);\r\nvar maxValue = Math.max(...values);\r\n\r\npercentageElements.forEach(function (element) {\r\n  var percentage = parseInt(element.textContent);\r\n  if (percentage === minValue) {\r\n    element.style.setProperty(\'background-color\', \'red\');\r\n  } else if (percentage === maxValue) {\r\n    element.style.setProperty(\'background-color\', \'green\');\r\n  }\r\n});\r\n', 'Highlight min in red and max in green'),
+(101, 'Even and Odd Row Color ', '.', 'var percentageElements = document.querySelectorAll(\'table td:nth-child(8)\');\r\n    percentageElements.forEach(function (element) {\r\n      var percentage = parseInt(element.textContent);\r\n      if (percentage >= 30) {\r\n        element.style.setProperty(\'color\', \'green\', \'important\');\r\n      } else {\r\n        element.style.setProperty(\'color\', \'red\', \'important\');\r\n      }\r\n    });', 'Color even and odd cell in grey and white color '),
+(102, 'CELL HighLight', '.', '// Select all cells in the third column of any table\r\nvar thirdColumnCells = document.querySelectorAll(\'table td:nth-child(3)\');\r\nvar keyword = \'Grid Container\';\r\n\r\nthirdColumnCells.forEach(function (element) {\r\n    if (element.textContent.trim() === keyword) {\r\n        // Apply styles to highlight the cell\r\n        element.style.setProperty(\'background-color\', \'yellow\', \'important\');\r\n        element.style.setProperty(\'color\', \'black\', \'important\'); // Example additional CSS\r\n        // Add any other CSS styles as needed\r\n    }\r\n});\r\n', 'Green Color if content of table column is above 45 or else red '),
+(103, 'Dynamic Report Column HighLight ', '', 'var targetColumnNames = [\'column_Name\'];\r\nvar highlightColor = \'#FFC000\';\r\n\r\nvar columnIndices = targetColumnNames.map(function (columnName) {\r\n    return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n});\r\n\r\nif (columnIndices.every(index => index !== -1)) {\r\n    columnIndices.forEach(function (columnIndex) {\r\n        var cellsInColumn = document.querySelectorAll(\'table tbody td:nth-child(\' + (columnIndex + 1) + \')\');\r\n\r\n        cellsInColumn.forEach(function (cell) {\r\n            cell.style.setProperty(\'background-color\', highlightColor, \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        });\r\n    });\r\n} else {\r\n    console.error(\'One or more columns not found: \' + targetColumnNames.join(\', \'));\r\n}\r\n', 'HighLight Column Based on Column name '),
+(104, 'Row/Record High Light', '', 'var targetWords = [\'word\'];\r\nvar rows = document.querySelectorAll(\'table tbody tr\');\r\n\r\nrows.forEach(function (row) {\r\n    var cells = row.querySelectorAll(\'td\');\r\n\r\n    var shouldHighlight = Array.from(cells).some(function (cell) {\r\n        var value = cell.textContent.trim();\r\n        return targetWords.some(function (word) {\r\n            return value.includes(word);\r\n        });\r\n    });\r\n\r\n    if (shouldHighlight) {\r\n        row.style.setProperty(\'background-color\', \'#6495ED\', \'important\');\r\n        row.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n    }\r\n});\r\n', 'Higlight Rows or record with give word'),
+(105, 'Marks Pass', '', 'var targetColumnNames = [\'column_Name\'];\r\n\r\n    var columnIndices = targetColumnNames.map(function (columnName) {\r\n        return Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === columnName);\r\n    });\r\n\r\n    columnIndices.forEach(function (columnIndex) {\r\n        if (columnIndex !== -1) {\r\n            var targetElements = document.querySelectorAll(\'table td:nth-child(\' + (columnIndex + 1) + \')\');\r\n            \r\n            targetElements.forEach(function (element) {\r\n                var value = parseInt(element.textContent);\r\n                if (!isNaN(value)) {\r\n                    if (value >= 30) {\r\n                        element.style.setProperty(\'color\', \'green\', \'important\');\r\n                    } else {\r\n                        element.style.setProperty(\'color\', \'red\', \'important\');\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n        }\r\n    });', 'For Numberical Columns only , Show marks less than 30 in red and above 30 in green'),
+(106, 'Dynamic Cell Hight Light ', '', 'var targetColumnNames = [\'column_Name\'];\r\nvar targetWords = [\'word\'];\r\n\r\nvar columnIndex = Array.from(document.querySelectorAll(\'table th\')).findIndex(th => th.textContent.trim() === targetColumnNames[0]);\r\n\r\nif (columnIndex !== -1) {\r\n    var rows = document.querySelectorAll(\'table tbody tr\');\r\n\r\n    rows.forEach(function (row) {\r\n        var cell = row.querySelector(\'td:nth-child(\' + (columnIndex + 1) + \')\');\r\n        var value = cell ? cell.textContent.trim() : \'\';\r\n\r\n        if (targetWords.includes(value)) {\r\n            cell.style.setProperty(\'background-color\', \'#6495ED\', \'important\');\r\n            cell.style.setProperty(\'font-weight\', \'bold\', \'important\');\r\n        }\r\n    });\r\n} else {\r\n    console.error(\'Column not found: \' + targetColumnNames.join(\', \'));\r\n}', 'HightLight Cell using column and word.There should be only one column, and words can be multiplely related to that field.');
 
 -- --------------------------------------------------------
 
@@ -3913,6 +4009,7 @@ CREATE TABLE `student_information` (
   `student_id` int(11) NOT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
+  `percentage` varchar(255) NOT NULL,
   `date_of_birth` date DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone_number` varchar(20) DEFAULT NULL,
@@ -3932,9 +4029,20 @@ CREATE TABLE `student_information` (
 -- Dumping data for table `student_information`
 --
 
-INSERT INTO `student_information` (`student_id`, `first_name`, `last_name`, `date_of_birth`, `address`, `phone_number`, `email_address`, `department_id`, `course_type_id`, `course_id`, `major`, `academic_status`, `theme_ID`, `emergency_contact_name`, `emergency_contact_phone`, `emergency_contact_relationship`) VALUES
-(1, 'Gauravi', 'Damahe', '2001-01-26', 'High Court Aurangabad', '09011689196', 'gauvi0981@gmail.com', 3, 5, 7, 'Science ', 'Regural ', 87, 'Anita Damahe ', '09011689196', 'Mother '),
-(3, 'Prasad ', 'Kumar', '0000-00-00', 'High Court Aurangabad', '09011689190', 'gauravidamahe01@outlook.com', 7, 5, 13, 'Commerce', 'Regural ', 121, 'Gauravi', '9158883235', 'Brother');
+INSERT INTO `student_information` (`student_id`, `first_name`, `last_name`, `percentage`, `date_of_birth`, `address`, `phone_number`, `email_address`, `department_id`, `course_type_id`, `course_id`, `major`, `academic_status`, `theme_ID`, `emergency_contact_name`, `emergency_contact_phone`, `emergency_contact_relationship`) VALUES
+(1, 'Gauravi', 'Damahe', '57', '2001-01-26', 'High Court Aurangabad', '09011689196', 'gauvi0981@gmail.com', 3, 5, 7, 'Science ', 'Regural ', 87, 'Anita Damahe ', '09011689196', 'Mother '),
+(2, 'Priya', 'Sharma', '64', NULL, 'Mumbai', '901179196', 'abc', 3, 6, 14, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'Prasad ', 'Kumar', '32', '0000-00-00', 'High Court Aurangabad', '09011689190', 'gauravidamahe01@outlook.com', 7, 5, 7, 'Commerce', 'Regural ', 121, 'Gauravi', '9158883235', 'Brother'),
+(4, 'John', 'Doe', '23', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Computer Science', 'Enrolled', NULL, NULL, NULL, NULL),
+(5, 'Alice', 'Smith', '25', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Electrical Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(6, 'Eve', 'Johnson', '12', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Mechanical Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(7, 'David', 'Brown', '10', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Civil Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(8, 'Grace', 'Miller', '45', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Chemical Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(9, 'Michael', 'Wilson', '78', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Aerospace Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(10, 'Sophia', 'Anderson', '76', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Biomedical Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(11, 'Oliver', 'Thomas', '90', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Environmental Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(12, 'Emma', 'Harris', '32', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Industrial Engineering', 'Enrolled', NULL, NULL, NULL, NULL),
+(13, 'Liam', 'Taylor', '56', NULL, NULL, NULL, NULL, NULL, NULL, 7, 'Materials Science', 'Enrolled', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4334,7 +4442,8 @@ INSERT INTO `themes` (`ID`, `theme_name`, `created_at`, `color`, `font_size`, `b
 (332, 'Icon Test 5', NULL, NULL, NULL, '#ffffff', '', NULL, NULL, NULL, NULL, '', '', '', NULL, 'px', 'px', 'px', 'px', NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.avif', 'Select', NULL, 'center center', 'px', NULL, NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', NULL, NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'icon/table.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, 'none', NULL, 'all', NULL, 'ease', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', ''),
 (333, 'Icon Test 6', NULL, NULL, NULL, '#ffffff', '', NULL, NULL, NULL, NULL, '', '', '', NULL, 'px', 'px', 'px', 'px', NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.avif', 'Select', NULL, 'center center', 'px', NULL, NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', NULL, NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, 'none', NULL, 'all', NULL, 'ease', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', ''),
 (334, 'Icon Test 6', NULL, NULL, NULL, '#ffffff', '', NULL, NULL, NULL, NULL, '', '', '', NULL, 'px', 'px', 'px', 'px', NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.avif', 'Select', NULL, 'center center', 'px', NULL, NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', NULL, NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, 'none', NULL, 'all', NULL, 'ease', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', ''),
-(335, 'Report Theme1 ', NULL, NULL, NULL, '#ecf0f1', '', '8px', '4px', NULL, 'center', 'inline-block', '', 'relative', '1px 1px 2px rgba(0, 0, 0, 0.3)', '5px', '1px', '2px', '1.5', 'uppercase', NULL, NULL, 'bold', NULL, 'nowrap', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.avif', 'Select', NULL, 'center center', '1px', 'solid', NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', '', '90px', 'px', 'px', 'px', 'px', 'border-box', NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, 'normal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, 'background-color: #3498db;\r\n  color: #ffffff;\r\n  transform: scale(1.05);', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, '0px 10px 20px rgba(0, 0, 0, 0.2)', NULL, 'all', '3', 'ease-in-out', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4px', '');
+(335, 'Report Theme1 ', NULL, NULL, NULL, '#ecf0f1', '', '8px', '4px', NULL, 'center', 'inline-block', '', 'relative', '1px 1px 2px rgba(0, 0, 0, 0.3)', '5px', '1px', '2px', '1.5', 'uppercase', NULL, NULL, 'bold', NULL, 'nowrap', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.avif', 'Select', NULL, 'center center', '1px', 'solid', NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', '', '90px', 'px', 'px', 'px', 'px', 'border-box', NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, 'normal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, 'background-color: #3498db;\r\n  color: #ffffff;\r\n  transform: scale(1.05);', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, '0px 10px 20px rgba(0, 0, 0, 0.2)', NULL, 'all', '3', 'ease-in-out', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4px', ''),
+(336, 'Exercise Theme', NULL, NULL, NULL, '#ffffff', '', NULL, NULL, NULL, NULL, '', '', '', NULL, 'px', 'px', 'px', 'px', NULL, NULL, NULL, NULL, NULL, 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/.jpg', 'no-repeat', NULL, 'left top', 'px', NULL, NULL, 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', 'px', NULL, NULL, NULL, 'none', 'px', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'icon/.jpg', '#fbab45', NULL, '#fbab45', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'row', NULL, NULL, NULL, NULL, NULL, NULL, 'start', 'start', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', 'px', 'px', NULL, 'px', 'px', 'none', NULL, 'none', NULL, 'all', '.3', 'ease-in', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'px', '');
 
 -- --------------------------------------------------------
 
@@ -4356,23 +4465,22 @@ CREATE TABLE `theme_for_report` (
 --
 
 INSERT INTO `theme_for_report` (`id`, `reference_id`, `theme_name`, `element_id`, `css_property_id`, `value`) VALUES
-(6, 0, 'Orange Theme', 0, 0, ''),
 (7, 7, 'Orange Theme', 60, 32, 'display'),
 (8, 7, 'Orange Theme', 60, 33, 'repeat(3, 1fr)'),
-(9, 7, 'Orange Theme', 60, 34, '10px'),
+(9, 7, 'Orange Theme', 60, 34, '11px'),
 (10, 7, 'Orange Theme', 60, 35, 'center'),
 (11, 7, 'Orange Theme', 60, 36, 'center'),
 (12, 7, 'Orange Theme', 60, 1, '#E6E6FA'),
 (13, 7, 'Orange Theme', 60, 7, '8px'),
 (14, 7, 'Orange Theme', 60, 6, '16px'),
 (15, 7, 'Orange Theme', 60, 37, '\'Roboto\', sans-serif'),
-(16, 7, 'Orange Theme', 60, 19, '800px'),
+(16, 7, 'Orange Theme', 60, 13, '880px'),
 (17, 7, 'Orange Theme', 60, 5, '0 auto'),
 (18, 7, 'Orange Theme', 115, 12, 'center'),
 (19, 7, 'Orange Theme', 115, 38, 'span 3'),
 (20, 7, 'Orange Theme', 115, 3, '#4CAF50'),
 (21, 7, 'Orange Theme', 115, 2, '24px'),
-(22, 7, 'Orange Theme', 61, 13, '600px'),
+(22, 7, 'Orange Theme', 61, 13, '850px'),
 (23, 7, 'Orange Theme', 61, 39, 'separate'),
 (24, 7, 'Orange Theme', 61, 40, '0 8px'),
 (25, 7, 'Orange Theme', 61, 41, '16px'),
@@ -4390,7 +4498,177 @@ INSERT INTO `theme_for_report` (`id`, `reference_id`, `theme_name`, `element_id`
 (37, 7, 'Orange Theme', 116, 3, '#333'),
 (38, 7, 'Orange Theme', 58, 1, '#FFD700'),
 (39, 7, 'Orange Theme', 58, 3, '#fff'),
-(40, 7, 'Orange Theme', 58, 18, 'bold');
+(40, 7, 'Orange Theme', 58, 18, 'bold'),
+(42, 42, 'Blue theme', 60, 32, 'display'),
+(43, 42, 'Blue theme', 60, 33, 'repeat(3, 1fr)'),
+(44, 42, 'Blue theme', 60, 34, '10px'),
+(45, 42, 'Blue theme', 60, 35, 'center'),
+(46, 42, 'Blue theme', 60, 36, 'center'),
+(47, 42, 'Blue theme', 60, 1, '#f5f8fa'),
+(48, 42, 'Blue theme', 60, 7, '7px'),
+(49, 42, 'Blue theme', 60, 6, '25px'),
+(50, 42, 'Blue theme', 60, 37, '\'Helvetica\', sans-serif'),
+(51, 42, 'Blue theme', 60, 13, '880px'),
+(52, 42, 'Blue theme', 60, 5, '0 auto'),
+(53, 42, 'Blue theme', 115, 12, 'center '),
+(54, 42, 'Blue theme', 115, 38, 'span 3'),
+(55, 42, 'Blue theme', 115, 3, '#4d5253'),
+(56, 42, 'Blue theme', 115, 2, '30px'),
+(57, 42, 'Blue theme', 61, 13, '100%'),
+(58, 42, 'Blue theme', 61, 39, 'collapse'),
+(59, 42, 'Blue theme', 61, 40, '0 10px'),
+(60, 42, 'Blue theme', 61, 41, '18px'),
+(61, 42, 'Blue theme', 61, 1, '#87CEEB'),
+(62, 42, 'Blue theme', 53, 6, '20px'),
+(63, 42, 'Blue theme', 53, 4, '3px groove #ddd'),
+(64, 42, 'Blue theme', 53, 1, '#102b47'),
+(65, 42, 'Blue theme', 53, 3, '#fff'),
+(66, 42, 'Blue theme', 53, 18, 'bold'),
+(67, 42, 'Blue theme', 55, 1, '#edfcff'),
+(68, 42, 'Blue theme', 56, 1, '#FFF'),
+(69, 42, 'Blue theme', 57, 1, '#ADD8E6'),
+(70, 42, 'Blue theme', 116, 6, '20px'),
+(71, 42, 'Blue theme', 116, 4, '2px dashed #8cc1ed'),
+(72, 42, 'Blue theme', 116, 3, '#4d5253'),
+(73, 42, 'Blue theme', 58, 1, '#FFD700'),
+(74, 42, 'Blue theme', 58, 3, '#fff'),
+(75, 42, 'Blue theme', 58, 18, 'bold'),
+(111, 111, 'Black Theme', 60, 32, 'display'),
+(112, 111, 'Black Theme', 60, 33, 'repeat(4, 1fr)'),
+(113, 111, 'Black Theme', 60, 34, '15px'),
+(114, 111, 'Black Theme', 60, 35, 'center'),
+(115, 111, 'Black Theme', 60, 36, 'center'),
+(116, 111, 'Black Theme', 60, 1, '#828582'),
+(117, 111, 'Black Theme', 60, 7, '12px'),
+(118, 111, 'Black Theme', 60, 6, '20px'),
+(119, 111, 'Black Theme', 60, 37, '\'Roboto\''),
+(120, 111, 'Black Theme', 60, 13, '900px'),
+(121, 111, 'Black Theme', 60, 5, '20px auto'),
+(122, 111, 'Black Theme', 115, 12, 'center'),
+(123, 111, 'Black Theme', 115, 38, 'span 4'),
+(124, 111, 'Black Theme', 115, 3, '#000000'),
+(125, 111, 'Black Theme', 115, 2, '28px'),
+(126, 111, 'Black Theme', 61, 13, '850px'),
+(127, 111, 'Black Theme', 61, 39, 'separate'),
+(128, 111, 'Black Theme', 61, 40, '0 12px'),
+(129, 111, 'Black Theme', 61, 41, '20px'),
+(130, 111, 'Black Theme', 61, 1, '#fff'),
+(131, 111, 'Black Theme', 53, 6, '12px'),
+(132, 111, 'Black Theme', 53, 4, '2px dotted white'),
+(133, 111, 'Black Theme', 53, 1, '#4c4f4c'),
+(137, 111, 'Black Theme', 53, 3, '#fff'),
+(138, 111, 'Black Theme', 53, 18, 'bold'),
+(139, 111, 'Black Theme', 55, 1, '#f8f8f8'),
+(140, 111, 'Black Theme', 56, 1, '#fff'),
+(141, 111, 'Black Theme', 57, 1, '#e0e0e0'),
+(142, 111, 'Black Theme', 116, 6, '14px'),
+(143, 111, 'Black Theme', 116, 4, '2px solid '),
+(144, 111, 'Black Theme', 116, 3, '#333'),
+(145, 111, 'Black Theme', 58, 1, '#008000'),
+(146, 111, 'Black Theme', 58, 3, '#fff'),
+(147, 111, 'Black Theme', 58, 18, 'bold'),
+(224, 42, 'Blue Theme', 53, 2, '18px'),
+(225, 111, 'Black Theme', 53, 2, '25px'),
+(782, 0, 'New Theme', 0, 0, ''),
+(783, 783, 'New Theme', 60, 32, 'centered'),
+(784, 783, 'New Theme', 60, 33, 'repeat(3, 1fr)'),
+(785, 783, 'New Theme', 60, 34, '10px'),
+(786, 783, 'New Theme', 60, 35, 'center'),
+(787, 783, 'New Theme', 60, 36, 'center'),
+(788, 783, 'New Theme', 60, 1, '#E6E6FA'),
+(789, 783, 'New Theme', 60, 7, '8px'),
+(790, 783, 'New Theme', 60, 6, '16px'),
+(791, 783, 'New Theme', 60, 37, '\'Roboto\', sans-serif'),
+(792, 783, 'New Theme', 60, 13, '880px'),
+(793, 783, 'New Theme', 60, 5, '0 auto'),
+(794, 783, 'New Theme', 115, 12, 'center'),
+(795, 783, 'New Theme', 115, 38, 'span 3'),
+(796, 783, 'New Theme', 115, 3, '#4CAF50'),
+(797, 783, 'New Theme', 115, 2, '24px'),
+(798, 783, 'New Theme', 61, 13, '850px'),
+(799, 783, 'New Theme', 61, 39, 'separate'),
+(800, 783, 'New Theme', 61, 40, '0 8px'),
+(801, 783, 'New Theme', 61, 41, '16px'),
+(802, 783, 'New Theme', 61, 1, '#FFF8DC'),
+(803, 783, 'New Theme', 53, 6, '14px'),
+(804, 783, 'New Theme', 53, 4, '2px solid #FFD700'),
+(805, 783, 'New Theme', 53, 1, '#FFA500'),
+(806, 783, 'New Theme', 53, 3, '#fff'),
+(807, 783, 'New Theme', 53, 18, 'bold'),
+(808, 783, 'New Theme', 55, 1, '#FFE4B5'),
+(809, 783, 'New Theme', 56, 1, '#FFC0CB'),
+(810, 783, 'New Theme', 57, 1, '#ADD8E6'),
+(811, 783, 'New Theme', 116, 6, '12px'),
+(812, 783, 'New Theme', 116, 4, '2px solid #87CEEB'),
+(813, 783, 'New Theme', 116, 3, '#333'),
+(814, 783, 'New Theme', 58, 1, '#FFD700'),
+(815, 783, 'New Theme', 58, 3, '#fff'),
+(816, 783, 'New Theme', 58, 18, ''),
+(817, 783, 'New Theme', 53, 2, '12px'),
+(818, 783, 'New Theme', 116, 37, '\'Roboto\', sans-serif'),
+(819, 783, 'New Theme', 116, 2, '20px'),
+(820, 783, 'New Theme', 116, 23, 'italic'),
+(821, 783, 'New Theme', 117, 3, '#FF0000'),
+(822, 783, 'New Theme', 117, 18, 'bold'),
+(823, 783, 'New Theme', 117, 2, '22px'),
+(824, 783, 'New Theme', 118, 3, 'red'),
+(825, 783, 'New Theme', 118, 18, 'bold'),
+(826, 783, 'New Theme', 118, 2, '22px'),
+(827, 783, 'New Theme', 119, 2, '22px'),
+(828, 783, 'New Theme', 119, 3, 'red'),
+(829, 783, 'New Theme', 119, 18, 'bold'),
+(830, 783, 'New Theme', 120, 2, '22px'),
+(831, 783, 'New Theme', 120, 18, 'bold'),
+(832, 0, 'Test 809', 0, 0, ''),
+(833, 833, 'Test 809', 60, 32, ''),
+(834, 833, 'Test 809', 60, 33, ''),
+(835, 833, 'Test 809', 60, 34, ''),
+(836, 833, 'Test 809', 60, 35, ''),
+(837, 833, 'Test 809', 60, 36, ''),
+(838, 833, 'Test 809', 60, 1, '#ffffff'),
+(839, 833, 'Test 809', 60, 7, ''),
+(840, 833, 'Test 809', 60, 6, ''),
+(841, 833, 'Test 809', 60, 37, ''),
+(842, 833, 'Test 809', 60, 13, ''),
+(843, 833, 'Test 809', 60, 5, ''),
+(844, 833, 'Test 809', 115, 12, 'center'),
+(845, 833, 'Test 809', 115, 38, ''),
+(846, 833, 'Test 809', 115, 3, '#ffffff'),
+(847, 833, 'Test 809', 115, 2, '22px'),
+(848, 833, 'Test 809', 61, 13, ''),
+(849, 833, 'Test 809', 61, 39, 'separate'),
+(850, 833, 'Test 809', 61, 40, ''),
+(851, 833, 'Test 809', 61, 41, '2px'),
+(852, 833, 'Test 809', 61, 1, '#ffffff'),
+(853, 833, 'Test 809', 53, 6, ''),
+(854, 833, 'Test 809', 53, 4, ''),
+(855, 833, 'Test 809', 53, 1, '#f8f1f1'),
+(856, 833, 'Test 809', 53, 3, '#000000'),
+(857, 833, 'Test 809', 53, 18, 'bold'),
+(858, 833, 'Test 809', 55, 1, '#ffffff'),
+(859, 833, 'Test 809', 56, 1, '#ffffff'),
+(860, 833, 'Test 809', 57, 1, '#f2f2f2'),
+(861, 833, 'Test 809', 116, 6, ''),
+(862, 833, 'Test 809', 116, 4, ''),
+(863, 833, 'Test 809', 116, 3, '#121212'),
+(864, 833, 'Test 809', 58, 1, '#000000'),
+(865, 833, 'Test 809', 58, 3, '#000000'),
+(866, 833, 'Test 809', 58, 18, ''),
+(867, 833, 'Test 809', 53, 2, ''),
+(868, 833, 'Test 809', 116, 37, ''),
+(869, 833, 'Test 809', 116, 2, ''),
+(870, 833, 'Test 809', 116, 23, ''),
+(871, 833, 'Test 809', 117, 3, '#000000'),
+(872, 833, 'Test 809', 117, 18, ''),
+(873, 833, 'Test 809', 117, 2, ''),
+(874, 833, 'Test 809', 118, 3, '#000000'),
+(875, 833, 'Test 809', 118, 18, ''),
+(876, 833, 'Test 809', 118, 2, ''),
+(877, 833, 'Test 809', 119, 2, ''),
+(878, 833, 'Test 809', 119, 3, '#000000'),
+(879, 833, 'Test 809', 119, 18, ''),
+(880, 833, 'Test 809', 120, 2, ''),
+(881, 833, 'Test 809', 120, 18, '');
 
 -- --------------------------------------------------------
 
@@ -4902,7 +5180,7 @@ INSERT INTO `theme_text_css_properties_value` (`id`, `theme_id`, `text_type_id`,
 (487, 329, 4, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-13 00:22:37', '2023-12-13 00:22:37'),
 (488, 329, 5, 'color', '#000000', '2023-12-13 00:22:37', '2023-12-13 00:22:37'),
 (489, 329, 5, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-13 00:22:37', '2023-12-13 00:22:37'),
-(490, 330, 1, 'color', '#000000', '2023-12-13 03:26:08', '2023-12-13 03:26:08'),
+(490, 330, 1, 'color', 'red', '2024-01-15 05:15:37', '2023-12-13 03:26:08'),
 (491, 330, 1, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-13 03:26:08', '2023-12-13 03:26:08'),
 (492, 330, 2, 'color', '#000000', '2023-12-13 03:26:08', '2023-12-13 03:26:08'),
 (493, 330, 2, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-13 03:26:08', '2023-12-13 03:26:08'),
@@ -4963,7 +5241,19 @@ INSERT INTO `theme_text_css_properties_value` (`id`, `theme_id`, `text_type_id`,
 (548, 335, 4, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-14 07:29:13', '2023-12-14 07:29:13'),
 (549, 335, 4, 'text_align', 'center', '2023-12-14 07:29:13', '2023-12-14 07:29:13'),
 (550, 335, 5, 'color', '#000000', '2023-12-14 07:29:13', '2023-12-14 07:29:13'),
-(551, 335, 5, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-14 07:29:13', '2023-12-14 07:29:13');
+(551, 335, 5, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-14 07:29:13', '2023-12-14 07:29:13'),
+(552, 336, 1, 'color', '#0000ff', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(553, 336, 1, 'font_family', 'Georgia, serif', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(554, 336, 1, 'text_align', 'center', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(555, 336, 2, 'color', '#000000', '2023-12-30 03:47:48', '2023-12-30 03:47:48');
+INSERT INTO `theme_text_css_properties_value` (`id`, `theme_id`, `text_type_id`, `text_CSS_Property`, `value`, `created_at`, `updated_at`) VALUES
+(556, 336, 2, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(557, 336, 3, 'color', '#000000', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(558, 336, 3, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(559, 336, 4, 'color', '#000000', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(560, 336, 4, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(561, 336, 5, 'color', '#000000', '2023-12-30 03:47:48', '2023-12-30 03:47:48'),
+(562, 336, 5, 'font_family', 'Arial, Helvetica, sans-serif', '2023-12-30 03:47:48', '2023-12-30 03:47:48');
 
 --
 -- Indexes for dumped tables
@@ -5177,6 +5467,18 @@ ALTER TABLE `report_theme`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `report_theme_mapping`
+--
+ALTER TABLE `report_theme_mapping`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `report_trigger_mapping`
+--
+ALTER TABLE `report_trigger_mapping`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `script_code`
 --
 ALTER TABLE `script_code`
@@ -5230,7 +5532,8 @@ ALTER TABLE `themes`
 --
 ALTER TABLE `theme_for_report`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `css_property_id` (`css_property_id`);
+  ADD KEY `css_property_id` (`css_property_id`),
+  ADD KEY `element_css_properties_ibfk_9` (`element_id`);
 
 --
 -- Indexes for table `theme_text_css_properties_value`
@@ -5247,7 +5550,7 @@ ALTER TABLE `theme_text_css_properties_value`
 -- AUTO_INCREMENT for table `application_forms`
 --
 ALTER TABLE `application_forms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -5265,7 +5568,7 @@ ALTER TABLE `course_type`
 -- AUTO_INCREMENT for table `css_properties`
 --
 ALTER TABLE `css_properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `current_theme`
@@ -5289,7 +5592,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `effects`
 --
 ALTER TABLE `effects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=430;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=437;
 
 --
 -- AUTO_INCREMENT for table `effect_trigger`
@@ -5301,7 +5604,7 @@ ALTER TABLE `effect_trigger`
 -- AUTO_INCREMENT for table `elements`
 --
 ALTER TABLE `elements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `element_css_properties`
@@ -5391,13 +5694,13 @@ ALTER TABLE `night_time_settings`
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `report_element_css_set`
 --
 ALTER TABLE `report_element_css_set`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `report_theme`
@@ -5406,10 +5709,22 @@ ALTER TABLE `report_theme`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `report_theme_mapping`
+--
+ALTER TABLE `report_theme_mapping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `report_trigger_mapping`
+--
+ALTER TABLE `report_trigger_mapping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
 -- AUTO_INCREMENT for table `script_code`
 --
 ALTER TABLE `script_code`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `selected_theme`
@@ -5439,19 +5754,19 @@ ALTER TABLE `text_type`
 -- AUTO_INCREMENT for table `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=336;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
 
 --
 -- AUTO_INCREMENT for table `theme_for_report`
 --
 ALTER TABLE `theme_for_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=882;
 
 --
 -- AUTO_INCREMENT for table `theme_text_css_properties_value`
 --
 ALTER TABLE `theme_text_css_properties_value`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=552;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=563;
 
 --
 -- Constraints for dumped tables
@@ -5544,7 +5859,8 @@ ALTER TABLE `student_information`
 -- Constraints for table `theme_for_report`
 --
 ALTER TABLE `theme_for_report`
-  ADD CONSTRAINT `css_properties_ibfk_1` FOREIGN KEY (`css_property_id`) REFERENCES `css_properties` (`id`);
+  ADD CONSTRAINT `css_properties_ibfk_1` FOREIGN KEY (`css_property_id`) REFERENCES `css_properties` (`id`),
+  ADD CONSTRAINT `element_css_properties_ibfk_9` FOREIGN KEY (`element_id`) REFERENCES `elements` (`id`);
 
 --
 -- Constraints for table `theme_text_css_properties_value`
