@@ -17,6 +17,8 @@ class ReportTriggerMapping extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+        public $columnScripts;
+
 	public function tableName()
 	{
 		return 'report_trigger_mapping';
@@ -35,7 +37,7 @@ class ReportTriggerMapping extends CActiveRecord
 			array('report_columns, report_row', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, application_forms_id, report_id, scipt_id, report_columns, report_row, applied_script', 'safe', 'on'=>'search'),
+			array('id,columnScripts, application_forms_id, report_id, scipt_id, report_columns, report_row, applied_script', 'safe', 'on'=>'search'),
 		);
 	}
 

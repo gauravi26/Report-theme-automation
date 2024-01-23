@@ -99,6 +99,9 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
 
 
         
+
+</div><!-- form -->
+
 <script>
  $(document).ready(function(){
     $('#reportIdDropbox').change(function(){
@@ -137,6 +140,8 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
                         size: '60',
                         maxlength: '255',
                         class: 'textField',
+                        style: 'display: none;', // Add this line to make the field hidden
+
                     });
                     inputFieldContainer.append(textField);
 
@@ -180,4 +185,3 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
         });
     });
 </script>
-</div><!-- form -->
