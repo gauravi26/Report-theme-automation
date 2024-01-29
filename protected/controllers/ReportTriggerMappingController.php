@@ -150,7 +150,8 @@ public function actionCreate()
                 $newModel->report_columns = $singleColumn;
             }
 
-          
+//            print_r($newModel);
+//            die();
 
             // Save the new model
             if (!$newModel->save()) {

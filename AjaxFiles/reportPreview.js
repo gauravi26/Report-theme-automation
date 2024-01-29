@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const reportThemeForm = document.getElementById('reportThemeForm');
     const reportGridContainer = document.getElementById('report-container');
-        const reportTable = document.getElementById('report-table');
+    const reportTable = document.getElementById('report-table');
     const reportHeader = document.getElementById('report-header');
     
-const tableHeaders = document.querySelectorAll('th');
+    const tableHeaders = document.querySelectorAll('th');
 
-const thPaddingInput = document.getElementById('th_padding');
-const thBorderInput = document.getElementById('th_border');
-const thBackgroundColorInput = document.getElementById('th_background-color');
-const thColorInput = document.getElementById('th_color');
-const thFontWeightInput = document.getElementById('th_font-weight');
-const thFontSizeInput = document.getElementById('th_font-size');
+    const thPaddingInput = document.getElementById('th_padding');
+    const thBorderInput = document.getElementById('th_border');
+    const thBackgroundColorInput = document.getElementById('th_background-color');
+    const thColorInput = document.getElementById('th_color');
+    const thFontWeightInput = document.getElementById('th_font-weight');
+    const thFontSizeInput = document.getElementById('th_font-size');
 
     
 
