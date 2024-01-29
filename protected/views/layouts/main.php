@@ -73,18 +73,21 @@ $controllerId = $controller->getId();
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+//				array('label'=>'Home', 'url'=>array('/site/index')),
+//				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+//				array('label'=>'Contact', 'url'=>array('/site/contact')),
+//				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+//				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
                                 array('label'=>'Create Theme for Report', 'url'=>array('/themeForReport/reportTheme')),
                                 array('label'=>'Apply Theme to Report', 'url'=>array('/reportThemeMapping/index')),
+                                array('label'=>'Report Scripts', 'url'=>array('/reportTriggerMapping/create')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
-                                array('label'=>'Demo', 'url'=>array('/reportThemeMapping/testReport')),
+                                array('label'=>'Student Report', 'url'=>array('/studentinformation/reportTest')),
+                                array('label'=>'Course Report', 'url'=>array('/courses/reportTest')),
 
 
+                            
 			),
 		)); ?>
 	</div><!-- mainmenu -->

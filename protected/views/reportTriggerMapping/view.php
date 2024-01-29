@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List ReportTriggerMapping', 'url'=>array('index')),
 	array('label'=>'Create ReportTriggerMapping', 'url'=>array('create')),
-	array('label'=>'Update ReportTriggerMapping', 'url'=>array('update', 'id'=>$model->id)),
+    array('label'=>'Update ReportTriggerMapping', 'url'=>array('selectReport')), // Change the URL to selectReport
 	array('label'=>'Delete ReportTriggerMapping', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage ReportTriggerMapping', 'url'=>array('admin')),
 );
