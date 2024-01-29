@@ -61,18 +61,12 @@ $scriptCodeList = CHtml::listData($scriptCodes, 'id', 'effects');
 
     <div class="form">
         
-        <?php echo CHtml::textField('model_id', $model->id); ?>
+        <?php echo CHtml::hiddenField('model_id', $model->id); ?>
 
         
-        <div class="row">
-            <?php echo $form->labelEx($model, 'application_forms_id'); ?>
-            <?php echo $form->dropDownList($model, 'application_forms_id', $application_form_List); ?>
-        </div>
+         <?php echo CHtml::hiddenField("ReportTriggerMapping[$model->id][report_id]", $model->report_id); ?>
+        <?php echo CHtml::hiddenField("ReportTriggerMapping[$model->id][application_forms_id]", $model->application_forms_id); ?>
 
-        <div class="row">
-            <?php echo $form->labelEx($model, 'report_id'); ?>
-            <?php echo $form->dropDownList($model, 'report_id', $reportList); ?>
-        </div>
 
       <div class="row">
     <?php echo $model->report_columns; ?>
