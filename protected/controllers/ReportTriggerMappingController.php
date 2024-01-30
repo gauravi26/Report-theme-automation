@@ -32,7 +32,7 @@ class ReportTriggerMappingController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'query','columnQuery','getScriptDetail','reportScriptMapping','selectReport'),
+				'actions'=>array('create','update', 'query','columnQuery','getScriptDetail','reportScriptMapping','selectReport','successPage'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -272,7 +272,7 @@ public function actionUpdate($report_id) {
         }
 
         // Redirect to success page or render success message
-        $this->redirect(array('success'));
+$this->redirect(array('/reportTriggerMapping/successPage'));
     }
 
     // Render the update page with the models
@@ -281,6 +281,10 @@ public function actionUpdate($report_id) {
         'report_id' => $report_id, // Pass report_id to the view
     ));
 }
+public function actionSuccessPage() {
+    $this->render('success'); // Renders the 'success.php' view
+}
+
 
 
 protected function loadModelsByReportId($report_id){
