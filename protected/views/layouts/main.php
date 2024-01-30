@@ -80,7 +80,7 @@ $controllerId = $controller->getId();
 //				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Report', 'url'=>array('/report/index')),
                                 array('label'=>'Create Theme for Report', 'url'=>array('/themeForReport/reportTheme')),
-                                array('label'=>'Apply Theme to Report', 'url'=>array('/reportThemeMapping/index')),
+                                array('label'=>'Apply Theme to Report', 'url'=>array('/reportThemeMapping/create')),
                                 array('label'=>'Report Scripts', 'url'=>array('/reportTriggerMapping/create')),
                                 array('label'=>'Testing', 'url'=>array('/report/testReport')),
                                 array('label'=>'Student Report', 'url'=>array('/studentinformation/reportTest')),

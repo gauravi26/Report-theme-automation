@@ -9,8 +9,12 @@ $application_form_List = CHtml::listData($application_form, 'id', 'menu_form');
 $report = Report::model()->findAll(array('order' => 'report_name'));
 $reportList = CHtml::listData($report, 'id', 'report_name');
 
-$theme = ThemeForReport::model()->findAll(array('order' => 'theme_name'));
-$themeList = Chtml::listData($theme, 'reference_id','theme_name');
+$themes = ThemeForReport::model()->findAll(array(
+    'condition' => 'reference_id != 0', // Exclude records with reference_id = 0
+    'order' => 'theme_name'
+));
+$themeList = CHtml::listData($themes, 'reference_id', 'theme_name');
+
 $uniqueThemes = array_unique($themeList);
 
 
