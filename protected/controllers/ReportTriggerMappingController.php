@@ -168,62 +168,119 @@ public function actionCreate()
     ));
 }
 
-public function actionUpdate($report_id)
-{
+//public function actionUpdate($report_id)
+//{
+//    // Load models associated with the given report ID
+//    $models = $this->loadModelsByReportId($report_id);
+//    
+//    // Check if the form is submitted (POST request)
+//    if(isset($_POST['model_id'], $_POST['ReportTriggerMapping'])) {
+//        // Get the model ID from the form submission
+//        $model_id = $_POST['model_id'];
+//        
+//        // Find the model with the provided ID
+//        $model = ReportTriggerMapping::model()->findByPk($model_id);
+//        
+//        if($model !== null) {
+//            // Load the POST data into the model
+//            $model->attributes = $_POST['ReportTriggerMapping'];
+//            
+//            // Save the model
+//            if($model->save()) {
+//                // Call the function for each column
+//                $scriptId = $model->scipt_id;
+//                $columns = $model->report_columns;
+//                $rowWord = $model->report_row;
+//                $pageId = $model->application_forms_id;
+//
+//                // Split the column names
+//                $columnArray = explode(',', $columns);
+//                $columnArray = array_map('trim', $columnArray); // Remove leading/trailing whitespaces
+//                
+//                foreach ($columnArray as $singleColumn) {
+//                    $jsonScript = $this->SaveScriptForReport(trim($singleColumn), $rowWord, $scriptId);
+//                    // Update applied_script for the current column
+//                    $model->applied_script = $jsonScript;
+//                    $model->save(); // Save the updated model
+//                }
+//
+//                // Redirect to success page or render success message
+//                $this->redirect(['success']);
+//            } else {
+//                // Handle validation errors or other save errors
+//                // You can render the update page again with error messages if needed
+//            }
+//        } else {
+//            // Handle the case where the model with the provided ID is not found
+//            // This could be due to invalid ID or other issues
+//        }
+//    }
+//
+//    // Render the update page with the models
+//    $this->render('update', [
+//        'models' => $models,
+//    ]);
+//}
+//
+//
+//
+public function actionUpdate($report_id) {
     // Load models associated with the given report ID
     $models = $this->loadModelsByReportId($report_id);
-    
+
+    if (empty($models)) {
+        Yii::app()->user->setFlash('error', 'Report Trigger Mappings not found for the report.');
+        $this->redirect(array('selectReport'));
+    }
+
     // Check if the form is submitted (POST request)
-    if(isset($_POST['model_id'], $_POST['ReportTriggerMapping'])) {
-        // Get the model ID from the form submission
-        $model_id = $_POST['model_id'];
-        
-        // Find the model with the provided ID
-        $model = ReportTriggerMapping::model()->findByPk($model_id);
-        
-        if($model !== null) {
-            // Load the POST data into the model
-            $model->attributes = $_POST['ReportTriggerMapping'];
-            
-            // Save the model
-            if($model->save()) {
-                // Call the function for each column
-                $scriptId = $model->scipt_id;
-                $columns = $model->report_columns;
-                $rowWord = $model->report_row;
-                $pageId = $model->application_forms_id;
+    if (isset($_POST['ReportTriggerMapping'])) {
+        foreach ($_POST['ReportTriggerMapping'] as $model_id => $attributes) {
+            // Find the model with the provided ID
+            $model = ReportTriggerMapping::model()->findByPk($model_id);
 
-                // Split the column names
-                $columnArray = explode(',', $columns);
-                $columnArray = array_map('trim', $columnArray); // Remove leading/trailing whitespaces
-                
-                foreach ($columnArray as $singleColumn) {
-                    $jsonScript = $this->SaveScriptForReport(trim($singleColumn), $rowWord, $scriptId);
-                    // Update applied_script for the current column
-                    $model->applied_script = $jsonScript;
-                    $model->save(); // Save the updated model
+            if ($model !== null) {
+                // Load the POST data into the model
+                $model->attributes = $attributes;
+
+                // Save the model
+                if ($model->save()) {
+                    // Call the function for each column
+                    $scriptId = $model->scipt_id;
+                    $columns = $model->report_columns;
+                    $rowWord = $model->report_row;
+                    $pageId = $model->application_forms_id;
+
+                    // Split the column names
+                    $columnArray = explode(',', $columns);
+                    $columnArray = array_map('trim', $columnArray); // Remove leading/trailing whitespaces
+
+                    foreach ($columnArray as $singleColumn) {
+                        $jsonScript = $this->SaveScriptForReport(trim($singleColumn), $rowWord, $scriptId);
+                        // Update applied_script for the current column
+                        $model->applied_script = $jsonScript;
+                        $model->save(); // Save the updated model
+                    }
+                } else {
+                    // Handle validation errors or other save errors
+                    // You can render the update page again with error messages if needed
                 }
-
-                // Redirect to success page or render success message
-                $this->redirect(['success']);
             } else {
-                // Handle validation errors or other save errors
-                // You can render the update page again with error messages if needed
+                // Handle the case where the model with the provided ID is not found
+                // This could be due to invalid ID or other issues
             }
-        } else {
-            // Handle the case where the model with the provided ID is not found
-            // This could be due to invalid ID or other issues
         }
+
+        // Redirect to success page or render success message
+        $this->redirect(array('success'));
     }
 
     // Render the update page with the models
-    $this->render('update', [
+    $this->render('update', array(
         'models' => $models,
-    ]);
+        'report_id' => $report_id, // Pass report_id to the view
+    ));
 }
-
-
-
 
 
 protected function loadModelsByReportId($report_id){

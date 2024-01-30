@@ -16,6 +16,7 @@ echo CHtml::hiddenField('actionId', $actionId);
 </head>
 <body>
     <div class="report-container">
+    <h2 class="report-heading">Student Report</h2> <!-- Dynamic Heading -->
         <table class="report-table" id="StudentInformation">
             <thead>
                 <tr>

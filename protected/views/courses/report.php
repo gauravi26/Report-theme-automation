@@ -1,4 +1,7 @@
-<?php
+<style>
+    
+     .report-container { border-radius: 10px !important; }
+</style><?php
 $controller = Yii::app()->getController();
 $actionId = $controller->getAction()->getId();
 $controllerId = $controller->getId();
@@ -16,6 +19,8 @@ echo CHtml::hiddenField('actionId', $actionId);
 </head>
 <body>
     <div class="report-container">
+                <h2 class="report-heading">Courses Report</h2> <!-- Dynamic Heading -->
+
         <table class="report-table" id="Courses">
             <thead>
                 <tr>

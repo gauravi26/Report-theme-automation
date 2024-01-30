@@ -231,21 +231,24 @@ updateTfootProperties();
     });
     
   
-    const dataTableLength = document.getElementsByClassName('dataTables_length')[0];
+const dataTableLength = document.getElementsByClassName('dataTables_length'); // Selecting all elements with the class 'dataTables_length'
 
 function updateDataTableLengthColor() {
     const colorInput = document.getElementById('.dataTables_length_color');
     if (colorInput) {
-        dataTableLength.style.color = colorInput.value;
+        const color = colorInput.value;
+        for (let i = 0; i < dataTableLength.length; i++) {
+            dataTableLength[i].style.color = color;
+        }
     }
 }
 
-const colorInput = document.getElementById('.dataTables_length_color');
-if (colorInput) {
-    colorInput.addEventListener("input", updateDataTableLengthColor);
-}
+
 
 updateDataTableLengthColor();
+
+
+
 
 });
 
