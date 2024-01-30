@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reportGridContainer.style.gridGap = reportThemeForm['.report-container_grid-gap'].value;
         reportGridContainer.style.justifyContent = reportThemeForm['.report-container_justify-content'].value;
         reportGridContainer.style.alignItems = reportThemeForm['.report-container_align-items'].value;
-        reportGridContainer.style.boderRadius = reportThemeForm['.report-container_border-radius'].value;
+        reportGridContainer.style.borderRadius = reportThemeForm['.report-container_border-radius'].value;
         reportGridContainer.style.padding = reportThemeForm['.report-container_padding'].value;
         reportGridContainer.style.fontFamily = reportThemeForm['.report-container_font-family'].value;
         reportGridContainer.style.width = reportThemeForm['.report-container_width'].value;
